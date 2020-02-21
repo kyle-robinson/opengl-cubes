@@ -2,4 +2,7 @@
 
 OpenGL project as part of 2nd semester FOGGS module.
 
-Coming soon!
+### Tutorials to complete.
+- [x] Inheritance & Polymorphism
+- [ ] Texturing
+- [ ] Lighting
