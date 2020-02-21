@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MeshDraw.h"
+#include "SceneObject.h"
 
 namespace MeshLoader
 {

@@ -1,9 +1,5 @@
 #include "MeshLoader.h"
 
-#include <gl/GL.h>
-#include <gl/GLU.h>
-#include "GL/freeglut.h"
-
 #include <iostream>
 #include <fstream>
 

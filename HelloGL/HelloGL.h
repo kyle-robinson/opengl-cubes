@@ -1,17 +1,8 @@
 #pragma once
 
-#include <Windows.h>
-#include <gl/GL.h>
-#include <gl/GLU.h>
-#include "GL/freeglut.h"
-
 #include "GLUTCallbacks.h"
-#include "SceneObject.h"
 #include "Cube.h"
 #include "Pyramid.h"
-
-#include <iostream>
-#include <fstream>
 
 #define REFRESHRATE		16
 #define OBJECTCOUNT		1000

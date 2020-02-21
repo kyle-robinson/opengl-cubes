@@ -1,5 +1,6 @@
-﻿  Cube.cpp
-  Pyramid.cpp
-  SceneObject.cpp
+﻿  GLUTCallbacks.cpp
+  HelloGL.cpp
+  MeshLoader.cpp
+  main.cpp
   Generating Code...
   HelloGL.vcxproj -> C:\Users\Kyle\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\Debug\HelloGL.exe
