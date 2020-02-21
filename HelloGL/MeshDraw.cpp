@@ -4,11 +4,11 @@ MeshDraw::MeshDraw(Mesh* mesh, float x, float y, float z) : SceneObject(mesh)
 {
 	//_mesh = mesh;
 
-	_rotation = 0.0f;
-
-	_position.x = x;
-	_position.y = y;
-	_position.z = z;
+	//_rotation = 0.0f;
+	//
+	//_position.x = x;
+	//_position.y = y;
+	//_position.z = z;
 }
 
 MeshDraw::~MeshDraw()
@@ -48,6 +48,6 @@ void MeshDraw::Draw()
 
 void MeshDraw::Update()
 {
-	_rotation += 5.0f;
-	_position.z += 0.1f;
+	//_rotation += 5.0f;
+	//_position.z += 0.1f;
 }

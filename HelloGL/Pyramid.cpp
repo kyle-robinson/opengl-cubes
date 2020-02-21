@@ -1,6 +1,6 @@
-#include "Cube.h"
+#include "Pyramid.h"
 
-Cube::Cube(Mesh* mesh, float x, float y, float z) : SceneObject(mesh)
+Pyramid::Pyramid(Mesh* mesh, float x, float y, float z) : SceneObject(mesh)
 {
 	_rotation = 0.0f;
 
@@ -9,13 +9,13 @@ Cube::Cube(Mesh* mesh, float x, float y, float z) : SceneObject(mesh)
 	_position.z = z;
 }
 
-Cube::~Cube()
+Pyramid::~Pyramid()
 {
 	delete _mesh;
 	_mesh = NULL;
 }
 
-void Cube::Draw()
+void Pyramid::Draw()
 {
 	if (_mesh->Vertices != nullptr && _mesh->Colors != nullptr && _mesh->Indices != nullptr)
 	{
@@ -35,7 +35,7 @@ void Cube::Draw()
 	}
 }
 
-void Cube::Update()
+void Pyramid::Update()
 {
 	_rotation += 5.0f;
 	_position.z += 0.1f;

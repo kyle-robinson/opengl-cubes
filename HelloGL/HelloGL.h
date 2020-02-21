@@ -1,10 +1,19 @@
 #pragma once
+
+#include <Windows.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include "GL/freeglut.h"
+
 #include "GLUTCallbacks.h"
-#include "MeshDraw.h"
+#include "SceneObject.h"
+#include "Cube.h"
+#include "Pyramid.h"
+
+#include <iostream>
+#include <fstream>
 
 #define REFRESHRATE		16
-#define CUBECOUNT		100
-#define PYRAMIDCOUNT	100
 #define OBJECTCOUNT		1000
 
 class HelloGL
@@ -29,9 +38,5 @@ private:
 	
 	// Pointers
 	Camera* camera;
-	
 	SceneObject* objects[OBJECTCOUNT];
-
-	//MeshDraw* cube[CUBECOUNT];
-	//MeshDraw* pyramid[PYRAMIDCOUNT];
 };

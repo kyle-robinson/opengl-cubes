@@ -18,8 +18,8 @@ class MeshDraw : public SceneObject
 private:
 	//Mesh* _mesh;
 	
-	Vector3 _position;
-	GLfloat _rotation;
+	//Vector3 _position;
+	//GLfloat _rotation;
 
 public:
 	MeshDraw(Mesh* mesh, float x, float y, float z);

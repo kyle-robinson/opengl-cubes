@@ -22,18 +22,6 @@ HelloGL::~HelloGL(void)
 	delete camera;
 	camera = NULL;
 
-	/*for (int i = 0; i < CUBECOUNT; i++)
-	{
-		delete cube[i];
-		cube[i] = NULL;
-	}
-
-	for (int i = 0; i < PYRAMIDCOUNT; i++)
-	{
-		delete pyramid[i];
-		pyramid[i] = NULL;
-	}*/
-
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		delete objects[i];
@@ -58,24 +46,18 @@ void HelloGL::InitObjects()
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	// Create cube objects
-	Mesh* cubeMesh = MeshLoader::Load((char *)"cube.txt");
-	srand(time(NULL));
-	for (int i = 0; i < OBJECTCOUNT; i++)
-	{
-		objects[i] = new MeshDraw(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
-	}
-	/*for (int i = 0; i < CUBECOUNT; i++)
-	{
-		cube[i] = new MeshDraw(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
-	}*/
+	// Create Objects
+	Mesh* cubeMesh = MeshLoader::Load((char*)"cube.txt");
+	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
 
-	// Create pyramid objects
-	/*Mesh* pyramidMesh = MeshLoader::Load((char *)"pyramid.txt");
-	for (int i = 0; i < PYRAMIDCOUNT; i++)
+	for (int i = 0; i < 500; i++) 
 	{
-		pyramid[i] = new MeshDraw(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
-	}*/
+		objects[i] = new Cube(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 1000) / 10.0f);
+	}
+	for (int i = 500; i < 1000; i++) 
+	{
+		objects[i] = new Pyramid(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+	}
 }
 
 void HelloGL::InitGL(int argc, char* argv[])
@@ -116,18 +98,7 @@ void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // This clears the scene.
 
-	// Draw Cubes
-	/*for (int i = 0; i < CUBECOUNT; i++)
-	{
-		cube[i]->Draw();
-	}
-
-	// Draw Pyramids
-	for (int i = 0; i < PYRAMIDCOUNT; i++)
-	{
-		pyramid[i]->Draw();
-	}*/
-
+	// Draw Objects
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		objects[i]->Draw();
@@ -155,16 +126,6 @@ void HelloGL::Update()
 		camera->up.z
 	);
 
-	/*for (int i = 0; i < CUBECOUNT; i++)
-	{
-		cube[i]->Update();
-	}
-
-	for (int i = 0; i < PYRAMIDCOUNT; i++)
-	{
-		pyramid[i]->Update();
-	}*/
-
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		objects[i]->Update();
@@ -177,11 +138,11 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
 	/*if (key == 'd')
 	{
-		MeshDraw::_rotation += 5.0f;
+		SceneObject::_rotation += 5.0f;
 	}
 
 	if (key == 'a')
 	{
-		MeshDraw::_rotation -= 5.0f;
+		SceneObject::_rotation -= 5.0f;
 	}*/
 }

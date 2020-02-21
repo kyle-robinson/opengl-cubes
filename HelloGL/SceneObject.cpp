@@ -7,7 +7,8 @@ SceneObject::SceneObject(Mesh* mesh)
 
 SceneObject::~SceneObject()
 {
-
+	delete _mesh;
+	_mesh = NULL;
 }
 
 void SceneObject::Draw()
