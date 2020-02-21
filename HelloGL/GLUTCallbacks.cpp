@@ -1,4 +1,4 @@
-//#include "GLUTCallbacks.h"
+#include "GLUTCallbacks.h"
 #include "HelloGL.h"
 
 namespace GLUTCallbacks

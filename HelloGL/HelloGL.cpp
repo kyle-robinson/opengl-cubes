@@ -1,4 +1,9 @@
 #include "HelloGL.h"
+#include "MeshLoader.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
@@ -17,10 +22,22 @@ HelloGL::~HelloGL(void)
 	delete camera;
 	camera = NULL;
 
-	for (int i = 0; i < CUBECOUNT; i++)
+	/*for (int i = 0; i < CUBECOUNT; i++)
 	{
 		delete cube[i];
 		cube[i] = NULL;
+	}
+
+	for (int i = 0; i < PYRAMIDCOUNT; i++)
+	{
+		delete pyramid[i];
+		pyramid[i] = NULL;
+	}*/
+
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		delete objects[i];
+		objects[i] = NULL;
 	}
 }
 
@@ -42,11 +59,23 @@ void HelloGL::InitObjects()
 	camera->up.z = 0.0f;
 
 	// Create cube objects
-	Cube::Load((char*)"cube.txt");
-	for (int i = 0; i < CUBECOUNT; i++)
+	Mesh* cubeMesh = MeshLoader::Load((char *)"cube.txt");
+	srand(time(NULL));
+	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
-		cube[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		objects[i] = new MeshDraw(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 	}
+	/*for (int i = 0; i < CUBECOUNT; i++)
+	{
+		cube[i] = new MeshDraw(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+	}*/
+
+	// Create pyramid objects
+	/*Mesh* pyramidMesh = MeshLoader::Load((char *)"pyramid.txt");
+	for (int i = 0; i < PYRAMIDCOUNT; i++)
+	{
+		pyramid[i] = new MeshDraw(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+	}*/
 }
 
 void HelloGL::InitGL(int argc, char* argv[])
@@ -87,10 +116,21 @@ void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // This clears the scene.
 
-	// Draw Methods
-	for (int i = 0; i < CUBECOUNT; i++)
+	// Draw Cubes
+	/*for (int i = 0; i < CUBECOUNT; i++)
 	{
 		cube[i]->Draw();
+	}
+
+	// Draw Pyramids
+	for (int i = 0; i < PYRAMIDCOUNT; i++)
+	{
+		pyramid[i]->Draw();
+	}*/
+
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		objects[i]->Draw();
 	}
 
 	glFlush(); // Flushes the scene drawn to the graphics card.
@@ -115,9 +155,19 @@ void HelloGL::Update()
 		camera->up.z
 	);
 
-	for (int i = 0; i < CUBECOUNT; i++)
+	/*for (int i = 0; i < CUBECOUNT; i++)
 	{
 		cube[i]->Update();
+	}
+
+	for (int i = 0; i < PYRAMIDCOUNT; i++)
+	{
+		pyramid[i]->Update();
+	}*/
+
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		objects[i]->Update();
 	}
 
 	glutPostRedisplay();
@@ -127,17 +177,11 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
 	/*if (key == 'd')
 	{
-		rotation += 5.0f;
-		rotationRect += 5.0f;
-		rotationSquare += 5.0f;
-		rotationTriangle += 5.0f;
+		MeshDraw::_rotation += 5.0f;
 	}
 
 	if (key == 'a')
 	{
-		rotation -= 5.0f;
-		rotationRect -= 5.0f;
-		rotationSquare -= 5.0f;
-		rotationTriangle -= 5.0f;
+		MeshDraw::_rotation -= 5.0f;
 	}*/
 }

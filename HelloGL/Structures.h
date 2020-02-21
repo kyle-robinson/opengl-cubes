@@ -1,5 +1,7 @@
 #pragma once
 
+#include <gl\GL.h>
+
 struct Vector3
 {
 	float x;
@@ -24,10 +26,10 @@ struct Vertex
 	GLfloat x, y, z;
 };
 
-/*struct Mesh
+struct Mesh
 {
 	Vertex* Vertices;
 	Color* Colors;
 	GLushort* Indices;
 	int VertexCount, ColorCount, IndexCount;
-};*/
+};
