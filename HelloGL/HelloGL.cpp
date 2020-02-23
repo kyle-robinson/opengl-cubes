@@ -50,13 +50,21 @@ void HelloGL::InitObjects()
 	Mesh* cubeMesh = MeshLoader::Load((char*)"cube.txt");
 	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
 
+	Texture2D* texturePenguins = new Texture2D();
+	texturePenguins->Load((char*)"penguins.raw", 512, 512);
+
+	Texture2D* textureStars = new Texture2D();
+	textureStars->Load((char*)"stars.raw", 512, 512);
+	
+	srand(time(NULL));
+
 	for (int i = 0; i < 500; i++) 
 	{
-		objects[i] = new Cube(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 1000) / 10.0f);
+		objects[i] = new Cube(cubeMesh, texturePenguins, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 1000) / 10.0f);
 	}
 	for (int i = 500; i < 1000; i++) 
 	{
-		objects[i] = new Pyramid(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		objects[i] = new Pyramid(pyramidMesh, textureStars, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 	}
 }
 
@@ -75,10 +83,11 @@ void HelloGL::InitGL(int argc, char* argv[])
 	// Enable Depth Testing
 	glEnable(GL_DEPTH_TEST);
 
-	// Set up keyboard input
+	// Set up GLUT function callbacks
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
+
 	glMatrixMode(GL_PROJECTION);
 
 	// Set the viewport to be the entire window
@@ -88,6 +97,9 @@ void HelloGL::InitGL(int argc, char* argv[])
 	gluPerspective(90, 1, 1, 1000);
 
 	glMatrixMode(GL_MODELVIEW);
+
+	// Enable Textures
+	glEnable(GL_TEXTURE_2D);
 
 	// Enable back-face culling
 	glEnable(GL_CULL_FACE);
