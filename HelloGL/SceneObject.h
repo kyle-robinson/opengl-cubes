@@ -9,17 +9,18 @@
 
 class SceneObject
 {
-protected:
-	Mesh* _mesh;
-	Texture2D* _texture;
-
-	Vector3 _position;
-	GLfloat _rotation;
-
 public:
 	SceneObject(Mesh* mesh, Texture2D* texture);
 	virtual ~SceneObject();
 
 	virtual void Update();
 	virtual void Draw();
+
+	GLfloat _rotation;
+
+protected:
+	Mesh* _mesh;
+	Texture2D* _texture;
+
+	Vector3 _position;
 };

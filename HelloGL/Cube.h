@@ -11,4 +11,8 @@ public:
 protected:
 	void Draw();
 	void Update();
+	void SetupLight();
+
+private:
+	Material* _material;
 };
