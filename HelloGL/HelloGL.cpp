@@ -7,14 +7,10 @@
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
-	// Initialise OpenGL
 	InitGL(argc, argv);
 	InitLighting(argc, argv);
-	
-	// Initialise scene objects
 	InitObjects();
 
-	// Start main loop
 	glutMainLoop();
 }
 
@@ -36,83 +32,32 @@ HelloGL::~HelloGL(void)
 	}
 }
 
-void HelloGL::InitObjects()
-{
-	// Set up camera
-	camera = new Camera();
-
-	camera->eye.x = 0.0f;
-	camera->eye.y = 0.0f;
-	camera->eye.z = 1.0f;
-
-	camera->center.x = 0.0f;
-	camera->center.y = 0.0f;
-	camera->center.z = 0.0f;
-
-	camera->up.x = 0.0f;
-	camera->up.y = 1.0f;
-	camera->up.z = 0.0f;
-
-	// Create Objects
-	Mesh* cubeMesh = MeshLoader::Load((char*)"cube.txt");
-	//Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
-
-	Texture2D* texturePenguins = new Texture2D();
-	texturePenguins->Load((char*)"penguins.raw", 512, 512);
-
-	/*Texture2D* textureStars = new Texture2D();
-	textureStars->Load((char*)"stars.raw", 512, 512);*/
-	
-	srand(time(NULL));
-
-	for (int i = 0; i < OBJECTCOUNT; i++) 
-	{
-		objects[i] = new Cube(cubeMesh, texturePenguins, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 1000) / 10.0f);
-	}
-	/*for (int i = 500; i < 1000; i++) 
-	{
-		objects[i] = new Pyramid(pyramidMesh, textureStars, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
-	}*/
-}
-
 void HelloGL::InitGL(int argc, char* argv[])
 {
-	// Set up GLUT callbacks
 	GLUTCallbacks::Init(this);
 
-	// Create window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Simple OpenGL Program");
 
-	// Set up GLUT function callbacks
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 
 	glMatrixMode(GL_PROJECTION);
-
-	// Set the viewport to be the entire window
 	glViewport(0, 0, 800, 800);
-
-	// Set the correct perspective
 	gluPerspective(90, 1, 1, 1000);
 
+	glEnable(GL_TEXTURE_2D);
 	glMatrixMode(GL_MODELVIEW);
 
-	// Enable Textures
-	glEnable(GL_TEXTURE_2D);
-
-	// Enable Lighting
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	
-	// Enable Depth Testing
+
 	glEnable(GL_DEPTH_TEST);
-	
-	// Enable back-face culling
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 }
@@ -144,18 +89,55 @@ void HelloGL::InitLighting(int argc, char* argv[])
 	_lightData->Specular.w = 1.0;
 }
 
+void HelloGL::InitObjects()
+{
+	// Set up camera
+	camera = new Camera();
+
+	camera->eye.x = 0.0f;
+	camera->eye.y = 0.0f;
+	camera->eye.z = 1.0f;
+
+	camera->center.x = 0.0f;
+	camera->center.y = 0.0f;
+	camera->center.z = 0.0f;
+
+	camera->up.x = 0.0f;
+	camera->up.y = 1.0f;
+	camera->up.z = 0.0f;
+
+	// Set up objects
+	cubeMesh = MeshLoader::Load((char*)"Objects/cube.txt");
+
+	texturePenguins = new Texture2D();
+	texturePenguins->Load((char*)"Textures/penguins.raw", 512, 512);
+
+	textureStars = new Texture2D();
+	textureStars->Load((char*)"Textures/stars.raw", 512, 512);
+	
+	srand(time(NULL));
+
+	for (int i = 0; i < OBJECTCOUNT; i++) 
+	{
+		objects[i] = new Cube(cubeMesh, texturePenguins, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 1000) / 10.0f);
+	}
+}
+
 void HelloGL::Display()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // This clears the scene.
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// Draw Objects
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		objects[i]->Draw();
 	}
 
-	glFlush(); // Flushes the scene drawn to the graphics card.
-	glutSwapBuffers(); // Swaps the buffers
+	Vector3 v = { -1.8f, 1.7f, -1.0f };
+	Color c = { 0.0f, 1.0f, 0.0f };
+	DrawString("Penguin Cubes", &v, &c);
+
+	glFlush();
+	glutSwapBuffers();
 }
 
 void HelloGL::Update()
@@ -179,6 +161,10 @@ void HelloGL::Update()
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		objects[i]->Update();
+		if (objects[i]->_position.z > 10.0f)
+		{
+			objects[i]->_position.z = -100.0f;
+		}
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
@@ -190,20 +176,87 @@ void HelloGL::Update()
 }
 
 void HelloGL::Keyboard(unsigned char key, int x, int y)
-{
-	if (key == 'd')
+{	
+	// Object Movement
+	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
-		for (int i = 0; i < OBJECTCOUNT; i++)
-		{
+		if (key == 'd')
 			objects[i]->_rotation += 5.0f;
-		}
+		else if (key == 'a')
+			objects[i]->_rotation -= 10.0f;	
 	}
 
-	if (key == 'a')
+	// Change Texture
+	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
-		for (int i = 0; i < OBJECTCOUNT; i++)
+		if (key == 's')
+			objects[i] = new Cube(cubeMesh, textureStars, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+		else if (key == 'p')
+			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+	}
+
+	// Change Colour - RBG W CMY
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		switch (key)
 		{
-			objects[i]->_rotation -= 5.0f;
+		case 'r':
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 0.0f;
+			break;
+		case 'g':
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+			break;
+		case 'b':
+			objects[i]->red = 0.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+			break;
+		case 'w':
+			objects[i]->red = 1.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 1.0f;
+			break;
+		case 'c':
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 1.0f;
+			break;
+		case 'm':
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+			break;
+		case 'y':
+			objects[i]->red = 1.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+			break;
 		}
 	}
+}
+
+void HelloGL::KeyboardSpecial(int key, int x, int y)
+{
+	// Camera Movement
+	if (key == GLUT_KEY_UP)
+		camera->eye.y -= MOVEMENT_SPEED;
+	else if (key == GLUT_KEY_DOWN)
+		camera->eye.y += MOVEMENT_SPEED;
+	else if (key == GLUT_KEY_LEFT)
+		camera->eye.x += MOVEMENT_SPEED;
+	else if (key == GLUT_KEY_RIGHT)
+		camera->eye.x -= MOVEMENT_SPEED;
+}
+
+void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
+{
+	glPushMatrix();
+		glTranslatef(position->x, position->y, position->z);
+		glRasterPos2f(0.0f, 0.0f);
+		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
+	glPopMatrix();
 }

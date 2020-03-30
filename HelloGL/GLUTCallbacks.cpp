@@ -33,4 +33,9 @@ namespace GLUTCallbacks
 	{
 		helloGL->Keyboard(key, x, y);
 	}
+
+	void KeyboardSpecial(int key, int x, int y)
+	{
+		helloGL->KeyboardSpecial(key, x, y);
+	}
 }

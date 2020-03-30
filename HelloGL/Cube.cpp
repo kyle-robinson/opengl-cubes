@@ -1,22 +1,14 @@
 #include "Cube.h"
 
-#include <cstdlib>
-#include <ctime>
-
 Cube::Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObject(mesh, texture)
 {
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
-
-	_rotation = 0.0f;
 }
 
 Cube::~Cube()
 {
-	delete _mesh;
-	_mesh = NULL;
-
 	delete _material;
 	_material = NULL;
 }
@@ -55,27 +47,21 @@ void Cube::Draw()
 
 void Cube::Update()
 {
-	//srand((unsigned int)time(NULL));
-	//float randRotate = 5.0f;
-	//_rotation += (float(rand()) / float((RAND_MAX)) * randRotate);
-
-	srand((unsigned int)time(NULL));
-	float randPosition = 2.5f;
-	_position.z += (float(rand()) / float((RAND_MAX)) * randPosition);
+	SceneObject::Update();
 }
 
 void Cube::SetupLight()
 {
 	_material = new Material();
 
-	_material->Ambient.x = 0.8;
-	_material->Ambient.y = 0.05;
-	_material->Ambient.z = 0.05;
+	_material->Ambient.x = red;
+	_material->Ambient.y = green;
+	_material->Ambient.z = blue;
 	_material->Ambient.w = 1.0;
 
-	_material->Diffuse.x = 0.8;
-	_material->Diffuse.y = 0.05;
-	_material->Diffuse.z = 0.05;
+	_material->Diffuse.x = red;
+	_material->Diffuse.y = green;
+	_material->Diffuse.z = blue;
 	_material->Diffuse.w = 1.0;
 
 	_material->Specular.x = 1.0;

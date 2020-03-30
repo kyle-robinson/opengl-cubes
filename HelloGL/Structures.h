@@ -2,6 +2,7 @@
 
 #include <gl\GL.h>
 
+// CAMERA
 struct Vector3
 {
 	float x;
@@ -16,14 +17,15 @@ struct Camera
 	Vector3 up;
 };
 
-struct Color
-{
-	GLfloat r, g, b;
-};
-
+// MESH
 struct Vertex
 {
 	GLfloat x, y, z;
+};
+
+struct Color
+{
+	GLfloat r, g, b;
 };
 
 struct TexCoord
@@ -40,6 +42,7 @@ struct Mesh
 	int VertexCount, NormalCount, IndexCount, TexCoordCount;
 };
 
+// LIGHTING
 struct Vector4
 {
 	float x, y, z, w;

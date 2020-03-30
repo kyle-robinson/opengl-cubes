@@ -9,6 +9,10 @@ public:
 	~Pyramid();
 
 protected:
-	virtual void Draw();
-	virtual void Update();
+	void Draw();
+	void Update();
+	void SetupLight();
+
+private:
+	Material* _material;
 };

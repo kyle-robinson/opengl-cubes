@@ -17,10 +17,11 @@ public:
 	virtual void Draw();
 
 	GLfloat _rotation;
+	Vector3 _position;
+	
+	double red, green, blue;
 
 protected:
 	Mesh* _mesh;
 	Texture2D* _texture;
-
-	Vector3 _position;
 };

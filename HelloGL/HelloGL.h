@@ -7,6 +7,7 @@
 
 #define REFRESHRATE		16
 #define OBJECTCOUNT		500
+#define MOVEMENT_SPEED	0.1f
 
 class HelloGL
 {
@@ -16,14 +17,21 @@ public:
 	void Display();
 	void Update();
 
-	void InitObjects();
 	void InitGL(int argc, char* argv[]);
 	void InitLighting(int argc, char* argv[]);
+	void InitObjects();
 
 	void Keyboard(unsigned char key, int x, int y);
+	void KeyboardSpecial(int key, int x, int y);
+	void DrawString(const char* text, Vector3* position, Color* color);
 
 private:
 	float rotation;
+
+	Mesh* cubeMesh;
+	Mesh* pyramidMesh;
+	Texture2D* texturePenguins;
+	Texture2D* textureStars;
 
 	Camera* camera;
 	SceneObject* objects[OBJECTCOUNT];

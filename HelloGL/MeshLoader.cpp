@@ -89,16 +89,9 @@ namespace MeshLoader
 			return nullptr;
 		}
 
-		// Load vertex information
 		LoadVertices(inFile, *mesh);
-
-		// Load texture information
 		LoadTexCoords(inFile, *mesh);
-		
-		// Load colour information
 		LoadNormals(inFile, *mesh);
-
-		// Load index information
 		LoadIndices(inFile, *mesh);
 
 		inFile.close();
