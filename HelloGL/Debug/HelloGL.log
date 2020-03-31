@@ -1,12 +1,3 @@
-﻿  HelloGL.cpp
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(76,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(77,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(78,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(81,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(82,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(83,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(86,30): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(87,30): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(88,30): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\HelloGL\HelloGL.cpp(118,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  HelloGL.vcxproj -> D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\HelloGL\Debug\HelloGL.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (HelloGL.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  SceneManager.cpp
+  HelloGL.vcxproj -> D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\Debug\OpenGL-Project.exe

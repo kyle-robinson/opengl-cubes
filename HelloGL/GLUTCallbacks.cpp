@@ -1,41 +1,41 @@
 #include "GLUTCallbacks.h"
-#include "HelloGL.h"
+#include "SceneStarfield.h"
 
 namespace GLUTCallbacks
 {
 	namespace
 	{
-		HelloGL* helloGL = nullptr;
+		SceneStarfield* sceneStarfield = nullptr;
 	}
 
-	void Init(HelloGL *gl)
+	void Init(SceneStarfield *gl)
 	{
-		helloGL = gl;
+		sceneStarfield = gl;
 	}
 
 	void Display()
 	{
-		if (helloGL != nullptr)
+		if (sceneStarfield != nullptr)
 		{
-			helloGL->Display();
+			sceneStarfield->Display();
 		}
 	}
 
 	void Timer(int preferredRefresh)
 	{
 		int updateTime = glutGet(GLUT_ELAPSED_TIME);
-		helloGL->Update();
+		sceneStarfield->Update();
 		updateTime = glutGet(GLUT_ELAPSED_TIME) - updateTime;
 		glutTimerFunc(preferredRefresh - updateTime, GLUTCallbacks::Timer, preferredRefresh);
 	}
 
 	void Keyboard(unsigned char key, int x, int y)
 	{
-		helloGL->Keyboard(key, x, y);
+		sceneStarfield->Keyboard(key, x, y);
 	}
 
 	void KeyboardSpecial(int key, int x, int y)
 	{
-		helloGL->KeyboardSpecial(key, x, y);
+		sceneStarfield->KeyboardSpecial(key, x, y);
 	}
 }

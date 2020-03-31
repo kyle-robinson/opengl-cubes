@@ -2,6 +2,14 @@
 
 #include <gl\GL.h>
 
+enum SCENES
+{
+	SCENE_STARFIELD = 0,
+	SCENE_COLLISION,
+	SCENE_GAME,
+	SCENE_OBJLOADER
+};
+
 // CAMERA
 struct Vector3
 {
