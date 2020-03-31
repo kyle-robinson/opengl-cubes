@@ -3,16 +3,20 @@
 #include <Windows.h>
 #include "Structures.h"
 
+#define REFRESHRATE		16
+
 class Scene;
 class SceneManager
 {
 public:
-	SceneManager(int argc, char* argv[], SCENES startScene);
+	SceneManager();
 	~SceneManager(void);
 
 	void Display();
 	void Update();
-	void ChangeScene(int argc, char* argv[], SCENES newScene);
+
+	void ChangeScene(SCENES newScene);
+	void Keyboard(unsigned char key, int x, int y);
 
 private:
 	Scene* mCurrentScene;

@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="GLUTCallbacks.cpp" />
+    <ClCompile Include="SceneCollision.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneStarfield.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
@@ -140,6 +142,8 @@
   <ItemGroup>
     <ClInclude Include="Cube.h" />
     <ClInclude Include="GLUTCallbacks.h" />
+    <ClInclude Include="SceneCollision.h" />
+    <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneStarfield.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="Scene.h" />

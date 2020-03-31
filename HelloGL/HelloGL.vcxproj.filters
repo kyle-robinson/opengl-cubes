@@ -60,6 +60,12 @@
     <ClCompile Include="GLUTCallbacks.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
+    <ClCompile Include="SceneCollision.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneStarfield.h">
@@ -88,6 +94,12 @@
     </ClInclude>
     <ClInclude Include="Structures.h">
       <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneCollision.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

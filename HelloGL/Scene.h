@@ -3,12 +3,9 @@
 class Scene
 {
 public:
-	Scene(int argc, char* argv[]);
+	Scene();
 	~Scene(void);
 
 	virtual void Display();
 	virtual void Update();
-
-private:
-
 };

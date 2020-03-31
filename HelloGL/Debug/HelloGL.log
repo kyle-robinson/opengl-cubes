@@ -1,3 +1,11 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (HelloGL.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  SceneManager.cpp
+﻿  SceneStarfield.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(64,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(65,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(66,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(69,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(70,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(71,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(74,30): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(75,30): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(76,30): warning C4305: '=': truncation from 'double' to 'float'
   HelloGL.vcxproj -> D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\Debug\OpenGL-Project.exe

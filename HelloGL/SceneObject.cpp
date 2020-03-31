@@ -31,11 +31,5 @@ void SceneObject::Draw()
 
 void SceneObject::Update()
 {
-	srand((unsigned int)time(NULL));
-	float randRotate = 5.0f;
-	_rotation += (float(rand()) / float((RAND_MAX)) * randRotate);
-
-	srand((unsigned int)time(NULL));
-	float randPosition = 0.2f;
-	_position.z += (float(rand()) / float((RAND_MAX)) * randPosition);
+	
 }

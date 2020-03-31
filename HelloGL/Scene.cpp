@@ -1,8 +1,8 @@
 #include "Scene.h"
 
-Scene::Scene(int argc, char* argv[])
+Scene::Scene()
 {
-
+	
 }
 
 Scene::~Scene(void)

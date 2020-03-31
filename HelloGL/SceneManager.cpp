@@ -1,13 +1,22 @@
-#include "SceneManager.h"
+#include "GLUTCallbacks.h"
+
 #include "Scene.h"
+#include "SceneManager.h"
 #include "SceneStarfield.h"
+#include "SceneCollision.h"
+#include "SceneGame.h"
 
 #include <iostream>
 
-SceneManager::SceneManager(int argc, char* argv[], SCENES startScene)
+SceneManager::SceneManager()
 {
 	mCurrentScene = NULL;
-	ChangeScene(argc, argv, startScene);
+
+	GLUTCallbacks::Init(this);
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
+
+	ChangeScene(SCENE_STARFIELD);
 }
 
 SceneManager::~SceneManager(void)
@@ -26,23 +35,57 @@ void SceneManager::Update()
 	mCurrentScene->Update();
 }
 
-void SceneManager::ChangeScene(int argc, char* argv[], SCENES newScreen)
-{
-	if (mCurrentScene != NULL)
+void SceneManager::ChangeScene(SCENES newScreen)
+{	
+	if (mCurrentScene != NULL || mCurrentScene == NULL)
 	{
 		delete mCurrentScene;
 	}
 
 	SceneStarfield* tempStarfield;
+	SceneCollision* tempCollision;
+	SceneGame* tempGame;
 
 	switch (newScreen)
 	{
 	case SCENE_STARFIELD:
-		tempStarfield = new SceneStarfield(argc, argv);
+		tempStarfield = new SceneStarfield();
 		mCurrentScene = (Scene*)tempStarfield;
 		tempStarfield = NULL;
 		break;
+	case SCENE_COLLISION:
+		tempCollision = new SceneCollision();
+		mCurrentScene = (Scene*)tempCollision;
+		tempCollision = NULL;
+		break;
+	case SCENE_GAME:
+		tempGame = new SceneGame();
+		mCurrentScene = (Scene*)tempGame;
+		tempGame = NULL;
 	default:
 		std::cout << "ERROR::Was not able to load any of the scenes!" << std::endl;
+		break;
+	}
+}
+
+void SceneManager::Keyboard(unsigned char key, int x, int y)
+{
+	if (key == '1')
+	{
+		delete mCurrentScene;
+		mCurrentScene = NULL;
+		ChangeScene(SCENE_STARFIELD);
+	}
+	if (key == '2')
+	{
+		delete mCurrentScene;
+		mCurrentScene = NULL;
+		ChangeScene(SCENE_COLLISION);
+	}
+	if (key == '3')
+	{
+		delete mCurrentScene;
+		mCurrentScene = NULL;
+		ChangeScene(SCENE_GAME);
 	}
 }

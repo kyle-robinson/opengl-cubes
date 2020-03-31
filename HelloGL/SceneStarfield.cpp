@@ -4,12 +4,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <iostream>
 
-SceneStarfield::SceneStarfield(int argc, char* argv[]) : Scene(argc, argv)
+SceneStarfield::SceneStarfield() : Scene()
 {
-	InitGL(argc, argv);
-	InitLighting(argc, argv);
+	InitGL();
+	InitLighting();
 	InitObjects();
+
+	colorIsRed = false;
+	colorIsGreen = false;
+	colorIsBlue = false;
+	colorIsCyan = false;
+	colorIsMagenta = false;
+	colorIsYellow = false;
+
+	std::cout << "Starfield scene loaded." << std::endl;
 
 	glutMainLoop();
 }
@@ -32,31 +42,15 @@ SceneStarfield::~SceneStarfield(void)
 	}
 }
 
-void SceneStarfield::InitGL(int argc, char* argv[])
+void SceneStarfield::InitGL()
 {
 	GLUTCallbacks::Init(this);
 
-	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 	glutDisplayFunc(GLUTCallbacks::Display);
-	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
-
-	glMatrixMode(GL_PROJECTION);
-	glViewport(0, 0, 800, 800);
-	gluPerspective(90, 1, 1, 1000);
-
-	glEnable(GL_TEXTURE_2D);
-	glMatrixMode(GL_MODELVIEW);
-
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
 }
 
-void SceneStarfield::InitLighting(int argc, char* argv[])
+void SceneStarfield::InitLighting()
 {
 	_lightPosition = new Vector4();
 
@@ -85,7 +79,6 @@ void SceneStarfield::InitLighting(int argc, char* argv[])
 
 void SceneStarfield::InitObjects()
 {
-	// Set up camera
 	camera = new Camera();
 
 	camera->eye.x = 0.0f;
@@ -100,7 +93,6 @@ void SceneStarfield::InitObjects()
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	// Set up objects
 	cubeMesh = MeshLoader::Load((char*)"Objects/cube.txt");
 
 	texturePenguins = new Texture2D();
@@ -108,8 +100,6 @@ void SceneStarfield::InitObjects()
 
 	textureStars = new Texture2D();
 	textureStars->Load((char*)"Textures/stars.raw", 512, 512);
-	
-	srand(time(NULL));
 
 	for (int i = 0; i < OBJECTCOUNT; i++) 
 	{
@@ -128,7 +118,22 @@ void SceneStarfield::Display()
 
 	Vector3 v = { -1.8f, 1.7f, -1.0f };
 	Color c = { 0.0f, 1.0f, 0.0f };
-	DrawString("Penguin Cubes", &v, &c);
+	DrawString("Starfield Scene", &v, &c);
+
+	// Update colour change to screen.
+	Vector3 cPosition = { 0.5f, 1.7f, -1.0f };
+	if (colorIsRed)
+		DrawString("Colour changed to red.", &cPosition, &c);
+	else if (colorIsGreen)
+		DrawString("Colour changed to green.", &cPosition, &c);
+	else if (colorIsBlue)
+		DrawString("Colour changed to blue.", &cPosition, &c);
+	else if (colorIsCyan)
+		DrawString("Colour changed to cyan.", &cPosition, &c);
+	else if (colorIsMagenta)
+		DrawString("Colour changed to magenta.", &cPosition, &c);
+	else if (colorIsYellow)
+		DrawString("Colour changed to yellow.", &cPosition, &c);
 
 	glFlush();
 	glutSwapBuffers();
@@ -155,10 +160,13 @@ void SceneStarfield::Update()
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		objects[i]->Update();
+
+		objects[i]->_position.z += static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		srand(static_cast <unsigned> (time(0)));
+		objects[i]->_rotation += static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 7.5f));
+
 		if (objects[i]->_position.z > 10.0f)
-		{
 			objects[i]->_position.z = -100.0f;
-		}
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
@@ -177,7 +185,7 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 		if (key == 'd')
 			objects[i]->_rotation += 5.0f;
 		else if (key == 'a')
-			objects[i]->_rotation -= 10.0f;	
+			objects[i]->_rotation -= 10.0f;
 	}
 
 	// Change Texture
@@ -198,36 +206,85 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 0.0f;
+			
+			colorIsRed = true;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'g':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+
+			colorIsRed = false;
+			colorIsGreen = true;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'b':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = true;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
-		case 'w':
+		case 'n':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'c':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = true;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'm':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = true;
+			colorIsYellow = false;
 			break;
 		case 'y':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = true;
 			break;
 		}
 	}
