@@ -43,4 +43,5 @@ private:
 	Lighting* _lightData;
 
 	bool colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow;
+	bool zReverse, zMoving, cRotating;
 };

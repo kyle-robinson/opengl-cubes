@@ -11,13 +11,17 @@ SceneStarfield::SceneStarfield() : Scene()
 	InitGL();
 	InitLighting();
 	InitObjects();
-
+		
 	colorIsRed = false;
 	colorIsGreen = false;
 	colorIsBlue = false;
 	colorIsCyan = false;
 	colorIsMagenta = false;
 	colorIsYellow = false;
+	
+	zReverse = false;
+	zMoving = true;
+	cRotating = true;
 
 	std::cout << "Starfield scene loaded." << std::endl;
 
@@ -161,12 +165,23 @@ void SceneStarfield::Update()
 	{
 		objects[i]->Update();
 
-		objects[i]->_position.z += static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		if (zMoving)
+		{
+			if (!zReverse)
+				objects[i]->_position.z += static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			else
+				objects[i]->_position.z -= static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		}
+		
 		srand(static_cast <unsigned> (time(0)));
-		objects[i]->_rotation += static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 7.5f));
+		
+		if (cRotating)
+			objects[i]->_rotation += static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 7.5f));
 
 		if (objects[i]->_position.z > 10.0f)
 			objects[i]->_position.z = -100.0f;
+		if (objects[i]->_position.z < -100.0f)
+			objects[i]->_position.z = 10.0f;
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
@@ -179,34 +194,45 @@ void SceneStarfield::Update()
 
 void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 {	
-	// Object Movement
+	
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
+		// Object Rotation
 		if (key == 'd')
-			objects[i]->_rotation += 5.0f;
+			objects[i]->_rotation += 7.5f;
 		else if (key == 'a')
-			objects[i]->_rotation -= 10.0f;
-	}
+			objects[i]->_rotation -= 7.5f;
 
-	// Change Texture
-	for (int i = 0; i < OBJECTCOUNT; i++)
-	{
+		if (key == 'k')
+			cRotating = true;
+		if (key == 'l')
+			cRotating = false;
+
+		// Object Z Movement
+		if (key == 'z')
+			zReverse = true;
+		if (key == 'x')
+			zReverse = false;
+
+		if (key == 'q')
+			zMoving = false;
+		if (key == 'e')
+			zMoving = true;
+
+		// Change Texture
 		if (key == 's')
 			objects[i] = new Cube(cubeMesh, textureStars, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
 		else if (key == 'p')
 			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
-	}
-
-	// Change Colour - RBG W CMY
-	for (int i = 0; i < OBJECTCOUNT; i++)
-	{
+		
+		// Change Colour - RBG W CMY
 		switch (key)
 		{
 		case 'r':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 0.0f;
-			
+
 			colorIsRed = true;
 			colorIsGreen = false;
 			colorIsBlue = false;
