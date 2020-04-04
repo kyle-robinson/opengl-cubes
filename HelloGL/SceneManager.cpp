@@ -5,6 +5,7 @@
 #include "SceneStarfield.h"
 #include "SceneCollision.h"
 #include "SceneGame.h"
+#include "SceneOBJ.h"
 
 #include <iostream>
 
@@ -45,6 +46,7 @@ void SceneManager::ChangeScene(SCENES newScreen)
 	SceneStarfield* tempStarfield;
 	SceneCollision* tempCollision;
 	SceneGame* tempGame;
+	SceneOBJ* tempOBJ;
 
 	switch (newScreen)
 	{
@@ -62,6 +64,10 @@ void SceneManager::ChangeScene(SCENES newScreen)
 		tempGame = new SceneGame();
 		mCurrentScene = (Scene*)tempGame;
 		tempGame = NULL;
+	case SCENE_OBJLOADER:
+		tempOBJ = new SceneOBJ();
+		mCurrentScene = (Scene*)tempOBJ;
+		tempOBJ = NULL;
 	default:
 		std::cout << "ERROR::Was not able to load any of the scenes!" << std::endl;
 		break;
@@ -88,4 +94,13 @@ void SceneManager::Keyboard(unsigned char key, int x, int y)
 		mCurrentScene = NULL;
 		ChangeScene(SCENE_GAME);
 	}
+	if (key == '4')
+	{
+		delete mCurrentScene;
+		mCurrentScene = NULL;
+		ChangeScene(SCENE_OBJLOADER);
+	}
+
+	if (key == 27)
+		exit(0);
 }

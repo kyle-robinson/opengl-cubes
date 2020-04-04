@@ -25,4 +25,4 @@ OpenGL project as part of 2nd semester FOGGS module.
 - [x] 1st Scene - Star field of cubes.
 - [ ] 2nd Scene - Cube collision example.
 - [ ] 3rd Scene - Simple OpenGL game.
-- [ ] 4th Scene - Attempt at loading .obj file.
+- [x] 4th Scene - Example .obj file loading.

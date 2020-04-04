@@ -120,11 +120,11 @@ void SceneStarfield::Display()
 		objects[i]->Draw();
 	}
 
-	Vector3 v = { -1.8f, 1.7f, -1.0f };
+	//Vector3 v = { -1.8f, 1.7f, -1.0f };
+	Vector3 v = { camera->center.x - 0.85f, camera->center.y + 0.85f, camera->eye.z - 1.0f };
 	Color c = { 0.0f, 1.0f, 0.0f };
 	DrawString("Starfield Scene", &v, &c);
 
-	// Update colour change to screen.
 	Vector3 cPosition = { 0.5f, 1.7f, -1.0f };
 	if (colorIsRed)
 		DrawString("Colour changed to red.", &cPosition, &c);
@@ -197,6 +197,22 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 	
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
+		// Camera Position
+		if (key == 'i')
+		{
+			camera->eye.x = 0.0f;
+			camera->eye.y = 0.0f;
+			camera->eye.z = 1.0f;
+
+			camera->center.x = 0.0f;
+			camera->center.y = 0.0f;
+			camera->center.z = 0.0f;
+
+			camera->up.x = 0.0f;
+			camera->up.y = 1.0f;
+			camera->up.z = 0.0f;
+		}
+
 		// Object Rotation
 		if (key == 'd')
 			objects[i]->_rotation += 7.5f;
@@ -314,6 +330,12 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			break;
 		}
 	}
+
+	// Display Menu
+	if (key == 9)
+	{
+		std::cout << "TAB key has been pressed." << std::endl;
+	}
 }
 
 void SceneStarfield::KeyboardSpecial(int key, int x, int y)
@@ -327,6 +349,7 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 		camera->eye.x += MOVEMENT_SPEED;
 	else if (key == GLUT_KEY_RIGHT)
 		camera->eye.x -= MOVEMENT_SPEED;
+	
 }
 
 void SceneStarfield::DrawString(const char* text, Vector3* position, Color* color)

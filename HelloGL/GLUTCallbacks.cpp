@@ -4,6 +4,7 @@
 #include "SceneStarfield.h"
 #include "SceneCollision.h"
 #include "SceneGame.h"
+#include "SceneOBJ.h"
 
 namespace GLUTCallbacks
 {
@@ -13,6 +14,7 @@ namespace GLUTCallbacks
 		SceneStarfield* sceneStarfield = nullptr;
 		SceneCollision* sceneCollision = nullptr;
 		SceneGame* sceneGame = nullptr;
+		SceneOBJ* sceneOBJ = nullptr;
 	}
 
 	void Init(SceneManager *gl)
@@ -24,6 +26,7 @@ namespace GLUTCallbacks
 	{
 		sceneCollision = nullptr;
 		sceneGame = nullptr;
+		sceneOBJ = nullptr;
 		sceneStarfield = gl;
 	}
 
@@ -31,6 +34,7 @@ namespace GLUTCallbacks
 	{
 		sceneStarfield = nullptr;
 		sceneGame = nullptr;
+		sceneOBJ = nullptr;
 		sceneCollision = gl;
 	}
 
@@ -38,7 +42,16 @@ namespace GLUTCallbacks
 	{
 		sceneStarfield = nullptr;
 		sceneCollision = nullptr;
+		sceneOBJ = nullptr;
 		sceneGame = gl;
+	}
+
+	void Init(SceneOBJ* gl)
+	{
+		sceneStarfield = nullptr;
+		sceneCollision = nullptr;
+		sceneGame = nullptr;
+		sceneOBJ = gl;
 	}
 
 	void Display()
@@ -54,6 +67,10 @@ namespace GLUTCallbacks
 		else if (sceneGame != nullptr)
 		{
 			sceneGame->Display();
+		}
+		else if (sceneOBJ != nullptr)
+		{
+			sceneOBJ->Display();
 		}
 	}
 
@@ -71,6 +88,10 @@ namespace GLUTCallbacks
 		else if (sceneGame != nullptr)
 		{
 			sceneGame->Update();
+		}
+		else if (sceneOBJ != nullptr)
+		{
+			sceneOBJ->Update();
 		}
 		updateTime = glutGet(GLUT_ELAPSED_TIME) - updateTime;
 		glutTimerFunc(preferredRefresh - updateTime, GLUTCallbacks::Timer, preferredRefresh);
@@ -92,6 +113,10 @@ namespace GLUTCallbacks
 		{
 			sceneGame->Keyboard(key, x, y);
 		}
+		if (sceneOBJ != nullptr)
+		{
+			sceneOBJ->Keyboard(key, x, y);
+		}
 	}
 
 	void KeyboardSpecial(int key, int x, int y)
@@ -107,6 +132,10 @@ namespace GLUTCallbacks
 		if (sceneGame != nullptr)
 		{
 			sceneGame->KeyboardSpecial(key, x, y);
+		}
+		if (sceneOBJ != nullptr)
+		{
+			sceneOBJ->KeyboardSpecial(key, x, y);
 		}
 	}
 }

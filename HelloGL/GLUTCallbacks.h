@@ -4,6 +4,7 @@ class SceneManager;
 class SceneStarfield;
 class SceneCollision;
 class SceneGame;
+class SceneOBJ;
 
 namespace GLUTCallbacks
 {
@@ -11,6 +12,7 @@ namespace GLUTCallbacks
 	void Init(SceneStarfield* gl);
 	void Init(SceneCollision* gl);
 	void Init(SceneGame* gl);
+	void Init(SceneOBJ* gl);
 
 	void Display();
 	void Timer(int preferredRefresh);

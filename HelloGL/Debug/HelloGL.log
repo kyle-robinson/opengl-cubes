@@ -1,11 +1,11 @@
-﻿  SceneStarfield.cpp
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(68,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(69,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(70,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(73,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(74,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(75,29): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(78,30): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(79,30): warning C4305: '=': truncation from 'double' to 'float'
-D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.cpp(80,30): warning C4305: '=': truncation from 'double' to 'float'
+﻿  SceneOBJ.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(58,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(59,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(60,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(63,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(64,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(65,29): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(68,30): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(69,30): warning C4305: '=': truncation from 'double' to 'float'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneOBJ.cpp(70,30): warning C4305: '=': truncation from 'double' to 'float'
   HelloGL.vcxproj -> D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\Debug\OpenGL-Project.exe
