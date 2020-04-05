@@ -19,7 +19,7 @@ void InitWindow(int argc, char* argv[])
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Simple OpenGL Program");
+	glutCreateWindow("OpenGL Project - Showcase of Knowledge");
 
 	glMatrixMode(GL_PROJECTION);
 	glViewport(0, 0, 800, 800);

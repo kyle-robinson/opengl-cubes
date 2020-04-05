@@ -31,87 +31,111 @@
     <Filter Include="Header Files\Main">
       <UniqueIdentifier>{174acbaf-b512-4cbc-acd8-166b1a240678}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scenes\Levels">
+      <UniqueIdentifier>{5b650e8e-f757-4518-8623-8b70adf6c518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes\Managers">
+      <UniqueIdentifier>{4b3f76a9-618b-42e0-ab4d-61145710bc43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes\Managers">
+      <UniqueIdentifier>{fc896ac6-5214-46d5-916d-77045a0636da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes\Levels">
+      <UniqueIdentifier>{4c01510f-1677-42f7-93be-e9443cdd10ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Cube">
+      <UniqueIdentifier>{dadfa52c-3904-4026-981d-ff67044d1dc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Cube">
+      <UniqueIdentifier>{3fbfe56e-fba1-409d-9691-2b32277656d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SceneStarfield.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneObject.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshLoader.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Cube.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
     <ClCompile Include="GLUTCallbacks.cpp">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
-    <ClCompile Include="SceneCollision.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGame.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneOBJ.cpp">
-      <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="ModelOBJ.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="SceneOBJ.cpp">
+      <Filter>Source Files\Scenes\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneStarfield.cpp">
+      <Filter>Source Files\Scenes\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Source Files\Scenes\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneCollision.cpp">
+      <Filter>Source Files\Scenes\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Scenes\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Scenes\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMenu.cpp">
+      <Filter>Source Files\Scenes\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Source Files\Objects\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneObject.cpp">
+      <Filter>Source Files\Objects\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLoader.cpp">
+      <Filter>Source Files\Objects\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Source Files\Objects\Cube</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SceneStarfield.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshLoader.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="GLUTCallbacks.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
     <ClInclude Include="Structures.h">
       <Filter>Header Files\Main</Filter>
     </ClInclude>
-    <ClInclude Include="SceneCollision.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGame.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneOBJ.h">
-      <Filter>Header Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="ModelOBJ.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneStarfield.h">
+      <Filter>Header Files\Scenes\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneOBJ.h">
+      <Filter>Header Files\Scenes\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Header Files\Scenes\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneCollision.h">
+      <Filter>Header Files\Scenes\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMenu.h">
+      <Filter>Header Files\Scenes\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\Scenes\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Scenes\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Header Files\Objects\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
+      <Filter>Header Files\Objects\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLoader.h">
+      <Filter>Header Files\Objects\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\Objects\Cube</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

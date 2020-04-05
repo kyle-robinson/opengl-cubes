@@ -1,6 +1,8 @@
 #pragma once
 
 class SceneManager;
+class SceneMenu;
+
 class SceneStarfield;
 class SceneCollision;
 class SceneGame;
@@ -9,6 +11,8 @@ class SceneOBJ;
 namespace GLUTCallbacks
 {
 	void Init(SceneManager* gl);
+	void Init(SceneMenu* gl);
+
 	void Init(SceneStarfield* gl);
 	void Init(SceneCollision* gl);
 	void Init(SceneGame* gl);

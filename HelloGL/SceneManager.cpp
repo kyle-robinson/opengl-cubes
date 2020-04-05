@@ -2,6 +2,8 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
+#include "SceneMenu.h"
+
 #include "SceneStarfield.h"
 #include "SceneCollision.h"
 #include "SceneGame.h"
@@ -17,7 +19,7 @@ SceneManager::SceneManager()
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 
-	ChangeScene(SCENE_STARFIELD);
+	ChangeScene(SCENE_MENU);
 }
 
 SceneManager::~SceneManager(void)
@@ -43,6 +45,7 @@ void SceneManager::ChangeScene(SCENES newScreen)
 		delete mCurrentScene;
 	}
 
+	SceneMenu* tempMenu;
 	SceneStarfield* tempStarfield;
 	SceneCollision* tempCollision;
 	SceneGame* tempGame;
@@ -50,6 +53,11 @@ void SceneManager::ChangeScene(SCENES newScreen)
 
 	switch (newScreen)
 	{
+	case SCENE_MENU:
+		tempMenu = new SceneMenu();
+		mCurrentScene = (Scene*)tempMenu;
+		tempMenu = NULL;
+		break;
 	case SCENE_STARFIELD:
 		tempStarfield = new SceneStarfield();
 		mCurrentScene = (Scene*)tempStarfield;
@@ -76,6 +84,12 @@ void SceneManager::ChangeScene(SCENES newScreen)
 
 void SceneManager::Keyboard(unsigned char key, int x, int y)
 {
+	if (key == '0')
+	{
+		delete mCurrentScene;
+		mCurrentScene = NULL;
+		ChangeScene(SCENE_MENU);
+	}
 	if (key == '1')
 	{
 		delete mCurrentScene;

@@ -1,6 +1,8 @@
 #include "GLUTCallbacks.h"
 
 #include "SceneManager.h"
+#include "SceneMenu.h"
+
 #include "SceneStarfield.h"
 #include "SceneCollision.h"
 #include "SceneGame.h"
@@ -11,6 +13,8 @@ namespace GLUTCallbacks
 	namespace
 	{
 		SceneManager* sceneManager = nullptr;
+		SceneMenu* sceneMenu = nullptr;
+
 		SceneStarfield* sceneStarfield = nullptr;
 		SceneCollision* sceneCollision = nullptr;
 		SceneGame* sceneGame = nullptr;
@@ -22,8 +26,18 @@ namespace GLUTCallbacks
 		sceneManager = gl;
 	}
 
+	void Init(SceneMenu *gl)
+	{
+		sceneStarfield = nullptr;
+		sceneCollision = nullptr;
+		sceneGame = nullptr;
+		sceneOBJ = nullptr;
+		sceneMenu = gl;
+	}
+
 	void Init(SceneStarfield *gl)
 	{
+		sceneMenu = nullptr;
 		sceneCollision = nullptr;
 		sceneGame = nullptr;
 		sceneOBJ = nullptr;
@@ -32,6 +46,7 @@ namespace GLUTCallbacks
 
 	void Init(SceneCollision *gl)
 	{
+		sceneMenu = nullptr;
 		sceneStarfield = nullptr;
 		sceneGame = nullptr;
 		sceneOBJ = nullptr;
@@ -40,6 +55,7 @@ namespace GLUTCallbacks
 
 	void Init(SceneGame *gl)
 	{
+		sceneMenu = nullptr;
 		sceneStarfield = nullptr;
 		sceneCollision = nullptr;
 		sceneOBJ = nullptr;
@@ -48,6 +64,7 @@ namespace GLUTCallbacks
 
 	void Init(SceneOBJ* gl)
 	{
+		sceneMenu = nullptr;
 		sceneStarfield = nullptr;
 		sceneCollision = nullptr;
 		sceneGame = nullptr;
@@ -56,43 +73,33 @@ namespace GLUTCallbacks
 
 	void Display()
 	{
-		if (sceneStarfield != nullptr)
-		{
+		if (sceneMenu != nullptr)
+			sceneMenu->Display();
+		else if (sceneStarfield != nullptr)
 			sceneStarfield->Display();
-		}
 		else if (sceneCollision != nullptr)
-		{
 			sceneCollision->Display();
-		}
 		else if (sceneGame != nullptr)
-		{
 			sceneGame->Display();
-		}
 		else if (sceneOBJ != nullptr)
-		{
 			sceneOBJ->Display();
-		}
 	}
 
 	void Timer(int preferredRefresh)
 	{
 		int updateTime = glutGet(GLUT_ELAPSED_TIME);
-		if (sceneStarfield != nullptr)
-		{
+
+		if (sceneMenu != nullptr)
+			sceneMenu->Update();
+		else if (sceneStarfield != nullptr)
 			sceneStarfield->Update();
-		}
 		else if (sceneCollision != nullptr)
-		{
 			sceneCollision->Update();
-		}
 		else if (sceneGame != nullptr)
-		{
 			sceneGame->Update();
-		}
 		else if (sceneOBJ != nullptr)
-		{
 			sceneOBJ->Update();
-		}
+
 		updateTime = glutGet(GLUT_ELAPSED_TIME) - updateTime;
 		glutTimerFunc(preferredRefresh - updateTime, GLUTCallbacks::Timer, preferredRefresh);
 	}
@@ -100,42 +107,26 @@ namespace GLUTCallbacks
 	void Keyboard(unsigned char key, int x, int y)
 	{
 		sceneManager->Keyboard(key, x, y);
-		
+
 		if (sceneStarfield != nullptr)
-		{
 			sceneStarfield->Keyboard(key, x, y);
-		}
-		if (sceneCollision != nullptr)
-		{
+		else if (sceneCollision != nullptr)
 			sceneCollision->Keyboard(key, x, y);
-		}
-		if (sceneGame != nullptr)
-		{
+		else if (sceneGame != nullptr)
 			sceneGame->Keyboard(key, x, y);
-		}
-		if (sceneOBJ != nullptr)
-		{
+		else if (sceneOBJ != nullptr)
 			sceneOBJ->Keyboard(key, x, y);
-		}
 	}
 
 	void KeyboardSpecial(int key, int x, int y)
 	{	
 		if (sceneStarfield != nullptr)
-		{
 			sceneStarfield->KeyboardSpecial(key, x, y);
-		}
-		if (sceneCollision != nullptr)
-		{
+		else if (sceneCollision != nullptr)
 			sceneCollision->KeyboardSpecial(key, x, y);
-		}
-		if (sceneGame != nullptr)
-		{
+		else if (sceneGame != nullptr)
 			sceneGame->KeyboardSpecial(key, x, y);
-		}
-		if (sceneOBJ != nullptr)
-		{
+		else if (sceneOBJ != nullptr)
 			sceneOBJ->KeyboardSpecial(key, x, y);
-		}
 	}
 }

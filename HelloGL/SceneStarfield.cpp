@@ -39,6 +39,12 @@ SceneStarfield::~SceneStarfield(void)
 	delete _lightData;
 	_lightData = NULL;
 
+	delete texturePenguins;
+	texturePenguins = NULL;
+
+	delete textureStars;
+	textureStars = NULL;
+
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		delete objects[i];
@@ -120,24 +126,27 @@ void SceneStarfield::Display()
 		objects[i]->Draw();
 	}
 
-	//Vector3 v = { -1.8f, 1.7f, -1.0f };
-	Vector3 v = { camera->center.x - 0.85f, camera->center.y + 0.85f, camera->eye.z - 1.0f };
-	Color c = { 0.0f, 1.0f, 0.0f };
-	DrawString("Starfield Scene", &v, &c);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+		Vector3 v = { -1.8f, 1.7f, -1.0f };
+		Color c = { 1.0f, 1.0f, 1.0f };
+		DrawString("Starfield Scene", &v, &c);
+	glEnable(GL_LIGHTING);
 
-	Vector3 cPosition = { 0.5f, 1.7f, -1.0f };
+	Vector3 vPosition = { 0.5f, 1.7f, -1.0f };
 	if (colorIsRed)
-		DrawString("Colour changed to red.", &cPosition, &c);
+		DrawString("Colour changed to red.", &vPosition, &c);
 	else if (colorIsGreen)
-		DrawString("Colour changed to green.", &cPosition, &c);
+		DrawString("Colour changed to green.", &vPosition, &c);
 	else if (colorIsBlue)
-		DrawString("Colour changed to blue.", &cPosition, &c);
+		DrawString("Colour changed to blue.", &vPosition, &c);
 	else if (colorIsCyan)
-		DrawString("Colour changed to cyan.", &cPosition, &c);
+		DrawString("Colour changed to cyan.", &vPosition, &c);
 	else if (colorIsMagenta)
-		DrawString("Colour changed to magenta.", &cPosition, &c);
+		DrawString("Colour changed to magenta.", &vPosition, &c);
 	else if (colorIsYellow)
-		DrawString("Colour changed to yellow.", &cPosition, &c);
+		DrawString("Colour changed to yellow.", &vPosition, &c);
+	glEnable(GL_TEXTURE_2D);
 
 	glFlush();
 	glutSwapBuffers();
@@ -237,9 +246,27 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 
 		// Change Texture
 		if (key == 's')
+		{
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
+
 			objects[i] = new Cube(cubeMesh, textureStars, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+		}
 		else if (key == 'p')
+		{
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
+
 			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+		}
 		
 		// Change Colour - RBG W CMY
 		switch (key)
@@ -355,6 +382,7 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 void SceneStarfield::DrawString(const char* text, Vector3* position, Color* color)
 {
 	glPushMatrix();
+		glColor3f(color->r, color->g, color->b);
 		glTranslatef(position->x, position->y, position->z);
 		glRasterPos2f(0.0f, 0.0f);
 		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);

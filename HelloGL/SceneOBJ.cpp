@@ -92,6 +92,8 @@ void SceneOBJ::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glDisable(GL_TEXTURE_2D);
+
 	glPushMatrix();
 		if (tankLoaded)
 		{
@@ -119,9 +121,12 @@ void SceneOBJ::Display()
 		}
 	glPopMatrix();
 
-	Vector3 v = { -1.8f, 1.7f, -1.0f };
-	Color c = { 0.0f, 1.0f, 0.0f };
-	DrawString("OBJ Loader", &v, &c);
+	glDisable(GL_LIGHTING);
+		Vector3 v = { -1.8f, 1.7f, -1.0f };
+		Color c = { 1.0f, 1.0f, 1.0f };
+		DrawString("OBJ Loader", &v, &c);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 
 	glFlush();
 	glutSwapBuffers();
@@ -207,6 +212,7 @@ void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 void SceneOBJ::DrawString(const char* text, Vector3* position, Color* color)
 {
 	glPushMatrix();
+		glColor3f(color->r, color->g, color->b);
 		glTranslatef(position->x, position->y, position->z);
 		glRasterPos2f(0.0f, 0.0f);
 		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);

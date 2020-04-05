@@ -25,6 +25,12 @@ SceneGame::~SceneGame(void)
 	delete _lightData;
 	_lightData = NULL;
 
+	delete texturePenguins;
+	texturePenguins = NULL;
+
+	delete textureStars;
+	textureStars = NULL;
+
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		delete objects[i];
@@ -103,9 +109,13 @@ void SceneGame::Display()
 		objects[i]->Draw();
 	}
 
-	Vector3 v = { -1.8f, 1.7f, -1.0f };
-	Color c = { 0.0f, 1.0f, 0.0f };
-	DrawString("OpenGL Game", &v, &c);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+		Vector3 v = { -1.8f, 1.7f, -1.0f };
+		Color c = { 1.0f, 1.0f, 1.0f };
+		DrawString("OpenGL Game", &v, &c);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 
 	glFlush();
 	glutSwapBuffers();
@@ -215,6 +225,7 @@ void SceneGame::KeyboardSpecial(int key, int x, int y)
 void SceneGame::DrawString(const char* text, Vector3* position, Color* color)
 {
 	glPushMatrix();
+		glColor3f(color->r, color->g, color->b);
 		glTranslatef(position->x, position->y, position->z);
 		glRasterPos2f(0.0f, 0.0f);
 		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);	
