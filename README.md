@@ -16,7 +16,7 @@ OpenGL project as part of 2nd semester FOGGS module.
 
 ### Complex Features
 - [x] Implement a scene manager system.
-- [ ] Implement a user interface.
+- [x] Implement a user interface.
 - [ ] Add a variety of audio.
 
 ---

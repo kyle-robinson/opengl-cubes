@@ -10,7 +10,7 @@
 #include "SceneManager.h"
 
 #define OBJECTCOUNT		500
-#define MOVEMENT_SPEED	0.1f
+#define MOVEMENT_SPEED	5.0f
 
 class SceneStarfield : Scene
 {
@@ -42,6 +42,7 @@ private:
 	Vector4 * _lightPosition;
 	Lighting* _lightData;
 
+	bool paused;
 	bool colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow;
 	bool zReverse, zMoving, cRotating;
 };

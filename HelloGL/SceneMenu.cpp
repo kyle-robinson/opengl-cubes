@@ -138,12 +138,12 @@ void SceneMenu::Display()
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 
-	Vector3 vMenu = { -0.3f, 1.75f, -1.0f };
-	Vector3 vStarfield = { -1.7f, 0.3f, -1.0f };
-	Vector3 vCollision = { 0.3f, 0.3f, -1.0f };
-	Vector3 vGame = { -1.64f, -1.2f, -1.0f };
-	Vector3 vLoadOBJ = { 0.25f, -1.2f, -1.0f };
-	Vector3 vExit = { -0.5f, -1.75f, -1.0f };
+	Vector3 vMenu = { -0.2f, 1.75f, -1.0f };
+	Vector3 vStarfield = { -1.58f, 0.3f, -1.0f };
+	Vector3 vCollision = { 0.42f, 0.3f, -1.0f };
+	Vector3 vGame = { -1.52f, -1.2f, -1.0f };
+	Vector3 vLoadOBJ = { 0.35f, -1.2f, -1.0f };
+	Vector3 vExit = { -0.4f, -1.75f, -1.0f };
 
 	Color cRed = { 1.0f, 0.2f, 0.2f };
 	Color cYellow = { 1.0f, 1.0f, 0.0f };
@@ -198,6 +198,6 @@ void SceneMenu::DrawString(const char* text, Vector3* position, Color* color)
 		glColor3f(color->r, color->g, color->b);
 		glTranslatef(position->x, position->y, position->z);
 		glRasterPos2f(0.0, 0.0);
-		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
+		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)text);
 	glPopMatrix();
 }

@@ -1,8 +1,11 @@
 #pragma once
 
+#include <Windows.h>
+#include <gl/GLU.h>
+#include "GL/freeglut.h"
+
 #include "GLUTCallbacks.h"
 #include "Scene.h"
-#include "SceneObject.h"
 #include "SceneManager.h"
 #include "ModelOBJ.h"
 
@@ -25,7 +28,7 @@ public:
 
 private:
 	Camera* camera;
-	
+
 	ModelOBJ tankObj, cubeObj, skullObj;
 	float g_rotation, xPosition, yPosition, zPosition;
 	bool tankLoaded, cubeLoaded, skullLoaded;
