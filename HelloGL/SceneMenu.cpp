@@ -87,16 +87,23 @@ void SceneMenu::InitObjects()
 	camera->up.z = 0.0f;
 
 	textureStarfield = new Texture2D();
+	textureStarfield->Load((char*)"Textures/starfield.raw", 512, 512);
+	
 	textureCollision = new Texture2D();
+	textureCollision->Load((char*)"Textures/collision.raw", 512, 512);
+	
 	textureGame = new Texture2D();
+	textureGame->Load((char*)"Textures/game.raw", 512, 512);
+	
 	textureLoader = new Texture2D();
+	textureLoader->Load((char*)"Textures/object_loader.raw", 512, 512);
 }
 
 void SceneMenu::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	textureStarfield->Load((char*)"Textures/starfield.raw", 512, 512);
+	glBindTexture(GL_TEXTURE_2D, textureStarfield->GetID());
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.75, 0.25);
 		glTexCoord2f(1.0f, 1.0f); glVertex2f(-0.25, 0.25);
@@ -104,15 +111,15 @@ void SceneMenu::Display()
 		glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.75, 0.75);
 	glEnd();
 
-	textureCollision->Load((char*)"Textures/collision.raw", 512, 512);
+	glBindTexture(GL_TEXTURE_2D, textureCollision->GetID());
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 1.0f); glVertex2f(0.25, 0.25);
 		glTexCoord2f(1.0f, 1.0f); glVertex2f(0.75, 0.25);
 		glTexCoord2f(1.0f, 0.0f); glVertex2f(0.75, 0.75);
 		glTexCoord2f(0.0f, 0.0f); glVertex2f(0.25, 0.75);
 	glEnd();
-	
-	textureGame->Load((char*)"Textures/game.raw", 512, 512);
+
+	glBindTexture(GL_TEXTURE_2D, textureGame->GetID());
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.75, -0.5);
 		glTexCoord2f(1.0f, 1.0f); glVertex2f(-0.25, -0.5);
@@ -120,7 +127,7 @@ void SceneMenu::Display()
 		glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.75, 0.0);
 	glEnd();
 
-	textureLoader->Load((char*)"Textures/object_loader.raw", 512, 512);
+	glBindTexture(GL_TEXTURE_2D, textureLoader->GetID());
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 1.0f); glVertex2f(0.25, -0.5);
 		glTexCoord2f(1.0f, 1.0f); glVertex2f(0.75, -0.5);
