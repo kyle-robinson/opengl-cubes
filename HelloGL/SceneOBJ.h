@@ -27,6 +27,8 @@ public:
 	void DrawString(const char* text, Vector3* position, Color* color);
 
 private:
+	bool paused, audioPlaying;
+	
 	Camera* camera;
 
 	ModelOBJ tankObj, cubeObj, skullObj;

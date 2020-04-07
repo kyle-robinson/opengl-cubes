@@ -40,6 +40,8 @@ void SceneManager::Update()
 
 void SceneManager::ChangeScene(SCENES newScreen)
 {	
+	PlaySound(NULL, NULL, 0);
+	
 	if (mCurrentScene != NULL || mCurrentScene == NULL)
 	{
 		delete mCurrentScene;

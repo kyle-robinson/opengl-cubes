@@ -28,6 +28,8 @@ public:
 	void DrawString(const char* text, Vector3* position, Color* color);
 
 private:
+	bool paused, audioPlaying;
+
 	Mesh* cubeMesh;
 	Texture2D* texturePenguins;
 	Texture2D* textureStars;

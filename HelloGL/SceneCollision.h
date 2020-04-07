@@ -28,6 +28,7 @@ public:
 	void DrawString(const char* text, Vector3* position, Color* color);
 
 private:
+	bool paused, audioPlaying;
 	float rotation;
 
 	Mesh* cubeMesh;

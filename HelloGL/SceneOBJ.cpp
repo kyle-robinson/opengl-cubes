@@ -7,6 +7,9 @@ SceneOBJ::SceneOBJ()
 	InitLighting();
 	InitObjects();
 
+	paused = false;
+	audioPlaying = false;
+
 	xPosition = 0.0f;
 	yPosition = -1.0f;
 	zPosition = -10.0f;
@@ -92,41 +95,101 @@ void SceneOBJ::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glDisable(GL_TEXTURE_2D);
+	if (paused)
+	{
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_LIGHTING);
 
-	glPushMatrix();
-		if (tankLoaded)
-		{
-			glTranslatef(xPosition, yPosition, zPosition);
-			glRotatef(g_rotation, 0, 1, 0);
-			glRotatef(90, 0, 1, 0);
-			g_rotation++;
-			tankObj.Draw();
-		}
-		else if (cubeLoaded)
-		{
-			glTranslatef(xPosition, yPosition, zPosition);
-			glRotatef(g_rotation, 0, 1, 0);
-			glRotatef(90, 0, 1, 0);
-			g_rotation++;
-			cubeObj.Draw();
-		}
-		else if (skullLoaded)
-		{
-			glTranslatef(xPosition, yPosition, zPosition);
-			glRotatef(g_rotation, 0, 1, 0);
-			glRotatef(90, 0, 1, 0);
-			g_rotation++;
-			skullObj.Draw();
-		}
-	glPopMatrix();
+		Vector3 vTitle = { -0.6f, 1.75f, -1.0f };
 
-	glDisable(GL_LIGHTING);
-		Vector3 v = { -1.8f, 1.7f, -1.0f };
-		Color c = { 1.0f, 1.0f, 1.0f };
-		DrawString("OBJ Loader", &v, &c);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
+		Vector3 vMovement = { -1.7f, 1.25f, -1.0f };
+		Vector3 vMovementUp = { -1.7f, 1.05f, -1.0f };
+		Vector3 vMovementLeft = { -1.7f, 0.85f, -1.0f };
+		Vector3 vMovementDown = { -1.7f, 0.65f, -1.0f };
+		Vector3 vMovementRight = { -1.7f, 0.45f, -1.0f };
+		Vector3 vMovementBack = { -1.7f, 0.25f, -1.0f };
+		Vector3 vMovementForward = { -1.7f, 0.05f, -1.0f };
+
+		Vector3 vObject = { 0.25f, 1.25f, -1.0f };
+		Vector3 vObjectTank = { 0.25f, 1.05f, -1.0f };
+		Vector3 vObjectSkull = { 0.25f, 0.85f, -1.0f };
+		Vector3 vObjectCube = { 0.25f, 0.65f, -1.0f };
+
+		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+
+		Color cWhite = { 1.0f, 1.0f, 1.0f };
+		Color cRed = { 1.0f, 0.2f, 0.2f };
+		Color cGreen = { 0.0f, 1.0f, 0.0f };
+		Color cBlue = { 0.2f, 0.2f, 1.0f };
+		Color cCyan = { 0.0f, 1.0f, 1.0f };
+		Color cMagenta = { 1.0f, 0.0f, 1.0f };
+		Color cYellow = { 1.0f, 1.0f, 0.0f };
+		Color cOrange = { 1.0f, 0.7f, 0.0f };
+
+		DrawString("OBJ Loader Controls", &vTitle, &cRed);
+
+		DrawString("Object Movement", &vMovement, &cYellow);
+		DrawString("'w' - Move object up", &vMovementUp, &cWhite);
+		DrawString("'a' - Move object left", &vMovementLeft, &cWhite);
+		DrawString("'s' - Move object down", &vMovementDown, &cWhite);
+		DrawString("'d' - Move object right", &vMovementRight, &cWhite);
+		DrawString("'up' - Move object backward", &vMovementBack, &cWhite);
+		DrawString("'down' - Move object forward", &vMovementForward, &cWhite);
+
+		DrawString("Change OBJ", &vObject, &cOrange);
+		DrawString("'t' - Change to tank", &vObjectTank, &cWhite);
+		DrawString("'h' - Change to skull", &vObjectSkull, &cWhite);
+		DrawString("'c' - Change to cube", &vObjectCube, &cWhite);
+
+		DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
+
+		glEnable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_2D);
+
+		glPushMatrix();
+			if (tankLoaded)
+			{
+				glTranslatef(xPosition, yPosition, zPosition);
+				glRotatef(g_rotation, 0, 1, 0);
+				glRotatef(90, 0, 1, 0);
+				g_rotation++;
+				tankObj.Draw();
+			}
+			else if (cubeLoaded)
+			{
+				glTranslatef(xPosition, yPosition, zPosition);
+				glRotatef(g_rotation, 0, 1, 0);
+				glRotatef(90, 0, 1, 0);
+				g_rotation++;
+				cubeObj.Draw();
+			}
+			else if (skullLoaded)
+			{
+				glTranslatef(xPosition, yPosition, zPosition);
+				glRotatef(g_rotation, 0, 1, 0);
+				glRotatef(90, 0, 1, 0);
+				g_rotation++;
+				skullObj.Draw();
+			}
+		glPopMatrix();
+
+		glDisable(GL_LIGHTING);
+
+			Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
+			Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+
+			Color cWhite = { 1.0f, 1.0f, 1.0f };
+
+			DrawString("OBJ Loader", &vTitle, &cWhite);
+			DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
+
+		glEnable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+	}
 
 	glFlush();
 	glutSwapBuffers();
@@ -149,6 +212,23 @@ void SceneOBJ::Update()
 		camera->up.y,
 		camera->up.z
 	);
+
+	if (paused)
+	{
+		if (!audioPlaying)
+		{
+			audioPlaying = true;
+			PlaySound("Audio/mario_elevator.wav", GetModuleHandle(NULL), SND_LOOP | SND_ASYNC);
+		}
+	}
+	else
+	{
+		if (audioPlaying)
+		{
+			audioPlaying = false;
+			PlaySound(NULL, NULL, 0);
+		}
+	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->Diffuse.x));
@@ -196,8 +276,16 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 		skullLoaded = true;
 
 		xPosition = 0.0f;
-		yPosition = -15.0f;
-		zPosition = -30.0f;
+		yPosition = -10.0f;
+		zPosition = -40.0f;
+	}
+
+	if (key == 9)
+	{
+		if (!paused)
+			paused = true;
+		else
+			paused = false;
 	}
 }
 
@@ -215,6 +303,6 @@ void SceneOBJ::DrawString(const char* text, Vector3* position, Color* color)
 		glColor3f(color->r, color->g, color->b);
 		glTranslatef(position->x, position->y, position->z);
 		glRasterPos2f(0.0f, 0.0f);
-		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
+		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)text);
 	glPopMatrix();
 }

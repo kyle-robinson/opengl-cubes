@@ -29,6 +29,7 @@ public:
 	void DrawString(const char* text, Vector3* position, Color* color);
 
 private:
+	bool paused, audioPlaying;
 	float rotation;
 
 	Mesh* cubeMesh;
@@ -42,7 +43,6 @@ private:
 	Vector4 * _lightPosition;
 	Lighting* _lightData;
 
-	bool paused;
 	bool colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow;
 	bool zReverse, zMoving, cRotating;
 };

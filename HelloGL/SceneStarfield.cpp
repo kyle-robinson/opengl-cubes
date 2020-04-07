@@ -13,6 +13,7 @@ SceneStarfield::SceneStarfield() : Scene()
 	InitObjects();
 
 	paused = false;
+	audioPlaying = false;
 		
 	colorIsRed = false;
 	colorIsGreen = false;
@@ -128,7 +129,7 @@ void SceneStarfield::Display()
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
 
-		Vector3 vTitle = { -0.425f, 1.75f, -1.0f };
+		Vector3 vTitle = { -0.6f, 1.75f, -1.0f };
 
 		Vector3 vCamera = { -1.7f, 1.25f, -1.0f };
 		Vector3 vCameraReset = { -1.7f, 1.05f, -1.0f };
@@ -169,7 +170,7 @@ void SceneStarfield::Display()
 		Color cYellow = { 1.0f, 1.0f, 0.0f };
 		Color cOrange = { 1.0f, 0.7f, 0.0f };
 
-		DrawString("Scene Controls", &vTitle, &cRed);
+		DrawString("Starfield Scene Controls", &vTitle, &cRed);
 		
 		DrawString("Camera", &vCamera, &cYellow);
 		DrawString("'i' - Reset camera position", &vCameraReset, &cWhite);
@@ -213,9 +214,15 @@ void SceneStarfield::Display()
 
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
+
 		Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
+		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+
 		Color cWhite = { 1.0f, 1.0f, 1.0f };
+
 		DrawString("Starfield Scene", &vTitle, &cWhite);
+		DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
+
 		glEnable(GL_LIGHTING);
 
 		Vector3 vPosition = { 0.5f, 1.7f, -1.0f };
@@ -231,6 +238,7 @@ void SceneStarfield::Display()
 			DrawString("Colour changed to magenta.", &vPosition, &cWhite);
 		else if (colorIsYellow)
 			DrawString("Colour changed to yellow.", &vPosition, &cWhite);
+
 		glEnable(GL_TEXTURE_2D);
 	}
 
@@ -258,6 +266,12 @@ void SceneStarfield::Update()
 
 	if (!paused)
 	{
+		if (audioPlaying)
+		{
+			audioPlaying = false;
+			PlaySound(NULL, NULL, 0);
+		}
+		
 		for (int i = 0; i < OBJECTCOUNT; i++)
 		{
 			objects[i]->Update();
@@ -279,6 +293,14 @@ void SceneStarfield::Update()
 				objects[i]->_position.z = -100.0f;
 			if (objects[i]->_position.z < -100.0f)
 				objects[i]->_position.z = 10.0f;
+		}
+	}
+	else
+	{
+		if (!audioPlaying)
+		{
+			audioPlaying = true;
+			PlaySound("Audio/mario_elevator.wav", GetModuleHandle(NULL), SND_LOOP | SND_ASYNC);
 		}
 	}
 

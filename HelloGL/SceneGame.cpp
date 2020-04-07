@@ -9,6 +9,9 @@ SceneGame::SceneGame() : Scene()
 	InitLighting();
 	InitObjects();
 
+	paused = false;
+	audioPlaying = false;
+
 	std::cout << "Game scene loaded." << std::endl;
 
 	glutMainLoop();
@@ -103,19 +106,83 @@ void SceneGame::InitObjects()
 void SceneGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	for (int i = 0; i < OBJECTCOUNT; i++)
+	
+	if (paused)
 	{
-		objects[i]->Draw();
-	}
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_LIGHTING);
 
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-		Vector3 v = { -1.8f, 1.7f, -1.0f };
-		Color c = { 1.0f, 1.0f, 1.0f };
-		DrawString("OpenGL Game", &v, &c);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
+		Vector3 vTitle = { -0.6f, 1.75f, -1.0f };
+
+		Vector3 vPenguin = { -1.7f, 1.25f, -1.0f };
+		Vector3 vPenguinW = { -1.7f, 1.05f, -1.0f };
+		Vector3 vPenguinA = { -1.7f, 0.85f, -1.0f };
+		Vector3 vPenguinS = { -1.7f, 0.65f, -1.0f };
+		Vector3 vPenguinD = { -1.7f, 0.45f, -1.0f };
+
+		Vector3 vColour = { 0.25f, 1.25f, -1.0f };
+		Vector3 vColourRed = { 0.25f, 1.05f, -1.0f };
+		Vector3 vColourGreen = { 0.25f, 0.85f, -1.0f };
+		Vector3 vColourBlue = { 0.25f, 0.65f, -1.0f };
+		Vector3 vColourCyan = { 0.25f, 0.45f, -1.0f };
+		Vector3 vColourMagenta = { 0.25f, 0.25f, -1.0f };
+		Vector3 vColourYellow = { 0.25f, 0.05f, -1.0f };
+		Vector3 vColourReset = { 0.25f, -0.15f, -1.0f };
+
+		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+
+		Color cWhite = { 1.0f, 1.0f, 1.0f };
+		Color cRed = { 1.0f, 0.2f, 0.2f };
+		Color cGreen = { 0.0f, 1.0f, 0.0f };
+		Color cBlue = { 0.2f, 0.2f, 1.0f };
+		Color cCyan = { 0.0f, 1.0f, 1.0f };
+		Color cMagenta = { 1.0f, 0.0f, 1.0f };
+		Color cYellow = { 1.0f, 1.0f, 0.0f };
+		Color cOrange = { 1.0f, 0.7f, 0.0f };
+
+		DrawString("Game Scene Controls", &vTitle, &cRed);
+
+		DrawString("Cube Movement", &vPenguin, &cYellow);
+		DrawString("'w' - Move cube up", &vPenguinW, &cWhite);
+		DrawString("'a' - Move cube left", &vPenguinA, &cWhite);
+		DrawString("'s' - Move cube down", &vPenguinS, &cWhite);
+		DrawString("'d' - Move cube right", &vPenguinD, &cWhite);
+
+		DrawString("Cube Colour", &vColour, &cOrange);
+		DrawString("'r' - Change to red", &vColourRed, &cWhite);
+		DrawString("'g' - Change to green", &vColourGreen, &cWhite);
+		DrawString("'b' - Change to blue", &vColourBlue, &cWhite);
+		DrawString("'c' - Change to cyan", &vColourCyan, &cWhite);
+		DrawString("'m' - Change to magenta", &vColourMagenta, &cWhite);
+		DrawString("'y' - Change to yellow", &vColourYellow, &cWhite);
+		DrawString("'n' - Reset colours", &vColourReset, &cWhite);
+
+		DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
+
+		glEnable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+	}
+	else
+	{
+		for (int i = 0; i < OBJECTCOUNT; i++)
+		{
+			objects[i]->Draw();
+		}
+
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_LIGHTING);
+
+			Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
+			Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+			
+			Color cWhite = { 1.0f, 1.0f, 1.0f };
+
+			DrawString("OpenGL Game", &vTitle, &cWhite);
+			DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
+
+		glEnable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+	}
 
 	glFlush();
 	glutSwapBuffers();
@@ -139,19 +206,36 @@ void SceneGame::Update()
 		camera->up.z
 	);
 
-	for (int i = 0; i < OBJECTCOUNT; i++)
+	if (!paused)
 	{
-		objects[i]->Update();
+		if (audioPlaying)
+		{
+			audioPlaying = false;
+			PlaySound(NULL, NULL, 0);
+		}
 
-		if (objects[i]->_position.x > 4.0f)
-			objects[i]->_position.x -= 0.1f;
-		if (objects[i]->_position.x < -4.0f)
-			objects[i]->_position.x += 0.1f;
+		for (int i = 0; i < OBJECTCOUNT; i++)
+		{
+			objects[i]->Update();
 
-		if (objects[i]->_position.y > 4.0f)
-			objects[i]->_position.y -= 0.1f;
-		if (objects[i]->_position.y < -4.0f)
-			objects[i]->_position.y += 0.1f;
+			if (objects[i]->_position.x > 4.0f)
+				objects[i]->_position.x -= 0.1f;
+			if (objects[i]->_position.x < -4.0f)
+				objects[i]->_position.x += 0.1f;
+
+			if (objects[i]->_position.y > 4.0f)
+				objects[i]->_position.y -= 0.1f;
+			if (objects[i]->_position.y < -4.0f)
+				objects[i]->_position.y += 0.1f;
+		}
+	}
+	else
+	{
+		if (!audioPlaying)
+		{
+			audioPlaying = true;
+			PlaySound("Audio/mario_elevator.wav", GetModuleHandle(NULL), SND_LOOP | SND_ASYNC);
+		}
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
@@ -215,6 +299,14 @@ void SceneGame::Keyboard(unsigned char key, int x, int y)
 			break;
 		}
 	}
+
+	if (key == 9)
+	{
+		if (!paused)
+			paused = true;
+		else
+			paused = false;
+	}
 }
 
 void SceneGame::KeyboardSpecial(int key, int x, int y)
@@ -228,6 +320,6 @@ void SceneGame::DrawString(const char* text, Vector3* position, Color* color)
 		glColor3f(color->r, color->g, color->b);
 		glTranslatef(position->x, position->y, position->z);
 		glRasterPos2f(0.0f, 0.0f);
-		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);	
+		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)text);	
 	glPopMatrix();
 }
