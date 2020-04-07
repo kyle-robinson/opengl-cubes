@@ -9,10 +9,11 @@ SceneOBJ::SceneOBJ()
 
 	paused = false;
 	audioPlaying = false;
+	objectAudio = false;
 
 	xPosition = 0.0f;
 	yPosition = -1.0f;
-	zPosition = -10.0f;
+	zPosition = -5.0f;
 
 	tankLoaded = true;
 	cubeLoaded = false;
@@ -178,6 +179,7 @@ void SceneOBJ::Display()
 		glPopMatrix();
 
 		glDisable(GL_LIGHTING);
+		glDisable(GL_DEPTH_TEST);
 
 			Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
 			Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
@@ -187,6 +189,7 @@ void SceneOBJ::Display()
 			DrawString("OBJ Loader", &vTitle, &cWhite);
 			DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
 
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_TEXTURE_2D);
 	}
@@ -228,6 +231,12 @@ void SceneOBJ::Update()
 			audioPlaying = false;
 			PlaySound(NULL, NULL, 0);
 		}
+
+		if (objectAudio)
+		{
+			objectAudio = false;
+			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
+		}
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
@@ -255,9 +264,11 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 		cubeLoaded = false;
 		skullLoaded = false;
 
+		objectAudio = true;
+
 		xPosition = 0.0f;
 		yPosition = -1.0f;
-		zPosition = -10.0f;
+		zPosition = -5.0f;
 	}
 	if (key == 'c')
 	{
@@ -265,9 +276,11 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 		cubeLoaded = true;
 		skullLoaded = false;
 
+		objectAudio = true;
+
 		xPosition = 0.0f;
 		yPosition = -0.25f;
-		zPosition = -1.0f;
+		zPosition = -0.5f;
 	}
 	if (key == 'h')
 	{
@@ -275,9 +288,11 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 		cubeLoaded = false;
 		skullLoaded = true;
 
+		objectAudio = true;
+
 		xPosition = 0.0f;
 		yPosition = -10.0f;
-		zPosition = -40.0f;
+		zPosition = -30.0f;
 	}
 
 	if (key == 9)

@@ -14,6 +14,8 @@ SceneStarfield::SceneStarfield() : Scene()
 
 	paused = false;
 	audioPlaying = false;
+	colorAudio = false;
+	textureAudio = false;
 		
 	colorIsRed = false;
 	colorIsGreen = false;
@@ -174,10 +176,10 @@ void SceneStarfield::Display()
 		
 		DrawString("Camera", &vCamera, &cYellow);
 		DrawString("'i' - Reset camera position", &vCameraReset, &cWhite);
-		DrawString("'up' - Tile camera up", &vCameraUp, &cWhite);
-		DrawString("'down' - Tile camera down", &vCameraDown, &cWhite);
-		DrawString("'left' - Tile camera left", &vCameraLeft, &cWhite);
-		DrawString("'right' - Tile camera right", &vCameraRight, &cWhite);
+		DrawString("'up' - Tilt camera up", &vCameraUp, &cWhite);
+		DrawString("'down' - Tilt camera down", &vCameraDown, &cWhite);
+		DrawString("'left' - Tilt camera left", &vCameraLeft, &cWhite);
+		DrawString("'right' - Tilt camera right", &vCameraRight, &cWhite);
 		
 		DrawString("Movement & Rotation", &vMR, &cCyan);
 		DrawString("'a' - Rotate cubes backwards", &vMRBackwards, &cWhite);
@@ -214,6 +216,7 @@ void SceneStarfield::Display()
 
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
+		glDisable(GL_DEPTH_TEST);
 
 		Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
 		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
@@ -223,6 +226,7 @@ void SceneStarfield::Display()
 		DrawString("Starfield Scene", &vTitle, &cWhite);
 		DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
 
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_LIGHTING);
 
 		Vector3 vPosition = { 0.5f, 1.7f, -1.0f };
@@ -270,6 +274,18 @@ void SceneStarfield::Update()
 		{
 			audioPlaying = false;
 			PlaySound(NULL, NULL, 0);
+		}
+
+		if (colorAudio)
+		{
+			colorAudio = false;
+			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
+		}
+
+		if (textureAudio)
+		{
+			textureAudio = false;
+			PlaySound("Audio/pipe.wav", GetModuleHandle(NULL), SND_ASYNC);
 		}
 		
 		for (int i = 0; i < OBJECTCOUNT; i++)
@@ -369,6 +385,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			colorIsMagenta = false;
 			colorIsYellow = false;
 
+			textureAudio = true;
+
 			objects[i] = new Cube(cubeMesh, textureStars, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
 		}
 		else if (key == 'p')
@@ -380,6 +398,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			colorIsMagenta = false;
 			colorIsYellow = false;
 
+			textureAudio = true;
+
 			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
 		}
 
@@ -389,6 +409,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 0.0f;
+
+			colorAudio = true;
 
 			colorIsRed = true;
 			colorIsGreen = false;
@@ -401,6 +423,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+			
+			colorAudio = true;
 
 			colorIsRed = false;
 			colorIsGreen = true;
@@ -414,6 +438,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
 
+			colorAudio = true;
+
 			colorIsRed = false;
 			colorIsGreen = false;
 			colorIsBlue = true;
@@ -425,6 +451,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
+
+			colorAudio = true;
 
 			colorIsRed = false;
 			colorIsGreen = false;
@@ -438,6 +466,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
 
+			colorAudio = true;
+
 			colorIsRed = false;
 			colorIsGreen = false;
 			colorIsBlue = false;
@@ -450,6 +480,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
 
+			colorAudio = true;
+
 			colorIsRed = false;
 			colorIsGreen = false;
 			colorIsBlue = false;
@@ -461,6 +493,8 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+
+			colorAudio = true;
 
 			colorIsRed = false;
 			colorIsGreen = false;

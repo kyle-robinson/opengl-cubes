@@ -40,7 +40,7 @@ void SceneManager::Update()
 
 void SceneManager::ChangeScene(SCENES newScreen)
 {	
-	PlaySound(NULL, NULL, 0);
+	PlaySound("Audio/game_sound.wav", GetModuleHandle(NULL), SND_ASYNC);
 	
 	if (mCurrentScene != NULL || mCurrentScene == NULL)
 	{

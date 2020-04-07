@@ -29,7 +29,7 @@ public:
 	void DrawString(const char* text, Vector3* position, Color* color);
 
 private:
-	bool paused, audioPlaying;
+	bool paused, audioPlaying, colorAudio, textureAudio;
 	float rotation;
 
 	Mesh* cubeMesh;
