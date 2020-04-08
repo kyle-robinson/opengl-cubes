@@ -20,6 +20,7 @@ public:
 	Vector3 _position;
 	
 	double red, green, blue;
+	float _radius;
 
 protected:
 	Mesh* _mesh;

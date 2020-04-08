@@ -15,6 +15,10 @@ SceneCollision::SceneCollision() : Scene()
 	paused = false;
 	audioPlaying = false;
 
+	cubeCollision = false;
+	cubeAudio = false;
+	colorAudio = false;
+
 	std::cout << "Collision scene loaded." << std::endl;
 
 	glutMainLoop();
@@ -185,8 +189,42 @@ void SceneCollision::Display()
 			objects[i]->Draw();
 		}
 
+		float distance = CalculateDistanceSquared(objects[0], objects[1]);
+		
+		bool distanceSquared = true;
+		float radiusDistance;
+
+		if (distanceSquared)
+			radiusDistance = pow(objects[0]->_radius + objects[1]->_radius, 2);
+		else
+			radiusDistance = objects[0]->_radius + objects[1]->_radius;
+
+		if (distance <= radiusDistance)
+		{
+			cubeCollision = true;
+			cubeAudio = true;
+
+			if (objects[0]->_position.x < objects[1]->_position.x)
+			{
+				objects[0]->_position.x -= 0.05f;
+				objects[1]->_position.x += 0.05f;
+			}
+			else
+			{
+				objects[0]->_position.x += 0.05f;
+				objects[1]->_position.x -= 0.05f;
+			}
+		}
+
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
+
+			if (cubeCollision)
+			{
+				Vector3 vPosition = { 0.6f, 1.7f, -1.0f };
+				Color cWhite = { 1.0f, 1.0f, 1.0f };
+				DrawString("Cube collision occured.", &vPosition, &cWhite);
+			}
 
 			Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
 			Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
@@ -230,10 +268,22 @@ void SceneCollision::Update()
 			PlaySound(NULL, NULL, 0);
 		}
 
+		if (cubeAudio)
+		{
+			cubeAudio = false;
+			PlaySound("Audio/menu_click.wav", GetModuleHandle(NULL), SND_ASYNC);
+		}
+
+		if (colorAudio)
+		{
+			colorAudio = false;
+			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
+		}
+
 		for (int i = 0; i < OBJECTCOUNT; i++)
 		{
 			objects[i]->Update();
-		
+
 			if (objects[i]->_position.x > 4.0f)
 				objects[i]->_position.x -= 0.1f;
 			if(objects[i]->_position.x < -4.0f)
@@ -282,36 +332,43 @@ void SceneCollision::Keyboard(unsigned char key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 0.0f;
+			colorAudio = true;
 			break;
 		case 'g':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+			colorAudio = true;
 			break;
 		case 'b':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
+			colorAudio = true;
 			break;
 		case 'n':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
+			colorAudio = true;
 			break;
 		case 'c':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
+			colorAudio = true;
 			break;
 		case 'm':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
+			colorAudio = true;
 			break;
 		case 'y':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+			colorAudio = true;
 			break;
 		}
 	}
@@ -346,4 +403,12 @@ void SceneCollision::DrawString(const char* text, Vector3* position, Color* colo
 		glRasterPos2f(0.0f, 0.0f);
 		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)text);
 	glPopMatrix();
+}
+
+float SceneCollision::CalculateDistanceSquared(SceneObject* c1, SceneObject* c2)
+{
+	float distance = ((c1->_position.x - c2->_position.x) * (c1->_position.x - c2->_position.x)) +
+					 ((c1->_position.y - c2->_position.y) * (c1->_position.y - c2->_position.y)) +
+					 ((c1->_position.z - c2->_position.z) * (c1->_position.z - c2->_position.z));
+	return distance;
 }

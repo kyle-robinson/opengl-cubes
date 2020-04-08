@@ -13,6 +13,7 @@ SceneObject::SceneObject(Mesh* mesh, Texture2D* texture)
 	blue = 1.0f;
 
 	_rotation = 0.0f;
+	_radius = 1.0f;
 }
 
 SceneObject::~SceneObject()

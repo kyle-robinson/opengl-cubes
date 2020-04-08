@@ -226,7 +226,6 @@ void SceneStarfield::Display()
 		DrawString("Starfield Scene", &vTitle, &cWhite);
 		DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
 
-		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_LIGHTING);
 
 		Vector3 vPosition = { 0.5f, 1.7f, -1.0f };
@@ -243,6 +242,7 @@ void SceneStarfield::Display()
 		else if (colorIsYellow)
 			DrawString("Colour changed to yellow.", &vPosition, &cWhite);
 
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_TEXTURE_2D);
 	}
 

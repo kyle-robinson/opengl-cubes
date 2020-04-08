@@ -26,9 +26,10 @@ public:
 	void Keyboard(unsigned char key, int x, int y);
 	void KeyboardSpecial(int key, int x, int y);
 	void DrawString(const char* text, Vector3* position, Color* color);
+	float CalculateDistanceSquared(SceneObject* c1, SceneObject* c2);
 
 private:
-	bool paused, audioPlaying;
+	bool paused, audioPlaying, cubeCollision, cubeAudio, colorAudio;
 	float rotation;
 
 	Mesh* cubeMesh;
