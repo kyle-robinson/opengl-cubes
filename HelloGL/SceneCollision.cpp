@@ -19,6 +19,13 @@ SceneCollision::SceneCollision() : Scene()
 	cubeAudio = false;
 	colorAudio = false;
 
+	colorIsRed = false;
+	colorIsGreen = false;
+	colorIsBlue = false;
+	colorIsCyan = false;
+	colorIsMagenta = false;
+	colorIsYellow = false;
+
 	std::cout << "Collision scene loaded." << std::endl;
 
 	glutMainLoop();
@@ -218,6 +225,7 @@ void SceneCollision::Display()
 
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
+		glDisable(GL_DEPTH_TEST);
 
 			if (cubeCollision)
 			{
@@ -235,6 +243,22 @@ void SceneCollision::Display()
 			DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
 
 		glEnable(GL_LIGHTING);
+
+			Vector3 vPosition = { 0.6f, 1.5f, -1.0f };
+			if (colorIsRed)
+				DrawString("Colour changed to red.", &vPosition, &cWhite);
+			else if (colorIsGreen)
+				DrawString("Colour changed to green.", &vPosition, &cWhite);
+			else if (colorIsBlue)
+				DrawString("Colour changed to blue.", &vPosition, &cWhite);
+			else if (colorIsCyan)
+				DrawString("Colour changed to cyan.", &vPosition, &cWhite);
+			else if (colorIsMagenta)
+				DrawString("Colour changed to magenta.", &vPosition, &cWhite);
+			else if (colorIsYellow)
+				DrawString("Colour changed to yellow.", &vPosition, &cWhite);
+
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_TEXTURE_2D);
 	}
 
@@ -267,13 +291,11 @@ void SceneCollision::Update()
 			audioPlaying = false;
 			PlaySound(NULL, NULL, 0);
 		}
-
 		if (cubeAudio)
 		{
 			cubeAudio = false;
 			PlaySound("Audio/menu_click.wav", GetModuleHandle(NULL), SND_ASYNC);
 		}
-
 		if (colorAudio)
 		{
 			colorAudio = false;
@@ -332,43 +354,99 @@ void SceneCollision::Keyboard(unsigned char key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 0.0f;
+			
 			colorAudio = true;
+
+			colorIsRed = true;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'g':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+			
 			colorAudio = true;
+
+			colorIsRed = false;
+			colorIsGreen = true;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'b':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
+			
 			colorAudio = true;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = true;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'n':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
+			
 			colorAudio = true;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'c':
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
+			
 			colorAudio = true;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = true;
+			colorIsMagenta = false;
+			colorIsYellow = false;
 			break;
 		case 'm':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
+			
 			colorAudio = true;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = true;
+			colorIsYellow = false;
 			break;
 		case 'y':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
+			
 			colorAudio = true;
+
+			colorIsRed = false;
+			colorIsGreen = false;
+			colorIsBlue = false;
+			colorIsCyan = false;
+			colorIsMagenta = false;
+			colorIsYellow = true;
 			break;
 		}
 	}

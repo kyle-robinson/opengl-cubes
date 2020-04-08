@@ -41,4 +41,6 @@ private:
 
 	Vector4* _lightPosition;
 	Lighting* _lightData;
+
+	bool colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow;
 };

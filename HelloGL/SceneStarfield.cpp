@@ -128,6 +128,18 @@ void SceneStarfield::Display()
 
 	if (paused)
 	{
+		camera->eye.x = 0.0f;
+		camera->eye.y = 0.0f;
+		camera->eye.z = 1.0f;
+
+		camera->center.x = 0.0f;
+		camera->center.y = 0.0f;
+		camera->center.z = 0.0f;
+
+		camera->up.x = 0.0f;
+		camera->up.y = 1.0f;
+		camera->up.z = 0.0f;
+		
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
 
@@ -214,36 +226,39 @@ void SceneStarfield::Display()
 			objects[i]->Draw();
 		}
 
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_LIGHTING);
-		glDisable(GL_DEPTH_TEST);
+		if (camera->eye.x == 0.0f)
+		{
+			glDisable(GL_TEXTURE_2D);
+			glDisable(GL_LIGHTING);
+			glDisable(GL_DEPTH_TEST);
 
-		Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
-		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+				Vector3 vTitle = { -1.8f, 1.7f, camera->eye.z - 2.0f };
+				Vector3 vReturn = { -0.7f, -1.75f, camera->eye.z - 2.0f };
 
-		Color cWhite = { 1.0f, 1.0f, 1.0f };
+				Color cWhite = { 1.0f, 1.0f, 1.0f };
 
-		DrawString("Starfield Scene", &vTitle, &cWhite);
-		DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
+				DrawString("Starfield Scene", &vTitle, &cWhite);
+				DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
 
-		glEnable(GL_LIGHTING);
+			glEnable(GL_LIGHTING);
 
-		Vector3 vPosition = { 0.5f, 1.7f, -1.0f };
-		if (colorIsRed)
-			DrawString("Colour changed to red.", &vPosition, &cWhite);
-		else if (colorIsGreen)
-			DrawString("Colour changed to green.", &vPosition, &cWhite);
-		else if (colorIsBlue)
-			DrawString("Colour changed to blue.", &vPosition, &cWhite);
-		else if (colorIsCyan)
-			DrawString("Colour changed to cyan.", &vPosition, &cWhite);
-		else if (colorIsMagenta)
-			DrawString("Colour changed to magenta.", &vPosition, &cWhite);
-		else if (colorIsYellow)
-			DrawString("Colour changed to yellow.", &vPosition, &cWhite);
+				Vector3 vPosition = { 0.5f, 1.7f, camera->eye.z - 2.0f };
+				if (colorIsRed)
+					DrawString("Colour changed to red.", &vPosition, &cWhite);
+				else if (colorIsGreen)
+					DrawString("Colour changed to green.", &vPosition, &cWhite);
+				else if (colorIsBlue)
+					DrawString("Colour changed to blue.", &vPosition, &cWhite);
+				else if (colorIsCyan)
+					DrawString("Colour changed to cyan.", &vPosition, &cWhite);
+				else if (colorIsMagenta)
+					DrawString("Colour changed to magenta.", &vPosition, &cWhite);
+				else if (colorIsYellow)
+					DrawString("Colour changed to yellow.", &vPosition, &cWhite);
 
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_TEXTURE_2D);
+			glEnable(GL_DEPTH_TEST);
+			glEnable(GL_TEXTURE_2D);
+		}
 	}
 
 	glFlush();
@@ -275,18 +290,34 @@ void SceneStarfield::Update()
 			audioPlaying = false;
 			PlaySound(NULL, NULL, 0);
 		}
-
 		if (colorAudio)
 		{
 			colorAudio = false;
 			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
 		}
-
 		if (textureAudio)
 		{
 			textureAudio = false;
 			PlaySound("Audio/pipe.wav", GetModuleHandle(NULL), SND_ASYNC);
 		}
+
+		if (camera->eye.z < -75.0f)
+		{
+			camera->eye.z += MOVEMENT_SPEED;
+			camera->center.z += MOVEMENT_SPEED;
+			camera->up.z += MOVEMENT_SPEED;
+		}
+		else if (camera->eye.z > 30.0f)
+		{
+			camera->eye.z -= MOVEMENT_SPEED;
+			camera->center.z -= MOVEMENT_SPEED;
+			camera->up.z -= MOVEMENT_SPEED;
+		}
+
+		if (camera->eye.x > MOVEMENT_SPEED)
+			camera->eye.x -= MOVEMENT_SPEED / 10;
+		else if (camera->eye.x < -MOVEMENT_SPEED)
+			camera->eye.x += MOVEMENT_SPEED / 10;
 		
 		for (int i = 0; i < OBJECTCOUNT; i++)
 		{
@@ -330,7 +361,7 @@ void SceneStarfield::Update()
 
 void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 {	
-	if (key == 'i')
+	if (key == 'i' && !paused)
 	{
 		camera->eye.x = 0.0f;
 		camera->eye.y = 0.0f;
@@ -517,22 +548,25 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 
 void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 {
-	if (key == GLUT_KEY_UP)
+	if (!paused)
 	{
-		camera->eye.z -= MOVEMENT_SPEED;
-		camera->center.z -= MOVEMENT_SPEED;
-		camera->up.z -= MOVEMENT_SPEED;
+		if (key == GLUT_KEY_UP)
+		{
+			camera->eye.z -= MOVEMENT_SPEED;
+			camera->center.z -= MOVEMENT_SPEED;
+			camera->up.z -= MOVEMENT_SPEED;
+		}
+		else if (key == GLUT_KEY_DOWN)
+		{
+			camera->eye.z += MOVEMENT_SPEED;
+			camera->center.z += MOVEMENT_SPEED;
+			camera->up.z += MOVEMENT_SPEED;
+		}
+		else if (key == GLUT_KEY_LEFT && camera->eye.z == 1.0f)
+			camera->eye.x += MOVEMENT_SPEED / 10;
+		else if (key == GLUT_KEY_RIGHT && camera->eye.z == 1.0f)
+			camera->eye.x -= MOVEMENT_SPEED / 10;
 	}
-	else if (key == GLUT_KEY_DOWN)
-	{
-		camera->eye.z += MOVEMENT_SPEED;
-		camera->center.z += MOVEMENT_SPEED;
-		camera->up.z += MOVEMENT_SPEED;
-	}
-	else if (key == GLUT_KEY_LEFT)
-		camera->eye.x += MOVEMENT_SPEED;
-	else if (key == GLUT_KEY_RIGHT)
-		camera->eye.x -= MOVEMENT_SPEED;
 }
 
 void SceneStarfield::DrawString(const char* text, Vector3* position, Color* color)

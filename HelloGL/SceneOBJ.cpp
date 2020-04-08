@@ -231,7 +231,6 @@ void SceneOBJ::Update()
 			audioPlaying = false;
 			PlaySound(NULL, NULL, 0);
 		}
-
 		if (objectAudio)
 		{
 			objectAudio = false;
@@ -250,13 +249,41 @@ void SceneOBJ::Update()
 void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 {
 	if (key == 'w')
-		yPosition += 0.1f;
+	{
+		if (tankLoaded)
+			yPosition += 0.2f;
+		else if (cubeLoaded)
+			yPosition += 0.1f;
+		else if (skullLoaded)
+			yPosition += 2.0f;
+	}
 	if (key == 'a')
-		xPosition -= 0.1f;
+	{
+		if (tankLoaded)
+			xPosition -= 0.2f;
+		else if (cubeLoaded)
+			xPosition -= 0.1f;
+		else if (skullLoaded)
+			xPosition -= 2.0f;
+	}
 	if (key == 's')
-		yPosition -= 0.1f;
+	{
+		if (tankLoaded)
+			yPosition -= 0.2f;
+		else if (cubeLoaded)
+			yPosition -= 0.1f;
+		else if (skullLoaded)
+			yPosition -= 2.0f;
+	}
 	if (key == 'd')
-		xPosition += 0.1f;
+	{
+		if (tankLoaded)
+			xPosition += 0.2f;
+		else if (cubeLoaded)
+			xPosition += 0.1f;
+		else if (skullLoaded)
+			xPosition += 2.0f;
+	}
 
 	if (key == 't')
 	{
@@ -307,9 +334,23 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 {
 	if (key == GLUT_KEY_UP)
-		zPosition -= 0.1f;
+	{
+		if (tankLoaded)
+			zPosition -= 0.2f;
+		else if (cubeLoaded)
+			zPosition -= 0.1f;
+		else if (skullLoaded)
+			zPosition -= 2.0f;
+	}
 	if (key == GLUT_KEY_DOWN)
-		zPosition += 0.1f;
+	{
+		if (tankLoaded)
+			zPosition += 0.2f;
+		else if (cubeLoaded)
+			zPosition += 0.1f;
+		else if (skullLoaded)
+			zPosition += 2.0f;
+	}
 }
 
 void SceneOBJ::DrawString(const char* text, Vector3* position, Color* color)
