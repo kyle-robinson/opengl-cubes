@@ -188,8 +188,8 @@ void SceneStarfield::Display()
 		
 		DrawString("Camera", &vCamera, &cYellow);
 		DrawString("'i' - Reset camera position", &vCameraReset, &cWhite);
-		DrawString("'up' - Tilt camera up", &vCameraUp, &cWhite);
-		DrawString("'down' - Tilt camera down", &vCameraDown, &cWhite);
+		DrawString("'up' - Move camera forward", &vCameraUp, &cWhite);
+		DrawString("'down' - Move camera backwards", &vCameraDown, &cWhite);
 		DrawString("'left' - Tilt camera left", &vCameraLeft, &cWhite);
 		DrawString("'right' - Tilt camera right", &vCameraRight, &cWhite);
 		
