@@ -26,6 +26,18 @@ struct Camera
 	Vector3 up;
 };
 
+// QUADS
+struct Quads
+{
+	int x1, y1, z1,
+		x2, y2, z2,
+		x3, y3, z3,
+		x4, y4, z4;
+	float r, g, b;
+	int state;
+	int total;
+};
+
 // MESH
 struct Vertex
 {

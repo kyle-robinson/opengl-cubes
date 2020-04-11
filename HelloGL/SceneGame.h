@@ -24,18 +24,22 @@ public:
 	void InitObjects();
 
 	void Keyboard(unsigned char key, int x, int y);
-	void KeyboardSpecial(int key, int x, int y);
 	void DrawString(const char* text, Vector3* position, Color* color);
 
+	void DrawUI();
+	void DrawMenu();
+
+	void DrawGrid();
+	void AddQuad();
+	void DrawQuad();
+	void DrawCube();
+
 private:
+	int cubeX, cubeY, cubeZ, cubeN;
 	bool paused, audioPlaying;
 
-	Mesh* cubeMesh;
-	Texture2D* texturePenguins;
-	Texture2D* textureStars;
-
 	Camera* camera;
-	SceneObject* objects[OBJECTCOUNT];
+	Quads Q[100];
 
 	Vector4* _lightPosition;
 	Lighting* _lightData;

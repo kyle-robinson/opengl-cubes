@@ -12,21 +12,11 @@ SceneStarfield::SceneStarfield() : Scene()
 	InitLighting();
 	InitObjects();
 
-	paused = false;
-	audioPlaying = false;
-	colorAudio = false;
-	textureAudio = false;
-		
-	colorIsRed = false;
-	colorIsGreen = false;
-	colorIsBlue = false;
-	colorIsCyan = false;
-	colorIsMagenta = false;
-	colorIsYellow = false;
+	paused = audioPlaying = colorAudio = textureAudio = false;
+	colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 	
 	zReverse = false;
-	zMoving = true;
-	cRotating = true;
+	zMoving = cRotating = true;
 
 	std::cout << "Starfield scene loaded." << std::endl;
 
@@ -63,6 +53,11 @@ void SceneStarfield::InitGL()
 
 	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 	glutDisplayFunc(GLUTCallbacks::Display);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(90, 1, 1, 1000);
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void SceneStarfield::InitLighting()
@@ -127,97 +122,8 @@ void SceneStarfield::Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (paused)
-	{
-		camera->eye.x = 0.0f;
-		camera->eye.y = 0.0f;
-		camera->eye.z = 1.0f;
-
-		camera->center.x = 0.0f;
-		camera->center.y = 0.0f;
-		camera->center.z = 0.0f;
-
-		camera->up.x = 0.0f;
-		camera->up.y = 1.0f;
-		camera->up.z = 0.0f;
-		
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_LIGHTING);
-
-		Vector3 vTitle = { -0.6f, 1.75f, -1.0f };
-
-		Vector3 vCamera = { -1.7f, 1.25f, -1.0f };
-		Vector3 vCameraReset = { -1.7f, 1.05f, -1.0f };
-		Vector3 vCameraUp = { -1.7f, 0.85f, -1.0f };
-		Vector3 vCameraDown = { -1.7f, 0.65f, -1.0f };
-		Vector3 vCameraLeft = { -1.7f, 0.45f, -1.0f };
-		Vector3 vCameraRight = { -1.7f, 0.25f, -1.0f };
-		
-		Vector3 vMR = { -1.7f, -0.1f, -1.0f };
-		Vector3 vMRBackwards = { -1.7f, -0.3f, -1.0f };
-		Vector3 vMRForwards = { -1.7f, -0.5f, -1.0f };
-		Vector3 vMRRotation = { -1.7f, -0.7f, -1.0f };
-
-		Vector3 vMRDirection = { -1.7f, -0.9f, -1.0f };
-		Vector3 vMRMovement = { -1.7f, -1.1f, -1.0f };
-		
-		Vector3 vColour = { 0.25f, 1.25f, -1.0f };
-		Vector3 vColourRed = { 0.25f, 1.05f, -1.0f };
-		Vector3 vColourGreen = { 0.25f, 0.85f, -1.0f };
-		Vector3 vColourBlue = { 0.25f, 0.65f, -1.0f };
-		Vector3 vColourCyan = { 0.25f, 0.45f, -1.0f };
-		Vector3 vColourMagenta = { 0.25f, 0.25f, -1.0f };
-		Vector3 vColourYellow = { 0.25f, 0.05f, -1.0f };
-		Vector3 vColourReset = { 0.25f, -0.15f, -1.0f };
-
-		Vector3 vTexture = { 0.25f, -0.5f, -1.0f };
-		Vector3 vTexturePenguins = { 0.25f, -0.7f, -1.0f };
-		Vector3 vTextureStars = { 0.25f, -0.9f, -1.0f };
-
-		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
-
-		Color cWhite = { 1.0f, 1.0f, 1.0f };
-		Color cRed = { 1.0f, 0.2f, 0.2f };
-		Color cGreen = { 0.0f, 1.0f, 0.0f };
-		Color cBlue = { 0.2f, 0.2f, 1.0f };
-		Color cCyan = { 0.0f, 1.0f, 1.0f };
-		Color cMagenta = { 1.0f, 0.0f, 1.0f };
-		Color cYellow = { 1.0f, 1.0f, 0.0f };
-		Color cOrange = { 1.0f, 0.7f, 0.0f };
-
-		DrawString("Starfield Scene Controls", &vTitle, &cRed);
-		
-		DrawString("Camera", &vCamera, &cYellow);
-		DrawString("'i' - Reset camera position", &vCameraReset, &cWhite);
-		DrawString("'up' - Move camera forward", &vCameraUp, &cWhite);
-		DrawString("'down' - Move camera backwards", &vCameraDown, &cWhite);
-		DrawString("'left' - Tilt camera left", &vCameraLeft, &cWhite);
-		DrawString("'right' - Tilt camera right", &vCameraRight, &cWhite);
-		
-		DrawString("Movement & Rotation", &vMR, &cCyan);
-		DrawString("'a' - Rotate cubes backwards", &vMRBackwards, &cWhite);
-		DrawString("'d' - Rotate cubes forwards", &vMRForwards, &cWhite);
-		DrawString("'e' - Toggle cube rotation", &vMRRotation, &cWhite);
-		
-		DrawString("'z' - Toggle z direction", &vMRDirection, &cWhite);
-		DrawString("'q' - Toggle z movement", &vMRMovement, &cWhite);
-		
-		DrawString("Cube Colour", &vColour, &cOrange);
-		DrawString("'r' - Change to red", &vColourRed, &cWhite);
-		DrawString("'g' - Change to green", &vColourGreen, &cWhite);
-		DrawString("'b' - Change to blue", &vColourBlue, &cWhite);
-		DrawString("'c' - Change to cyan", &vColourCyan, &cWhite);
-		DrawString("'m' - Change to magenta", &vColourMagenta, &cWhite);
-		DrawString("'y' - Change to yellow", &vColourYellow, &cWhite);
-		DrawString("'n' - Reset colours", &vColourReset, &cWhite);
-		
-		DrawString("Cube Texture", &vTexture, &cMagenta);
-		DrawString("'p' - Change to penguin texture", &vTexturePenguins, &cWhite);
-		DrawString("'s' - Change to star texture", &vTextureStars, &cWhite);
-		
-		DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
-
-		glEnable(GL_LIGHTING);
-		glEnable(GL_TEXTURE_2D);
+	{	
+		DrawMenu();
 	}
 	else
 	{
@@ -228,36 +134,7 @@ void SceneStarfield::Display()
 
 		if (camera->eye.x == 0.0f)
 		{
-			glDisable(GL_TEXTURE_2D);
-			glDisable(GL_LIGHTING);
-			glDisable(GL_DEPTH_TEST);
-
-				Vector3 vTitle = { -1.8f, 1.7f, camera->eye.z - 2.0f };
-				Vector3 vReturn = { -0.7f, -1.75f, camera->eye.z - 2.0f };
-
-				Color cWhite = { 1.0f, 1.0f, 1.0f };
-
-				DrawString("Starfield Scene", &vTitle, &cWhite);
-				DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
-
-			glEnable(GL_LIGHTING);
-
-				Vector3 vPosition = { 0.5f, 1.7f, camera->eye.z - 2.0f };
-				if (colorIsRed)
-					DrawString("Colour changed to red.", &vPosition, &cWhite);
-				else if (colorIsGreen)
-					DrawString("Colour changed to green.", &vPosition, &cWhite);
-				else if (colorIsBlue)
-					DrawString("Colour changed to blue.", &vPosition, &cWhite);
-				else if (colorIsCyan)
-					DrawString("Colour changed to cyan.", &vPosition, &cWhite);
-				else if (colorIsMagenta)
-					DrawString("Colour changed to magenta.", &vPosition, &cWhite);
-				else if (colorIsYellow)
-					DrawString("Colour changed to yellow.", &vPosition, &cWhite);
-
-			glEnable(GL_DEPTH_TEST);
-			glEnable(GL_TEXTURE_2D);
+			DrawUI();
 		}
 	}
 
@@ -577,4 +454,120 @@ void SceneStarfield::DrawString(const char* text, Vector3* position, Color* colo
 		glRasterPos2f(0.0f, 0.0f);
 		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)text);
 	glPopMatrix();
+}
+
+void SceneStarfield::DrawUI()
+{
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+
+	Vector3 vTitle = { -1.8f, 1.7f, camera->eye.z - 2.0f };
+	Vector3 vReturn = { -0.7f, -1.75f, camera->eye.z - 2.0f };
+
+	Color cWhite = { 1.0f, 1.0f, 1.0f };
+
+	DrawString("Starfield Scene", &vTitle, &cWhite);
+	DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
+
+	glEnable(GL_LIGHTING);
+
+	Vector3 vPosition = { 0.5f, 1.7f, camera->eye.z - 2.0f };
+	if (colorIsRed)
+		DrawString("Colour changed to red.", &vPosition, &cWhite);
+	else if (colorIsGreen)
+		DrawString("Colour changed to green.", &vPosition, &cWhite);
+	else if (colorIsBlue)
+		DrawString("Colour changed to blue.", &vPosition, &cWhite);
+	else if (colorIsCyan)
+		DrawString("Colour changed to cyan.", &vPosition, &cWhite);
+	else if (colorIsMagenta)
+		DrawString("Colour changed to magenta.", &vPosition, &cWhite);
+	else if (colorIsYellow)
+		DrawString("Colour changed to yellow.", &vPosition, &cWhite);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+}
+
+void SceneStarfield::DrawMenu()
+{
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+
+	Vector3 vTitle = { -0.6f, 1.75f, -1.0f };
+
+	Vector3 vCamera = { -1.7f, 1.25f, -1.0f };
+	Vector3 vCameraReset = { -1.7f, 1.05f, -1.0f };
+	Vector3 vCameraUp = { -1.7f, 0.85f, -1.0f };
+	Vector3 vCameraDown = { -1.7f, 0.65f, -1.0f };
+	Vector3 vCameraLeft = { -1.7f, 0.45f, -1.0f };
+	Vector3 vCameraRight = { -1.7f, 0.25f, -1.0f };
+
+	Vector3 vMR = { -1.7f, -0.1f, -1.0f };
+	Vector3 vMRBackwards = { -1.7f, -0.3f, -1.0f };
+	Vector3 vMRForwards = { -1.7f, -0.5f, -1.0f };
+	Vector3 vMRRotation = { -1.7f, -0.7f, -1.0f };
+
+	Vector3 vMRDirection = { -1.7f, -0.9f, -1.0f };
+	Vector3 vMRMovement = { -1.7f, -1.1f, -1.0f };
+
+	Vector3 vColour = { 0.25f, 1.25f, -1.0f };
+	Vector3 vColourRed = { 0.25f, 1.05f, -1.0f };
+	Vector3 vColourGreen = { 0.25f, 0.85f, -1.0f };
+	Vector3 vColourBlue = { 0.25f, 0.65f, -1.0f };
+	Vector3 vColourCyan = { 0.25f, 0.45f, -1.0f };
+	Vector3 vColourMagenta = { 0.25f, 0.25f, -1.0f };
+	Vector3 vColourYellow = { 0.25f, 0.05f, -1.0f };
+	Vector3 vColourReset = { 0.25f, -0.15f, -1.0f };
+
+	Vector3 vTexture = { 0.25f, -0.5f, -1.0f };
+	Vector3 vTexturePenguins = { 0.25f, -0.7f, -1.0f };
+	Vector3 vTextureStars = { 0.25f, -0.9f, -1.0f };
+
+	Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+
+	Color cWhite = { 1.0f, 1.0f, 1.0f };
+	Color cRed = { 1.0f, 0.2f, 0.2f };
+	Color cGreen = { 0.0f, 1.0f, 0.0f };
+	Color cBlue = { 0.2f, 0.2f, 1.0f };
+	Color cCyan = { 0.0f, 1.0f, 1.0f };
+	Color cMagenta = { 1.0f, 0.0f, 1.0f };
+	Color cYellow = { 1.0f, 1.0f, 0.0f };
+	Color cOrange = { 1.0f, 0.7f, 0.0f };
+
+	DrawString("Starfield Scene Controls", &vTitle, &cRed);
+
+	DrawString("Camera", &vCamera, &cYellow);
+	DrawString("'i' - Reset camera position", &vCameraReset, &cWhite);
+	DrawString("'up' - Move camera forward", &vCameraUp, &cWhite);
+	DrawString("'down' - Move camera backwards", &vCameraDown, &cWhite);
+	DrawString("'left' - Tilt camera left", &vCameraLeft, &cWhite);
+	DrawString("'right' - Tilt camera right", &vCameraRight, &cWhite);
+
+	DrawString("Movement & Rotation", &vMR, &cCyan);
+	DrawString("'a' - Rotate cubes backwards", &vMRBackwards, &cWhite);
+	DrawString("'d' - Rotate cubes forwards", &vMRForwards, &cWhite);
+	DrawString("'e' - Toggle cube rotation", &vMRRotation, &cWhite);
+
+	DrawString("'z' - Toggle z direction", &vMRDirection, &cWhite);
+	DrawString("'q' - Toggle z movement", &vMRMovement, &cWhite);
+
+	DrawString("Cube Colour", &vColour, &cOrange);
+	DrawString("'r' - Change to red", &vColourRed, &cWhite);
+	DrawString("'g' - Change to green", &vColourGreen, &cWhite);
+	DrawString("'b' - Change to blue", &vColourBlue, &cWhite);
+	DrawString("'c' - Change to cyan", &vColourCyan, &cWhite);
+	DrawString("'m' - Change to magenta", &vColourMagenta, &cWhite);
+	DrawString("'y' - Change to yellow", &vColourYellow, &cWhite);
+	DrawString("'n' - Reset colours", &vColourReset, &cWhite);
+
+	DrawString("Cube Texture", &vTexture, &cMagenta);
+	DrawString("'p' - Change to penguin texture", &vTexturePenguins, &cWhite);
+	DrawString("'s' - Change to star texture", &vTextureStars, &cWhite);
+
+	DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 }

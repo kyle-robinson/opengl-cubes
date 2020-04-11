@@ -27,6 +27,9 @@ public:
 	void Keyboard(unsigned char key, int x, int y);
 	void KeyboardSpecial(int key, int x, int y);
 	void DrawString(const char* text, Vector3* position, Color* color);
+	
+	void DrawUI();
+	void DrawMenu();
 
 private:
 	bool paused, audioPlaying, colorAudio, textureAudio;

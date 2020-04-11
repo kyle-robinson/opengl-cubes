@@ -124,8 +124,6 @@ namespace GLUTCallbacks
 			sceneStarfield->KeyboardSpecial(key, x, y);
 		else if (sceneCollision != nullptr)
 			sceneCollision->KeyboardSpecial(key, x, y);
-		else if (sceneGame != nullptr)
-			sceneGame->KeyboardSpecial(key, x, y);
 		else if (sceneOBJ != nullptr)
 			sceneOBJ->KeyboardSpecial(key, x, y);
 	}

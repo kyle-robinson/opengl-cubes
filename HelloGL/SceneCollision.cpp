@@ -61,6 +61,11 @@ void SceneCollision::InitGL()
 
 	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 	glutDisplayFunc(GLUTCallbacks::Display);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(90, 1, 1, 1000);
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void SceneCollision::InitLighting()
