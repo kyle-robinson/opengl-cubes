@@ -90,7 +90,6 @@ void SceneStarfield::Update()
 	SceneAudio();
 	
 	CameraMovement();
-	ResetCamera();
 
 	if (!paused)
 	{
@@ -99,6 +98,10 @@ void SceneStarfield::Update()
 			objects[i]->Update();
 			CubeMovement(i);
 		}
+	}
+	else
+	{
+		ResetCamera();
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
@@ -460,18 +463,15 @@ void SceneStarfield::CameraMovement()
 
 void SceneStarfield::ResetCamera()
 {
-	if (paused)
-	{
-		camera->eye.x = 0.0f;
-		camera->eye.y = 0.0f;
-		camera->eye.z = 1.0f;
+	camera->eye.x = 0.0f;
+	camera->eye.y = 0.0f;
+	camera->eye.z = 1.0f;
 
-		camera->center.x = 0.0f;
-		camera->center.y = 0.0f;
-		camera->center.z = 0.0f;
+	camera->center.x = 0.0f;
+	camera->center.y = 0.0f;
+	camera->center.z = 0.0f;
 
-		camera->up.x = 0.0f;
-		camera->up.y = 1.0f;
-		camera->up.z = 0.0f;
-	}
+	camera->up.x = 0.0f;
+	camera->up.y = 1.0f;
+	camera->up.z = 0.0f;
 }
