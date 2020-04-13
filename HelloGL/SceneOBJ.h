@@ -6,7 +6,6 @@
 
 #include "GLUTCallbacks.h"
 #include "Scene.h"
-#include "SceneManager.h"
 #include "ModelOBJ.h"
 
 class SceneOBJ : Scene
@@ -24,17 +23,18 @@ public:
 
 	void Keyboard(unsigned char key, int x, int y);
 	void KeyboardSpecial(int key, int x, int y);
+
 	void DrawString(const char* text, Vector3* position, Color* color);
+	void DrawUI();
+	void DrawMenu();
+
+	void SceneAudio();
+	void LoadOBJ();
 
 private:
-	bool paused, audioPlaying, objectAudio;
-	
-	Camera* camera;
+	bool paused, audioPlaying, objectAudio,
+		 tankLoaded, cubeLoaded, skullLoaded;
+	float g_rotation, xPosition, yPosition, zPosition;
 
 	ModelOBJ tankObj, cubeObj, skullObj;
-	float g_rotation, xPosition, yPosition, zPosition;
-	bool tankLoaded, cubeLoaded, skullLoaded;
-
-	Vector4* _lightPosition;
-	Lighting* _lightData;
 };

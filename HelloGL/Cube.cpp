@@ -5,6 +5,8 @@ Cube::Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObj
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
+
+	_material = new Material();
 }
 
 Cube::~Cube()
@@ -52,8 +54,6 @@ void Cube::Update()
 
 void Cube::SetupLight()
 {
-	_material = new Material();
-
 	_material->Ambient.x = red;
 	_material->Ambient.y = green;
 	_material->Ambient.z = blue;

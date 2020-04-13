@@ -1,14 +1,13 @@
 #pragma once
 
+#include <Windows.h>
+#include <gl/GLU.h>
+#include "GL/freeglut.h"
+
 #include "GLUTCallbacks.h"
 #include "Scene.h"
 
-#include "Cube.h"
-#include "SceneObject.h"
-#include "SceneManager.h"
-
-#define OBJECTCOUNT		1
-#define MOVEMENT_SPEED	0.1f
+#define CUBE_TIMER		10
 
 class SceneGame : Scene
 {
@@ -29,18 +28,16 @@ public:
 	void DrawUI();
 	void DrawMenu();
 
+	void SceneAudio();
+
 	void DrawGrid();
 	void AddQuad();
 	void DrawQuad();
 	void DrawCube();
 
 private:
-	int cubeX, cubeY, cubeZ, cubeN;
-	bool paused, audioPlaying;
+	int cubeX, cubeY, cubeZ, cubeN, cubeTimer;
+	bool paused, audioPlaying, cubeRed, colourAudio;
 
-	Camera* camera;
 	Quads Q[100];
-
-	Vector4* _lightPosition;
-	Lighting* _lightData;
 };

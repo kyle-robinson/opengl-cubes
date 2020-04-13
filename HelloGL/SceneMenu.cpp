@@ -6,23 +6,11 @@ SceneMenu::SceneMenu() : Scene()
 	InitGL();
 	InitLighting();
 	InitObjects();
-
-	std::cout << "Scene menu loaded." << std::endl;
-
 	glutMainLoop();
 }
 
 SceneMenu::~SceneMenu(void)
 {
-	delete camera;
-	camera = NULL;
-
-	delete _lightPosition;
-	_lightPosition = NULL;
-
-	delete _lightData;
-	_lightData = NULL;
-
 	delete textureStarfield;
 	textureStarfield = NULL;
 
@@ -39,52 +27,18 @@ SceneMenu::~SceneMenu(void)
 void SceneMenu::InitGL()
 {
 	GLUTCallbacks::Init(this);
-
 	glutDisplayFunc(GLUTCallbacks::Display);
+	Scene::InitGL();
 }
 
 void SceneMenu::InitLighting()
 {
-	_lightPosition = new Vector4();
-
-	_lightPosition->x = 0.0;
-	_lightPosition->y = 0.0;
-	_lightPosition->z = 1.0;
-	_lightPosition->w = 0.0;
-
-	_lightData = new Lighting();
-
-	_lightData->Ambient.x = 0.2;
-	_lightData->Ambient.y = 0.2;
-	_lightData->Ambient.z = 0.2;
-	_lightData->Ambient.w = 1.0;
-
-	_lightData->Diffuse.x = 0.8;
-	_lightData->Diffuse.y = 0.8;
-	_lightData->Diffuse.z = 0.8;
-	_lightData->Diffuse.w = 1.0;
-
-	_lightData->Specular.x = 0.2;
-	_lightData->Specular.y = 0.2;
-	_lightData->Specular.z = 0.2;
-	_lightData->Specular.w = 1.0;
+	Scene::InitLighting();
 }
 
 void SceneMenu::InitObjects()
 {
-	camera = new Camera();
-
-	camera->eye.x = 0.0f;
-	camera->eye.y = 0.0f;
-	camera->eye.z = 1.0f;
-
-	camera->center.x = 0.0f;
-	camera->center.y = 0.0f;
-	camera->center.z = 0.0f;
-
-	camera->up.x = 0.0f;
-	camera->up.y = 1.0f;
-	camera->up.z = 0.0f;
+	Scene::InitObjects();
 
 	textureStarfield = new Texture2D();
 	textureStarfield->Load((char*)"Textures/starfield.raw", 512, 512);
@@ -103,6 +57,39 @@ void SceneMenu::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	DrawQuads();
+	DrawUI();
+
+	glFlush();
+	glutSwapBuffers();
+}
+
+void SceneMenu::Update()
+{
+	glLoadIdentity();
+
+	Scene::Update();
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->Diffuse.x));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->Specular.x));
+	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
+
+	glutPostRedisplay();
+}
+
+void SceneMenu::DrawString(const char* text, Vector3* position, Color* color)
+{
+	glPushMatrix();
+		glColor3f(color->r, color->g, color->b);
+		glTranslatef(position->x, position->y, position->z);
+		glRasterPos2f(0.0, 0.0);
+		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)text);
+	glPopMatrix();
+}
+
+void SceneMenu::DrawQuads()
+{
 	glBindTexture(GL_TEXTURE_2D, textureStarfield->GetID());
 	glBegin(GL_QUADS);
 		glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.75, 0.25);
@@ -134,10 +121,13 @@ void SceneMenu::Display()
 		glTexCoord2f(1.0f, 0.0f); glVertex2f(0.75, 0.0);
 		glTexCoord2f(0.0f, 0.0f); glVertex2f(0.25, 0.0);
 	glEnd();
+}
 
-	glDisable(GL_TEXTURE_2D);
+void SceneMenu::DrawUI()
+{
 	glDisable(GL_LIGHTING);
-
+	glDisable(GL_TEXTURE_2D);
+	
 	Vector3 vMenu = { -0.2f, 1.75f, -1.0f };
 	Vector3 vStarfield = { -1.58f, 0.3f, -1.0f };
 	Vector3 vCollision = { 0.42f, 0.3f, -1.0f };
@@ -161,43 +151,4 @@ void SceneMenu::Display()
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);
-
-	glFlush();
-	glutSwapBuffers();
-}
-
-void SceneMenu::Update()
-{
-	glLoadIdentity();
-
-	gluLookAt(
-		camera->eye.x,
-		camera->eye.y,
-		camera->eye.z,
-
-		camera->center.x,
-		camera->center.y,
-		camera->center.z,
-
-		camera->up.x,
-		camera->up.y,
-		camera->up.z
-	);
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->Diffuse.x));
-	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->Specular.x));
-	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
-
-	glutPostRedisplay();
-}
-
-void SceneMenu::DrawString(const char* text, Vector3* position, Color* color)
-{
-	glPushMatrix();
-		glColor3f(color->r, color->g, color->b);
-		glTranslatef(position->x, position->y, position->z);
-		glRasterPos2f(0.0, 0.0);
-		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)text);
-	glPopMatrix();
 }

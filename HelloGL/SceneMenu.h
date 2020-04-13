@@ -6,7 +6,6 @@
 
 #include "GLUTCallbacks.h"
 #include "Scene.h"
-#include "SceneManager.h"
 #include "Texture2D.h"
 
 class SceneMenu : Scene
@@ -23,15 +22,9 @@ public:
 	void InitObjects();
 
 	void DrawString(const char* text, Vector3* position, Color* color);
+	void DrawQuads();
+	void DrawUI();
 
 private:
-	Camera* camera;
-
-	Texture2D* textureStarfield;
-	Texture2D* textureCollision;
-	Texture2D* textureGame;
-	Texture2D* textureLoader;
-
-	Vector4* _lightPosition;
-	Lighting* _lightData;
+	Texture2D *textureStarfield, *textureCollision, *textureGame, *textureLoader;
 };
