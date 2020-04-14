@@ -18,13 +18,13 @@ SceneGame::~SceneGame(void)
 
 void SceneGame::InitGL()
 {
-	GLUTCallbacks::Init(this);
-	glutDisplayFunc(GLUTCallbacks::Display);
-	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(35, 1.0f, 0.1f, 1000);
 	glMatrixMode(GL_MODELVIEW);
+	
+	GLUTCallbacks::Init(this);
+	glutDisplayFunc(GLUTCallbacks::Display);
 }
 
 void SceneGame::InitLighting()

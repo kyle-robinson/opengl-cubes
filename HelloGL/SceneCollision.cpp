@@ -11,6 +11,10 @@ SceneCollision::SceneCollision() : Scene()
 	InitGL();
 	InitLighting();
 	InitObjects();
+
+	SetCubePositions();
+	collisionTimer = COLLISION_TIMER;
+
 	glutMainLoop();
 }
 
@@ -34,10 +38,12 @@ SceneCollision::~SceneCollision(void)
 
 void SceneCollision::InitGL()
 {
-	GLUTCallbacks::Init(this);
-	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
-	glutDisplayFunc(GLUTCallbacks::Display);
 	Scene::InitGL();
+	GLUTCallbacks::Init(this);
+	glutDisplayFunc(GLUTCallbacks::Display);
+	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
+	glutKeyboardUpFunc(GLUTCallbacks::KeyboardUp);
+	glutSpecialUpFunc(GLUTCallbacks::KeyboardSpecialUp);
 }
 
 void SceneCollision::InitLighting()
@@ -57,8 +63,8 @@ void SceneCollision::InitObjects()
 	textureStars = new Texture2D();
 	textureStars->Load((char*)"Textures/stars.raw", 512, 512);
 
-	objects[0] = new Cube(cubeMesh, texturePenguins, -2.5f, 0.0f, -5.0f);
-	objects[1] = new Cube(cubeMesh, textureStars, 2.5f, 0.0f, -5.0f);
+	objects[0] = new Cube(cubeMesh, texturePenguins, 0.0f, 0.0f, 0.0f);
+	objects[1] = new Cube(cubeMesh, textureStars, 0.0f, 0.0f, 0.0f);
 }
 
 void SceneCollision::Display()
@@ -90,11 +96,17 @@ void SceneCollision::Update()
 
 	if (!paused)
 	{
+		if (collisionTimer == COLLISION_TIMER)
+		{
+			MovePenguinCube();
+			MoveStarCube();
+		}
 		for (int i = 0; i < OBJECTCOUNT; i++)
 		{
 			objects[i]->Update();
 			CubeScreenCollision(i);
 		}
+		UpdateCubePositions();
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
@@ -107,17 +119,23 @@ void SceneCollision::Update()
 
 void SceneCollision::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'w')
-		objects[0]->_position.y += 0.1f;
+	if (key == 'i')
+		SetCubePositions();
 
-	if(key == 's')
-		objects[0]->_position.y -= 0.1f;
+	if (collisionTimer == COLLISION_TIMER)
+	{
+		if (key == 'w')
+			penguinMovingUp = true;
 
-	if (key == 'a')
-		objects[0]->_position.x -= 0.1f;
+		if (key == 's')
+			penguinMovingDown = true;
 
-	if (key == 'd')
-		objects[0]->_position.x += 0.1f;
+		if (key == 'a')
+			penguinMovingLeft = true;
+
+		if (key == 'd')
+			penguinMovingRight = true;
+	}
 
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
@@ -199,17 +217,54 @@ void SceneCollision::Keyboard(unsigned char key, int x, int y)
 
 void SceneCollision::KeyboardSpecial(int key, int x, int y)
 {
-	if(key == GLUT_KEY_UP)
-		objects[1]->_position.y += 0.1f;
+	if (collisionTimer == COLLISION_TIMER)
+	{
+		if (key == GLUT_KEY_UP)
+			starMovingUp = true;
 
-	if(key == GLUT_KEY_DOWN)
-		objects[1]->_position.y -= 0.1f;
+		if (key == GLUT_KEY_DOWN)
+			starMovingDown = true;
+
+		if (key == GLUT_KEY_LEFT)
+			starMovingLeft = true;
+
+		if (key == GLUT_KEY_RIGHT)
+			starMovingRight = true;
+	}
+}
+
+void SceneCollision::KeyboardUp(unsigned char key, int x, int y)
+{
+	cubeSpeed = 1.0f;
+	
+	if (key == 'w')
+		penguinMovingUp = false;
+
+	if (key == 's')
+		penguinMovingDown = false;
+
+	if (key == 'a')
+		penguinMovingLeft = false;
+
+	if (key == 'd')
+		penguinMovingRight = false;
+}
+
+void SceneCollision::KeyboardSpecialUp(int key, int x, int y)
+{
+	cubeSpeed = 1.0f;
+
+	if (key == GLUT_KEY_UP)
+		starMovingUp = false;
+
+	if (key == GLUT_KEY_DOWN)
+		starMovingDown = false;
 
 	if (key == GLUT_KEY_LEFT)
-		objects[1]->_position.x -= 0.1f;
+		starMovingLeft = false;
 
 	if (key == GLUT_KEY_RIGHT)
-		objects[1]->_position.x += 0.1f;
+		starMovingRight = false;
 }
 
 void SceneCollision::DrawString(const char* text, Vector3* position, Color* color)
@@ -251,6 +306,9 @@ void SceneCollision::DrawMenu()
 		Vector3 vColourMagenta = { 0.25f, 0.25f, -1.0f };
 		Vector3 vColourYellow = { 0.25f, 0.05f, -1.0f };
 		Vector3 vColourReset = { 0.25f, -0.15f, -1.0f };
+		
+		Vector3 vCubes = { 0.25f, -0.50f, -1.0f };
+		Vector3 vCubesReset = { 0.25f, -0.70f, -1.0f };
 
 		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
 
@@ -285,6 +343,9 @@ void SceneCollision::DrawMenu()
 		DrawString("'m' - Change to magenta", &vColourMagenta, &cWhite);
 		DrawString("'y' - Change to yellow", &vColourYellow, &cWhite);
 		DrawString("'n' - Reset colours", &vColourReset, &cWhite);
+		
+		DrawString("Scene Cubes", &vCubes, &cMagenta);
+		DrawString("'i' - Reset all cube positions", &vCubesReset, &cWhite);
 
 		DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
 
@@ -379,15 +440,16 @@ void SceneCollision::CubeCollision()
 		cubeAudio = true;
 
 		if (objects[0]->_position.x < objects[1]->_position.x)
-		{
-			objects[0]->_position.x -= 0.05f;
-			objects[1]->_position.x += 0.05f;
-		}
-		else
-		{
-			objects[0]->_position.x += 0.05f;
-			objects[1]->_position.x -= 0.05f;
-		}
+			innerCollision = true;
+		
+		if (objects[0]->_position.x > objects[1]->_position.x)
+			outerCollision = true;
+
+		if (objects[0]->_position.y < objects[1]->_position.y && ((objects[0]->_position.x + 1 > objects[1]->_position.x) || (objects[0]->_position.x < objects[1]->_position.x - 1)))
+			upperCollision = true;
+		
+		if (objects[0]->_position.y > objects[1]->_position.y && ((objects[0]->_position.x + 1 < objects[1]->_position.x) || (objects[0]->_position.x > objects[1]->_position.x - 1)))
+			lowerCollision = true;
 	}
 }
 
@@ -402,14 +464,95 @@ float SceneCollision::CalculateDistanceSquared(SceneObject* c1, SceneObject* c2)
 void SceneCollision::CubeScreenCollision(int iterator)
 {
 	if (objects[iterator]->_position.x > 4.0f)
-		objects[iterator]->_position.x -= 0.1f;
+		objects[iterator]->_position.x = 4.0f;
 
 	if (objects[iterator]->_position.x < -4.0f)
-		objects[iterator]->_position.x += 0.1f;
+		objects[iterator]->_position.x = -4.0f;
 
 	if (objects[iterator]->_position.y > 4.0f)
-		objects[iterator]->_position.y -= 0.1f;
+		objects[iterator]->_position.y = 4.0f;
 
 	if (objects[iterator]->_position.y < -4.0f)
-		objects[iterator]->_position.y += 0.1f;
+		objects[iterator]->_position.y = -4.0f;
+}
+
+void SceneCollision::MovePenguinCube()
+{
+	if (penguinMovingUp)
+		objects[0]->_position.y += CUBE_MOVEMENT * cubeSpeed;
+	else if (penguinMovingDown)
+		objects[0]->_position.y -= CUBE_MOVEMENT * cubeSpeed;
+	else if (penguinMovingLeft)
+		objects[0]->_position.x -= CUBE_MOVEMENT * cubeSpeed;
+	else if (penguinMovingRight)
+		objects[0]->_position.x += CUBE_MOVEMENT * cubeSpeed;
+
+	if (penguinMovingUp || penguinMovingDown || penguinMovingLeft || penguinMovingRight)
+		cubeSpeed += 0.1f;
+}
+
+void SceneCollision::MoveStarCube()
+{
+	if (starMovingUp)
+		objects[1]->_position.y += CUBE_MOVEMENT * cubeSpeed;
+	else if (starMovingDown)
+		objects[1]->_position.y -= CUBE_MOVEMENT * cubeSpeed;
+	else if (starMovingLeft)
+		objects[1]->_position.x -= CUBE_MOVEMENT * cubeSpeed;
+	else if (starMovingRight)
+		objects[1]->_position.x += CUBE_MOVEMENT * cubeSpeed;
+
+	if (starMovingUp || starMovingDown || starMovingLeft || starMovingRight)
+		cubeSpeed += 0.1f;
+}
+
+void SceneCollision::SetCubePositions()
+{
+	objects[0]->_position.x = -2.5f;
+	objects[0]->_position.y = 0.0f;
+	objects[0]->_position.z = -5.0f;
+
+	objects[1]->_position.x = 2.5f;
+	objects[1]->_position.y = 0.0f;
+	objects[1]->_position.z = -5.0f;
+}
+
+void SceneCollision::UpdateCubePositions()
+{
+	if (innerCollision)
+	{	
+		objects[0]->_position.x -= CUBE_MOVEMENT * cubeSpeed;
+		objects[1]->_position.x += CUBE_MOVEMENT * cubeSpeed;
+	}
+
+	if (outerCollision)
+	{
+		objects[0]->_position.x += CUBE_MOVEMENT * cubeSpeed;
+		objects[1]->_position.x -= CUBE_MOVEMENT * cubeSpeed;
+	}
+
+	if (upperCollision)
+	{
+		objects[0]->_position.y -= CUBE_MOVEMENT * cubeSpeed;
+		objects[1]->_position.y += CUBE_MOVEMENT * cubeSpeed;
+	}
+
+	if (lowerCollision)
+	{
+		objects[0]->_position.y += CUBE_MOVEMENT * cubeSpeed;
+		objects[1]->_position.y -= CUBE_MOVEMENT * cubeSpeed;
+	}
+
+	if (innerCollision || outerCollision || upperCollision || lowerCollision)
+	{
+		collisionTimer -= 1;
+		cubeSpeed -= 0.1f;
+
+		if (collisionTimer < 0)
+		{
+			cubeSpeed = 0.0f;
+			collisionTimer = COLLISION_TIMER;
+			innerCollision = outerCollision = upperCollision = lowerCollision = false;
+		}
+	}
 }

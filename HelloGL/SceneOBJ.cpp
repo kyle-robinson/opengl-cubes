@@ -21,10 +21,10 @@ SceneOBJ::~SceneOBJ(void)
 
 void SceneOBJ::InitGL()
 {
-	GLUTCallbacks::Init(this);
-	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
-	glutDisplayFunc(GLUTCallbacks::Display);
 	Scene::InitGL();
+	GLUTCallbacks::Init(this);
+	glutDisplayFunc(GLUTCallbacks::Display);
+	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 }
 
 void SceneOBJ::InitLighting()

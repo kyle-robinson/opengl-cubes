@@ -1,0 +1,6 @@
+#ifndef _resource_rc
+#define _resource_rc
+
+GLUT_ICON ICON "C++.ico"
+
+#endif _resource_rc

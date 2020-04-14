@@ -26,9 +26,9 @@ SceneMenu::~SceneMenu(void)
 
 void SceneMenu::InitGL()
 {
+	Scene::InitGL();
 	GLUTCallbacks::Init(this);
 	glutDisplayFunc(GLUTCallbacks::Display);
-	Scene::InitGL();
 }
 
 void SceneMenu::InitLighting()

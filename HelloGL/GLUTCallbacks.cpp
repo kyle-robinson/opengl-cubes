@@ -118,6 +118,12 @@ namespace GLUTCallbacks
 			sceneOBJ->Keyboard(key, x, y);
 	}
 
+	void KeyboardUp(unsigned char key, int x, int y)
+	{
+		if (sceneCollision != nullptr)
+			sceneCollision->KeyboardUp(key, x, y);
+	}
+
 	void KeyboardSpecial(int key, int x, int y)
 	{	
 		if (sceneStarfield != nullptr)
@@ -126,5 +132,11 @@ namespace GLUTCallbacks
 			sceneCollision->KeyboardSpecial(key, x, y);
 		else if (sceneOBJ != nullptr)
 			sceneOBJ->KeyboardSpecial(key, x, y);
+	}
+
+	void KeyboardSpecialUp(int key, int x, int y)
+	{
+		if (sceneCollision != nullptr)
+			sceneCollision->KeyboardSpecialUp(key, x, y);
 	}
 }

@@ -36,10 +36,10 @@ SceneStarfield::~SceneStarfield(void)
 
 void SceneStarfield::InitGL()
 {
-	GLUTCallbacks::Init(this);
-	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
-	glutDisplayFunc(GLUTCallbacks::Display);
 	Scene::InitGL();
+	GLUTCallbacks::Init(this);
+	glutDisplayFunc(GLUTCallbacks::Display);
+	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 }
 
 void SceneStarfield::InitLighting()
