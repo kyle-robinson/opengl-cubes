@@ -19,8 +19,9 @@ public:
 	GLfloat _rotation;
 	Vector3 _position;
 	
-	double red, green, blue;
-	float _radius;
+	float red, green, blue,
+		  axisX, axisY, axisZ,
+		  _radius;
 
 protected:
 	Mesh* _mesh;

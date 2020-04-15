@@ -142,70 +142,14 @@ void SceneCollision::Keyboard(unsigned char key, int x, int y)
 
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
-		switch (key)
+		if (key == 'r')
 		{
-		case 'r':
-			objects[i]->red = 1.0f;
-			objects[i]->green = 0.0f;
-			objects[i]->blue = 0.0f;
-			
-			colorAudio = colorIsRed = true;
-			colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'g':
-			objects[i]->red = 0.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 0.0f;
-			
-			colorAudio = colorIsGreen = true;
-			colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'b':
-			objects[i]->red = 0.0f;
-			objects[i]->green = 0.0f;
-			objects[i]->blue = 1.0f;
-			
-			colorAudio = colorIsBlue = true;
-			colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'n':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
 
 			colorAudio = true;
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'c':
-			objects[i]->red = 0.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 1.0f;
-			
-			colorAudio = colorIsCyan = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'm':
-			objects[i]->red = 1.0f;
-			objects[i]->green = 0.0f;
-			objects[i]->blue = 1.0f;
-			
-			colorAudio = colorIsMagenta = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
-			break;
-
-		case 'y':
-			objects[i]->red = 1.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 0.0f;
-			
-			colorAudio = colorIsYellow = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
-			break;
 		}
 	}
 
@@ -233,6 +177,66 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 
 		if (key == GLUT_KEY_RIGHT)
 			starMovingRight = true;
+	}
+
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		switch (key)
+		{
+		case GLUT_KEY_F1:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 0.0f;
+
+			colorAudio = colorIsRed = true;
+			colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case GLUT_KEY_F2:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+
+			colorAudio = colorIsGreen = true;
+			colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case GLUT_KEY_F3:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+
+			colorAudio = colorIsBlue = true;
+			colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case GLUT_KEY_F4:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 1.0f;
+
+			colorAudio = colorIsCyan = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case GLUT_KEY_F5:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+
+			colorAudio = colorIsMagenta = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
+			break;
+
+		case GLUT_KEY_F6:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+
+			colorAudio = colorIsYellow = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+			break;
+		}
 	}
 }
 
@@ -287,70 +291,66 @@ void SceneCollision::DrawMenu()
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
 
-		Vector3 vTitle = { -0.6f, 1.75f, -1.0f };
+		Vector3 vTitle =		 { -1.0f, 1.75f, -1.0f };
 
-		Vector3 vPenguin = { -1.7f, 1.25f, -1.0f };
-		Vector3 vPenguinW = { -1.7f, 1.05f, -1.0f };
-		Vector3 vPenguinA = { -1.7f, 0.85f, -1.0f };
-		Vector3 vPenguinS = { -1.7f, 0.65f, -1.0f };
-		Vector3 vPenguinD = { -1.7f, 0.45f, -1.0f };
+		Vector3 vPenguin =		 { -1.5f, 1.2f, -1.0f };
+		Vector3 vPenguinW =		 { -1.5f, 1.0f, -1.0f };
+		Vector3 vPenguinA =		 { -1.5f, 0.8f, -1.0f };
+		Vector3 vPenguinS =		 { -1.5f, 0.6f, -1.0f };
+		Vector3 vPenguinD =		 { -1.5f, 0.4f, -1.0f };
 
-		Vector3 vStar = { -1.7f, 0.1f, -1.0f };
-		Vector3 vStarUp = { -1.7f, -0.1f, -1.0f };
-		Vector3 vStarLeft = { -1.7f, -0.3f, -1.0f };
-		Vector3 vStarDown = { -1.7f, -0.5f, -1.0f };
-		Vector3 vStarRight = { -1.7f, -0.7f, -1.0f };
+		Vector3 vStar =			 { -1.5f, -0.1f, -1.0f };
+		Vector3 vStarUp =		 { -1.5f, -0.3f, -1.0f };
+		Vector3 vStarLeft =		 { -1.5f, -0.5f, -1.0f };
+		Vector3 vStarDown =		 { -1.5f, -0.7f, -1.0f };
+		Vector3 vStarRight =	 { -1.5f, -0.9f, -1.0f };
 
-		Vector3 vColour = { 0.25f, 1.25f, -1.0f };
-		Vector3 vColourRed = { 0.25f, 1.05f, -1.0f };
-		Vector3 vColourGreen = { 0.25f, 0.85f, -1.0f };
-		Vector3 vColourBlue = { 0.25f, 0.65f, -1.0f };
-		Vector3 vColourCyan = { 0.25f, 0.45f, -1.0f };
-		Vector3 vColourMagenta = { 0.25f, 0.25f, -1.0f };
-		Vector3 vColourYellow = { 0.25f, 0.05f, -1.0f };
-		Vector3 vColourReset = { 0.25f, -0.15f, -1.0f };
+		Vector3 vColour =		 { 0.45f, 1.2f, -1.0f };
+		Vector3 vColourRed =	 { 0.45f, 1.0f, -1.0f };
+		Vector3 vColourGreen =	 { 0.45f, 0.8f, -1.0f };
+		Vector3 vColourBlue =	 { 0.45f, 0.6f, -1.0f };
+		Vector3 vColourCyan =	 { 0.45f, 0.4f, -1.0f };
+		Vector3 vColourMagenta = { 0.45f, 0.2f, -1.0f };
+		Vector3 vColourYellow =  { 0.45f, 0.0f, -1.0f };
+		Vector3 vColourReset =	 { 0.45f, -0.2f, -1.0f };
+								 
+		Vector3 vCubes =		 { 0.45f, -0.7f, -1.0f };
+		Vector3 vCubesReset =	 { 0.45f, -0.9f, -1.0f };
+								 
+		Vector3 vReturn =		 { -1.05f, -1.75f, -1.0f };
+
+		Color cWhite =		{ 1.0f, 1.0f, 1.0f };
+		Color cSea =		{ 0.2f, 0.5f, 1.0f };
+		Color cDarkCyan =	{ 0.2f, 0.8f, 1.0f };
+		Color cLightBlue =	{ 0.4f, 1.0f, 1.0f };
+
+		DrawString("C O L L I S I O N    S C E N E    C O N T R O L S", &vTitle, &cSea);
+
+		DrawString("p e n g u i n    c u b e", &vPenguin, &cDarkCyan);
+		DrawString("`W' - Move Up", &vPenguinW, &cWhite);
+		DrawString("`A' - Move Left", &vPenguinA, &cWhite);
+		DrawString("`S' - Move Down", &vPenguinS, &cWhite);
+		DrawString("`D' - Move Right", &vPenguinD, &cWhite);
+
+		DrawString("s t a r    c u b e", &vStar, &cDarkCyan);
+		DrawString("`UP' - Move Up", &vStarUp, &cWhite);
+		DrawString("`LEFT' - Move Left", &vStarLeft, &cWhite);
+		DrawString("`DOWN' - Move Down", &vStarDown, &cWhite);
+		DrawString("`RIGHT' - Move Right", &vStarRight, &cWhite);
+
+		DrawString("c u b e    c o l o u r", &vColour, &cDarkCyan);
+		DrawString("`F1' - Red", &vColourRed, &cWhite);
+		DrawString("`F2' - Green", &vColourGreen, &cWhite);
+		DrawString("`F3' - Blue", &vColourBlue, &cWhite);
+		DrawString("`F4' - Cyan", &vColourCyan, &cWhite);
+		DrawString("`F5' - Magenta", &vColourMagenta, &cWhite);
+		DrawString("`F6' - Yellow", &vColourYellow, &cWhite);
+		DrawString("`R' - Reset Colours", &vColourReset, &cWhite);
 		
-		Vector3 vCubes = { 0.25f, -0.50f, -1.0f };
-		Vector3 vCubesReset = { 0.25f, -0.70f, -1.0f };
+		DrawString("s c e n e    c o l o u r", &vCubes, &cDarkCyan);
+		DrawString("`I' - Reset Cube Positions", &vCubesReset, &cWhite);
 
-		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
-
-		Color cWhite = { 1.0f, 1.0f, 1.0f };
-		Color cRed = { 1.0f, 0.2f, 0.2f };
-		Color cGreen = { 0.0f, 1.0f, 0.0f };
-		Color cBlue = { 0.2f, 0.2f, 1.0f };
-		Color cCyan = { 0.0f, 1.0f, 1.0f };
-		Color cMagenta = { 1.0f, 0.0f, 1.0f };
-		Color cYellow = { 1.0f, 1.0f, 0.0f };
-		Color cOrange = { 1.0f, 0.7f, 0.0f };
-
-		DrawString("Collision Scene Controls", &vTitle, &cRed);
-
-		DrawString("Penguin Cube", &vPenguin, &cYellow);
-		DrawString("'w' - Move cube up", &vPenguinW, &cWhite);
-		DrawString("'a' - Move cube left", &vPenguinA, &cWhite);
-		DrawString("'s' - Move cube down", &vPenguinS, &cWhite);
-		DrawString("'d' - Move cube right", &vPenguinD, &cWhite);
-
-		DrawString("Star Cube", &vStar, &cCyan);
-		DrawString("'up' - Move cube up", &vStarUp, &cWhite);
-		DrawString("'left' - Move cube left", &vStarLeft, &cWhite);
-		DrawString("'down' - Move cube down", &vStarDown, &cWhite);
-		DrawString("'right' - Move cube right", &vStarRight, &cWhite);
-
-		DrawString("Cube Colour", &vColour, &cOrange);
-		DrawString("'r' - Change to red", &vColourRed, &cWhite);
-		DrawString("'g' - Change to green", &vColourGreen, &cWhite);
-		DrawString("'b' - Change to blue", &vColourBlue, &cWhite);
-		DrawString("'c' - Change to cyan", &vColourCyan, &cWhite);
-		DrawString("'m' - Change to magenta", &vColourMagenta, &cWhite);
-		DrawString("'y' - Change to yellow", &vColourYellow, &cWhite);
-		DrawString("'n' - Reset colours", &vColourReset, &cWhite);
-		
-		DrawString("Scene Cubes", &vCubes, &cMagenta);
-		DrawString("'i' - Reset all cube positions", &vCubesReset, &cWhite);
-
-		DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
+		DrawString("`T A B'    t o    r e t u r n    t o    t h e    s c e n e   . . .", &vReturn, &cLightBlue);
 
 		glEnable(GL_LIGHTING);
 		glEnable(GL_TEXTURE_2D);
@@ -364,37 +364,37 @@ void SceneCollision::DrawUI()
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
 		glDisable(GL_DEPTH_TEST);
-	
+
+		Vector3 vTitle =		{ -1.8f, 1.7f, -1.0f };
+		Vector3 vReturn =		{ -1.05f, -1.75f, -1.0f };
+		Vector3 vCollision =	{ 0.6f, 1.7f, -1.0f };
+		Vector3 vPosition =		{ 0.6f, 1.5f, -1.0f };
+
+		Color cWhite =		{ 1.0f, 1.0f, 1.0f };
+		Color cSea =		{ 0.2f, 0.5f, 1.0f };
+		Color cDarkCyan =	{ 0.2f, 0.8f, 1.0f };
+		Color cLightBlue =	{ 0.4f, 1.0f, 1.0f };
+
+		DrawString("C O L L I S I O N    S C E N E", &vTitle, &cSea);
+		DrawString("`T A B'    t o    v i e w    s c e n e    c o n t r o l s    . . .", &vReturn, &cLightBlue);
+
 		if (cubeCollision)
-		{
-			Vector3 vPosition = { 0.6f, 1.7f, -1.0f };
-			Color cWhite = { 1.0f, 1.0f, 1.0f };
-			DrawString("Cube collision occured.", &vPosition, &cWhite);
-		}
-
-		Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
-		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
-
-		Color cWhite = { 1.0f, 1.0f, 1.0f };
-
-		DrawString("Collision Example", &vTitle, &cWhite);
-		DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
+			DrawString("Cube Collision Occured", &vCollision, &cWhite);
 
 		glEnable(GL_LIGHTING);
 
-		Vector3 vPosition = { 0.6f, 1.5f, -1.0f };
 		if (colorIsRed)
-			DrawString("Colour changed to red.", &vPosition, &cWhite);
+			DrawString("Colour Changed to Red", &vPosition, &cWhite);
 		else if (colorIsGreen)
-			DrawString("Colour changed to green.", &vPosition, &cWhite);
+			DrawString("Colour Changed to Green", &vPosition, &cWhite);
 		else if (colorIsBlue)
-			DrawString("Colour changed to blue.", &vPosition, &cWhite);
+			DrawString("Colour Changed to Blue", &vPosition, &cWhite);
 		else if (colorIsCyan)
-			DrawString("Colour changed to cyan.", &vPosition, &cWhite);
+			DrawString("Colour Changed to Cyan", &vPosition, &cWhite);
 		else if (colorIsMagenta)
-			DrawString("Colour changed to magenta.", &vPosition, &cWhite);
+			DrawString("Colour Changed to Magenta", &vPosition, &cWhite);
 		else if (colorIsYellow)
-			DrawString("Colour changed to yellow.", &vPosition, &cWhite);
+			DrawString("Colour Changed to Yellow", &vPosition, &cWhite);
 
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_TEXTURE_2D);

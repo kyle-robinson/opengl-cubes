@@ -39,6 +39,7 @@ void SceneStarfield::InitGL()
 	Scene::InitGL();
 	GLUTCallbacks::Init(this);
 	glutDisplayFunc(GLUTCallbacks::Display);
+	glutKeyboardUpFunc(GLUTCallbacks::KeyboardUp);
 	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 }
 
@@ -143,13 +144,47 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 	
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
-		if (key == 'd')
-			objects[i]->_rotation += 7.5f;
+		if (key == 'w')
+		{
+			objects[i]->axisX = 1.0f;
+			objects[i]->axisY = 0.0f;
+			objects[i]->axisZ = 0.0f;
 
-		if (key == 'a')
-			objects[i]->_rotation -= 7.5f;
+			objects[i]->_rotation -= CUBE_ROTATION;
+			cRotating = false;
+		}
 
 		if (key == 's')
+		{
+			objects[i]->axisX = 1.0f;
+			objects[i]->axisY = 0.0f;
+			objects[i]->axisZ = 0.0f;
+
+			objects[i]->_rotation += CUBE_ROTATION;
+			cRotating = false;
+		}
+		
+		if (key == 'a')
+		{
+			objects[i]->axisX = 0.0f;
+			objects[i]->axisY = 1.0f;
+			objects[i]->axisZ = 0.0f;
+
+			objects[i]->_rotation -= CUBE_ROTATION;
+			cRotating = false;
+		}
+
+		if (key == 'd')
+		{
+			objects[i]->axisX = 0.0f;
+			objects[i]->axisY = 1.0f;
+			objects[i]->axisZ = 0.0f;
+
+			objects[i]->_rotation += CUBE_ROTATION;
+			cRotating = false;
+		}
+
+		if (key == 'l')
 		{
 			textureAudio = true;
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
@@ -163,70 +198,14 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
 		}
 
-		switch (key)
+		if (key == 'r')
 		{
-		case 'r':
-			objects[i]->red = 1.0f;
-			objects[i]->green = 0.0f;
-			objects[i]->blue = 0.0f;
-
-			colorAudio = colorIsRed = true;
-			colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'g':
-			objects[i]->red = 0.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 0.0f;
-			
-			colorAudio = colorIsGreen = true;
-			colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'b':
-			objects[i]->red = 0.0f;
-			objects[i]->green = 0.0f;
-			objects[i]->blue = 1.0f;
-
-			colorAudio = colorIsBlue = true;
-			colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'n':
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
 
 			colorAudio = true;
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'c':
-			objects[i]->red = 0.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 1.0f;
-
-			colorAudio = colorIsCyan = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
-			break;
-
-		case 'm':
-			objects[i]->red = 1.0f;
-			objects[i]->green = 0.0f;
-			objects[i]->blue = 1.0f;
-
-			colorAudio = colorIsMagenta = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
-			break;
-
-		case 'y':
-			objects[i]->red = 1.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 0.0f;
-
-			colorAudio = colorIsYellow = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
-			break;
 		}
 	}
 
@@ -259,7 +238,83 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 			camera->eye.x += MOVEMENT_SPEED / 10;
 		else if (key == GLUT_KEY_RIGHT && camera->eye.z == 1.0f)
 			camera->eye.x -= MOVEMENT_SPEED / 10;
+
+		for (int i = 0; i < OBJECTCOUNT; i++)
+		{
+			switch (key)
+			{
+			case GLUT_KEY_F1:
+				objects[i]->red = 1.0f;
+				objects[i]->green = 0.0f;
+				objects[i]->blue = 0.0f;
+
+				colorAudio = colorIsRed = true;
+				colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+				break;
+
+			case GLUT_KEY_F2:
+				objects[i]->red = 0.0f;
+				objects[i]->green = 1.0f;
+				objects[i]->blue = 0.0f;
+
+				colorAudio = colorIsGreen = true;
+				colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+				break;
+
+			case GLUT_KEY_F3:
+				objects[i]->red = 0.0f;
+				objects[i]->green = 0.0f;
+				objects[i]->blue = 1.0f;
+
+				colorAudio = colorIsBlue = true;
+				colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+				break;
+
+			case GLUT_KEY_F4:
+				objects[i]->red = 0.0f;
+				objects[i]->green = 1.0f;
+				objects[i]->blue = 1.0f;
+
+				colorAudio = colorIsCyan = true;
+				colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
+				break;
+
+			case GLUT_KEY_F5:
+				objects[i]->red = 1.0f;
+				objects[i]->green = 0.0f;
+				objects[i]->blue = 1.0f;
+
+				colorAudio = colorIsMagenta = true;
+				colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
+				break;
+
+			case GLUT_KEY_F6:
+				objects[i]->red = 1.0f;
+				objects[i]->green = 1.0f;
+				objects[i]->blue = 0.0f;
+
+				colorAudio = colorIsYellow = true;
+				colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+				break;
+			}
+		}
 	}
+}
+
+void SceneStarfield::KeyboardUp(unsigned char key, int x, int y)
+{
+	if (key == 'a' || key == 'd')
+	{
+		for (int i = 0; i < OBJECTCOUNT; i++)
+		{
+			objects[i]->axisX = 1.0f;
+			objects[i]->axisY = 0.0f;
+			objects[i]->axisZ = 0.0f;
+		}
+	}
+
+	if (key == 'w' || key == 's' || key == 'a' || key == 'd')
+		cRotating = true;
 }
 
 void SceneStarfield::DrawString(const char* text, Vector3* position, Color* color)
@@ -278,29 +333,32 @@ void SceneStarfield::DrawUI()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
 
-	Vector3 vTitle = { -1.8f, 1.7f, camera->eye.z - 2.0f };
-	Vector3 vReturn = { -0.7f, -1.75f, camera->eye.z - 2.0f };
+	Vector3 vTitle =	{ -1.8f, 1.7f, camera->eye.z - 2.0f };
+	Vector3 vReturn =	{ -1.05f, -1.75f, camera->eye.z - 2.0f };
+	Vector3 vPosition = { 0.5f, 1.7f, camera->eye.z - 2.0f };
 
-	Color cWhite = { 1.0f, 1.0f, 1.0f };
+	Color cWhite =		 { 1.0f, 1.0f, 1.0f };
+	Color cBrightGreen = { 0.1f, 0.8f, 0.4f };
+	Color cLightGreen =	 { 0.5f, 1.0f, 0.6f };
+	Color cPaleGreen =	 { 0.8f, 1.0f, 0.8f };
 
-	DrawString("Starfield Scene", &vTitle, &cWhite);
-	DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
+	DrawString("S T A R F I E L D    S C E N E", &vTitle, &cBrightGreen);
+	DrawString("`T A B'    t o    v i e w    s c e n e    c o n t r o l s    . . .", &vReturn, &cPaleGreen);
 
 	glEnable(GL_LIGHTING);
 
-	Vector3 vPosition = { 0.5f, 1.7f, camera->eye.z - 2.0f };
 	if (colorIsRed)
-		DrawString("Colour changed to red.", &vPosition, &cWhite);
+		DrawString("Colour Changed to Red", &vPosition, &cWhite);
 	else if (colorIsGreen)
-		DrawString("Colour changed to green.", &vPosition, &cWhite);
+		DrawString("Colour Changed to Green", &vPosition, &cWhite);
 	else if (colorIsBlue)
-		DrawString("Colour changed to blue.", &vPosition, &cWhite);
+		DrawString("Colour Changed to Blue", &vPosition, &cWhite);
 	else if (colorIsCyan)
-		DrawString("Colour changed to cyan.", &vPosition, &cWhite);
+		DrawString("Colour Changed to Cyan", &vPosition, &cWhite);
 	else if (colorIsMagenta)
-		DrawString("Colour changed to magenta.", &vPosition, &cWhite);
+		DrawString("Colour Changed to Magenta", &vPosition, &cWhite);
 	else if (colorIsYellow)
-		DrawString("Colour changed to yellow.", &vPosition, &cWhite);
+		DrawString("Colour Changed to Yellow", &vPosition, &cWhite);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
@@ -313,78 +371,83 @@ void SceneStarfield::DrawMenu()
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_LIGHTING);
 
-		Vector3 vTitle = { -0.6f, 1.75f, -1.0f };
+		Vector3 vTitle =			{ -1.0f, 1.75f, -1.0f };
 
-		Vector3 vCamera = { -1.7f, 1.25f, -1.0f };
-		Vector3 vCameraReset = { -1.7f, 1.05f, -1.0f };
-		Vector3 vCameraUp = { -1.7f, 0.85f, -1.0f };
-		Vector3 vCameraDown = { -1.7f, 0.65f, -1.0f };
-		Vector3 vCameraLeft = { -1.7f, 0.45f, -1.0f };
-		Vector3 vCameraRight = { -1.7f, 0.25f, -1.0f };
+		Vector3 vCamera =			{ -1.5f, 1.4f, -1.0f };
+		Vector3 vCameraReset =		{ -1.5f, 1.2f, -1.0f };
+		Vector3 vCameraUp =			{ -1.5f, 1.0f, -1.0f };
+		Vector3 vCameraDown =		{ -1.5f, 0.8f, -1.0f };
+		Vector3 vCameraLeft =		{ -1.5f, 0.6f, -1.0f };
+		Vector3 vCameraRight =		{ -1.5f, 0.4f, -1.0f };
 
-		Vector3 vMR = { -1.7f, -0.1f, -1.0f };
-		Vector3 vMRBackwards = { -1.7f, -0.3f, -1.0f };
-		Vector3 vMRForwards = { -1.7f, -0.5f, -1.0f };
-		Vector3 vMRRotation = { -1.7f, -0.7f, -1.0f };
+		Vector3 vMove =				{ -1.5f, 0.1f, -1.0f };
+		Vector3 vMoveBackward =		{ -1.5f, -0.1f, -1.0f };
+		Vector3 vMoveLeft =			{ -1.5f, -0.3f, -1.0f };
+		Vector3 vMoveForward =		{ -1.5f, -0.5f, -1.0f };
+		Vector3 vMoveRight =		{ -1.5f, -0.7f, -1.0f };
+		Vector3 vMoveRotation =		{ -1.5f, -0.9f, -1.0f };
+		Vector3 vMoveDirection =	{ -1.5f, -1.1f, -1.0f };
+		Vector3 vMoveMovement =		{ -1.5f, -1.3f, -1.0f };
 
-		Vector3 vMRDirection = { -1.7f, -0.9f, -1.0f };
-		Vector3 vMRMovement = { -1.7f, -1.1f, -1.0f };
+		Vector3 vColour =			{ 0.45f, 1.4f, -1.0f };
+		Vector3 vColourRed =		{ 0.45f, 1.2f, -1.0f };
+		Vector3 vColourGreen =		{ 0.45f, 1.0f, -1.0f };
+		Vector3 vColourBlue =		{ 0.45f, 0.8f, -1.0f };
+		Vector3 vColourCyan =		{ 0.45f, 0.6f, -1.0f };
+		Vector3 vColourMagenta =	{ 0.45f, 0.4f, -1.0f };
+		Vector3 vColourYellow =		{ 0.45f, 0.2f, -1.0f };
+		Vector3 vColourReset =		{ 0.45f, 0.0f, -1.0f };
 
-		Vector3 vColour = { 0.25f, 1.25f, -1.0f };
-		Vector3 vColourRed = { 0.25f, 1.05f, -1.0f };
-		Vector3 vColourGreen = { 0.25f, 0.85f, -1.0f };
-		Vector3 vColourBlue = { 0.25f, 0.65f, -1.0f };
-		Vector3 vColourCyan = { 0.25f, 0.45f, -1.0f };
-		Vector3 vColourMagenta = { 0.25f, 0.25f, -1.0f };
-		Vector3 vColourYellow = { 0.25f, 0.05f, -1.0f };
-		Vector3 vColourReset = { 0.25f, -0.15f, -1.0f };
+		Vector3 vTexture =			{ 0.45f, -0.5f, -1.0f };
+		Vector3 vTexturePenguins =	{ 0.45f, -0.7f, -1.0f };
+		Vector3 vTextureStars =		{ 0.45f, -0.9f, -1.0f };
 
-		Vector3 vTexture = { 0.25f, -0.5f, -1.0f };
-		Vector3 vTexturePenguins = { 0.25f, -0.7f, -1.0f };
-		Vector3 vTextureStars = { 0.25f, -0.9f, -1.0f };
+		Vector3 vReturn =			{ -1.05f, -1.75f, -1.0f };
 
-		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
+		Color cWhite =				{ 1.0f, 1.0f, 1.0f };
+		Color cRed =				{ 1.0f, 0.2f, 0.2f };
+		Color cGreen =				{ 0.0f, 1.0f, 0.0f };
+		Color cBlue =				{ 0.2f, 0.2f, 1.0f };
+		Color cCyan =				{ 0.0f, 1.0f, 1.0f };
+		Color cMagenta =			{ 1.0f, 0.0f, 1.0f };
+		Color cYellow =				{ 1.0f, 1.0f, 0.0f };
+		Color cOrange =				{ 1.0f, 0.7f, 0.0f };
+		Color cBrightGreen =		{ 0.1f, 0.8f, 0.4f };
+		Color cLightGreen =			{ 0.5f, 1.0f, 0.6f };
+		Color cPaleGreen =			{ 0.8f, 1.0f, 0.8f };
 
-		Color cWhite = { 1.0f, 1.0f, 1.0f };
-		Color cRed = { 1.0f, 0.2f, 0.2f };
-		Color cGreen = { 0.0f, 1.0f, 0.0f };
-		Color cBlue = { 0.2f, 0.2f, 1.0f };
-		Color cCyan = { 0.0f, 1.0f, 1.0f };
-		Color cMagenta = { 1.0f, 0.0f, 1.0f };
-		Color cYellow = { 1.0f, 1.0f, 0.0f };
-		Color cOrange = { 1.0f, 0.7f, 0.0f };
+		DrawString("S T A R F I E L D    S C E N E    C O N T R O L S", &vTitle, &cBrightGreen);
 
-		DrawString("Starfield Scene Controls", &vTitle, &cRed);
+		DrawString("c a m e r a", &vCamera, &cLightGreen);
+		DrawString("`I' - Reset Position", &vCameraReset, &cWhite);
+		DrawString("`UP' - Move Forward", &vCameraUp, &cWhite);
+		DrawString("`DOWN' - Move Backwards", &vCameraDown, &cWhite);
+		DrawString("`LEFT' - Tilt Left", &vCameraLeft, &cWhite);
+		DrawString("`RIGHT' - Tilt Right", &vCameraRight, &cWhite);
+		DrawString("c u b e    m o v e m e n t", &vMove, &cLightGreen);
+		DrawString("`W' - Rotate Backward", &vMoveBackward, &cWhite);
+		DrawString("`A' - Rotate Left", &vMoveLeft, &cWhite);
+		DrawString("`S' - Rotate Forward", &vMoveForward, &cWhite);
+		DrawString("`D' - Rotate Right", &vMoveRight, &cWhite);
 
-		DrawString("Camera", &vCamera, &cYellow);
-		DrawString("'i' - Reset camera position", &vCameraReset, &cWhite);
-		DrawString("'up' - Move camera forward", &vCameraUp, &cWhite);
-		DrawString("'down' - Move camera backwards", &vCameraDown, &cWhite);
-		DrawString("'left' - Tilt camera left", &vCameraLeft, &cWhite);
-		DrawString("'right' - Tilt camera right", &vCameraRight, &cWhite);
+		DrawString("`E' - Toggle Rotation", &vMoveRotation, &cWhite);
+		DrawString("`Z' - Toggle Z Direction", &vMoveDirection, &cWhite);
+		DrawString("`Q' - Toggle Movement", &vMoveMovement, &cWhite);
 
-		DrawString("Movement & Rotation", &vMR, &cCyan);
-		DrawString("'a' - Rotate cubes backwards", &vMRBackwards, &cWhite);
-		DrawString("'d' - Rotate cubes forwards", &vMRForwards, &cWhite);
-		DrawString("'e' - Toggle cube rotation", &vMRRotation, &cWhite);
+		DrawString("c u b e    c o l o u r", &vColour, &cLightGreen);
+		DrawString("`F1' - Red", &vColourRed, &cWhite);
+		DrawString("`F2' - Green", &vColourGreen, &cWhite);
+		DrawString("`F3' - Blue", &vColourBlue, &cWhite);
+		DrawString("`F4' - Cyan", &vColourCyan, &cWhite);
+		DrawString("`F5' - Magenta", &vColourMagenta, &cWhite);
+		DrawString("`F6' - Yellow", &vColourYellow, &cWhite);
+		DrawString("`R' - Reset Colours", &vColourReset, &cWhite);
 
-		DrawString("'z' - Toggle z direction", &vMRDirection, &cWhite);
-		DrawString("'q' - Toggle z movement", &vMRMovement, &cWhite);
+		DrawString("c u b e    t e x t u r e", &vTexture, &cLightGreen);
+		DrawString("`P' - Penguin Texture", &vTexturePenguins, &cWhite);
+		DrawString("`L' - Star Texture", &vTextureStars, &cWhite);
 
-		DrawString("Cube Colour", &vColour, &cOrange);
-		DrawString("'r' - Change to red", &vColourRed, &cWhite);
-		DrawString("'g' - Change to green", &vColourGreen, &cWhite);
-		DrawString("'b' - Change to blue", &vColourBlue, &cWhite);
-		DrawString("'c' - Change to cyan", &vColourCyan, &cWhite);
-		DrawString("'m' - Change to magenta", &vColourMagenta, &cWhite);
-		DrawString("'y' - Change to yellow", &vColourYellow, &cWhite);
-		DrawString("'n' - Reset colours", &vColourReset, &cWhite);
-
-		DrawString("Cube Texture", &vTexture, &cMagenta);
-		DrawString("'p' - Change to penguin texture", &vTexturePenguins, &cWhite);
-		DrawString("'s' - Change to star texture", &vTextureStars, &cWhite);
-
-		DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
+		DrawString("`T A B'    t o    r e t u r n    t o    t h e    s c e n e   . . .", &vReturn, &cPaleGreen);
 
 		glEnable(GL_LIGHTING);
 		glEnable(GL_TEXTURE_2D);

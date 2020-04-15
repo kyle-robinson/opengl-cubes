@@ -38,12 +38,14 @@ public:
 	void DrawQuad();
 
 private:
-	int cubeY, cubeN,
-		cubeXRed, cubeZRed,
-		cubeXBlue, cubeZBlue;
+	int cubeN,
+		cubeXRed, cubeYRed, cubeZRed,
+		cubeXBlue, cubeYBlue, cubeZBlue;
 
 	bool paused, audioPlaying, colourAudio,
-		 cubeRed, cubeBlue;
+		 cubeRed, cubeRed_Quad,
+		 cubeBlue, cubeBlue_Quad,
+		 quadClear;
 
 	Quads Q_Red[100], Q_Blue[100];
 };

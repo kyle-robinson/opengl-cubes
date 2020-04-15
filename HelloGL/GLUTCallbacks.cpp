@@ -120,7 +120,9 @@ namespace GLUTCallbacks
 
 	void KeyboardUp(unsigned char key, int x, int y)
 	{
-		if (sceneCollision != nullptr)
+		if (sceneStarfield != nullptr)
+			sceneStarfield->KeyboardUp(key, x, y);
+		else if (sceneCollision != nullptr)
 			sceneCollision->KeyboardUp(key, x, y);
 		else if (sceneGame != nullptr)
 			sceneGame->KeyboardUp(key, x, y);

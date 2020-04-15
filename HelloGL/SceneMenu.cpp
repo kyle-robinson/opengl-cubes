@@ -119,34 +119,34 @@ void SceneMenu::DrawQuads()
 {
 	glBindTexture(GL_TEXTURE_2D, textureStarfield->GetID());
 	glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.75, 0.25);
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(-0.25, 0.25);
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(-0.25, 0.75);
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.75, 0.75);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.75, 0.15);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(-0.25, 0.15);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(-0.25, 0.65);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.75, 0.65);
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, textureCollision->GetID());
 	glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(0.25, 0.25);
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(0.75, 0.25);
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(0.75, 0.75);
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(0.25, 0.75);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(0.25, 0.15);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(0.75, 0.15);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(0.75, 0.65);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(0.25, 0.65);
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, textureGame->GetID());
 	glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.75, -0.5);
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(-0.25, -0.5);
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(-0.25, 0.0);
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.75, 0.0);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.75, -0.6);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(-0.25, -0.6);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(-0.25, -0.1);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.75, -0.1);
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, textureLoader->GetID());
 	glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(0.25, -0.5);
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(0.75, -0.5);
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(0.75, 0.0);
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(0.25, 0.0);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(0.25, -0.6);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(0.75, -0.6);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(0.75, -0.1);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(0.25, -0.1);
 	glEnd();
 }
 
@@ -155,26 +155,51 @@ void SceneMenu::DrawUI()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 	
-	Vector3 vMenu = { -0.2f, 1.75f, -1.0f };
-	Vector3 vStarfield = { -1.58f, 0.3f, -1.0f };
-	Vector3 vCollision = { 0.42f, 0.3f, -1.0f };
-	Vector3 vGame = { -1.52f, -1.2f, -1.0f };
-	Vector3 vLoadOBJ = { 0.35f, -1.2f, -1.0f };
-	Vector3 vExit = { -0.4f, -1.75f, -1.0f };
+	Vector3 vMenu =			{ -0.375f, 1.75f, -1.0f };
+	
+	Vector3 vStarfield =	{ -1.58f, 1.35f, -1.0f };
+	Vector3 vStarfieldKey =	{ -1.3f, 0.2f, -1.0f };
 
-	Color cRed = { 1.0f, 0.2f, 0.2f };
-	Color cYellow = { 1.0f, 1.0f, 0.0f };
-	Color cMagenta = { 1.0f, 0.0f, 1.0f };
-	Color cGreen = { 0.0f, 1.0f, 0.0f };
-	Color cCyan = { 0.0f, 1.0f, 1.0f };
-	Color cOrange = { 1.0f, 0.7f, 0.0f };
+	Vector3 vCollision =	{ 0.38f, 1.35f, -1.0f };
+	Vector3 vCollisionKey =	{ 0.725f, 0.2f, -1.0f };
+	
+	Vector3 vGame =			{ -1.425f, -0.15f, -1.0f };
+	Vector3 vGameKey =		{ -1.3f, -1.3f, -1.0f };
+	
+	Vector3 vLoadOBJ =		{ 0.6f, -0.15f, -1.0f };
+	Vector3 vLoadOBJKey =	{ 0.725f, -1.3f, -1.0f };
+	
+	Vector3 vExit =			{ -0.5f, -1.75f, -1.0f };
 
-	DrawString("Main Menu", &vMenu, &cRed);
-	DrawString("Press '1' for Starfield Scene", &vStarfield, &cYellow);
-	DrawString("Press '2' for Collision Scene", &vCollision, &cMagenta);
-	DrawString("Press '3' for Game Scene", &vGame, &cGreen);
-	DrawString("Press '4' for OBJ Loader Scene", &vLoadOBJ, &cCyan);
-	DrawString("Press 'ESC' to Exit", &vExit, &cOrange);
+	Color cWhite =			{ 1.0f, 1.0f, 1.0f };
+	
+	Color cBrightGreen =	{ 0.1f, 0.8f, 0.4f };
+	Color cPaleGreen =		{ 0.8f, 1.0f, 0.8f };
+	
+	Color cSea =			{ 0.2f, 0.5f, 1.0f };
+	Color cLightBlue =		{ 0.4f, 1.0f, 1.0f };
+	
+	Color cDarkPink =		{ 0.9f, 0.1f, 0.8f };
+	Color cPalePink =		{ 1.0f, 0.8f, 1.0f };
+	
+	Color cPurple =			{ 0.6f, 0.2f, 0.9f };
+	Color cLilac =			{ 0.9f, 0.8f, 1.0f };
+
+	DrawString("M A I N    M E N U", &vMenu, &cWhite);
+												 				  
+	DrawString("S T A R F I E L D    S C E N E", &vStarfield, &cBrightGreen);
+	DrawString("p r e s s    `1'", &vStarfieldKey, &cPaleGreen);
+												 				  
+	DrawString("C O L L I S I O N    S C E N E", &vCollision, &cSea);
+	DrawString("p r e s s    `2'", &vCollisionKey, &cLightBlue);
+												 
+	DrawString("G A M E    S C E N E", &vGame, &cDarkPink);
+	DrawString("p r e s s    `3'", &vGameKey, &cPalePink);
+												 
+	DrawString("O B J    L O A D E R", &vLoadOBJ, &cPurple);
+	DrawString("p r e s s    `4'", &vLoadOBJKey, &cLilac);
+	
+	DrawString("`E S C'    t o    e x i t    . . .", &vExit, &cWhite);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);

@@ -7,6 +7,7 @@
 
 #define OBJECTCOUNT		500
 #define MOVEMENT_SPEED	5.0f
+#define CUBE_ROTATION	10.0f
 
 class SceneStarfield : Scene
 {
@@ -21,6 +22,7 @@ public:
 	void InitObjects();
 
 	void Keyboard(unsigned char key, int x, int y);
+	void KeyboardUp(unsigned char key, int x, int y);
 	void KeyboardSpecial(int key, int x, int y);
 
 	void DrawString(const char* text, Vector3* position, Color* color);

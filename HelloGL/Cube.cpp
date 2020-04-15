@@ -6,6 +6,10 @@ Cube::Cube(Mesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObj
 	_position.y = y;
 	_position.z = z;
 
+	axisX = 1.0f;
+	axisY = 0.0f;
+	axisZ = 0.0f;
+
 	_material = new Material();
 }
 
@@ -37,7 +41,7 @@ void Cube::Draw()
 
 		glPushMatrix();
 			glTranslatef(_position.x, _position.y, _position.z);
-			glRotatef(_rotation, 1.0f, 0.0f, 0.0f);
+			glRotatef(_rotation, axisX, axisY, axisZ);
 			glDrawElements(GL_TRIANGLES, _mesh->IndexCount, GL_UNSIGNED_SHORT, _mesh->Indices);
 		glPopMatrix();
 
