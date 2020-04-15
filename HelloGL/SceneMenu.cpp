@@ -22,6 +22,9 @@ SceneMenu::~SceneMenu(void)
 
 	delete textureLoader;
 	textureLoader = NULL;
+
+	delete _material;
+	_material = NULL;
 }
 
 void SceneMenu::InitGL()
@@ -34,6 +37,30 @@ void SceneMenu::InitGL()
 void SceneMenu::InitLighting()
 {
 	Scene::InitLighting();
+
+	_material = new Material();
+
+	_material->Ambient.x = 1.0;
+	_material->Ambient.y = 1.0;
+	_material->Ambient.z = 1.0;
+	_material->Ambient.w = 1.0;
+
+	_material->Diffuse.x = 1.0;
+	_material->Diffuse.y = 1.0;
+	_material->Diffuse.z = 1.0;
+	_material->Diffuse.w = 1.0;
+
+	_material->Specular.x = 1.0;
+	_material->Specular.y = 1.0;
+	_material->Specular.z = 1.0;
+	_material->Specular.w = 1.0;
+
+	_material->Shininess = 100.0f;
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, &(_material->Ambient.x));
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, &(_material->Diffuse.x));
+	glMaterialfv(GL_FRONT, GL_SPECULAR, &(_material->Specular.x));
+	glMaterialf(GL_FRONT, GL_SHININESS, _material->Shininess);
 }
 
 void SceneMenu::InitObjects()

@@ -7,8 +7,6 @@
 #include "GLUTCallbacks.h"
 #include "Scene.h"
 
-#define CUBE_TIMER		10
-
 class SceneGame : Scene
 {
 public:
@@ -23,21 +21,29 @@ public:
 	void InitObjects();
 
 	void Keyboard(unsigned char key, int x, int y);
-	void DrawString(const char* text, Vector3* position, Color* color);
+	void KeyboardUp(unsigned char key, int x, int y);
+	void KeyboardSpecial(int key, int x, int y);
 
+	void DrawString(const char* text, Vector3* position, Color* color);
 	void DrawUI();
 	void DrawMenu();
 
 	void SceneAudio();
 
 	void DrawGrid();
-	void AddQuad();
+	void DrawCubes();
+	
+	void AddQuadRed();
+	void AddQuadBlue();
 	void DrawQuad();
-	void DrawCube();
 
 private:
-	int cubeX, cubeY, cubeZ, cubeN, cubeTimer;
-	bool paused, audioPlaying, cubeRed, colourAudio;
+	int cubeY, cubeN,
+		cubeXRed, cubeZRed,
+		cubeXBlue, cubeZBlue;
 
-	Quads Q[100];
+	bool paused, audioPlaying, colourAudio,
+		 cubeRed, cubeBlue;
+
+	Quads Q_Red[100], Q_Blue[100];
 };

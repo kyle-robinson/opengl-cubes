@@ -27,4 +27,5 @@ public:
 
 private:
 	Texture2D *textureStarfield, *textureCollision, *textureGame, *textureLoader;
+	Material* _material;
 };

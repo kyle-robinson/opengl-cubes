@@ -1,2 +1,49 @@
-﻿  main.cpp
+﻿  GLUTCallbacks.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.h(8,1): warning C4005: 'OBJECTCOUNT': macro redefinition
+  SceneGame.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.h(8): message : see previous definition of 'OBJECTCOUNT'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(402,27): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(402,20): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(406,25): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(406,19): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(412,26): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(416,24): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(422,25): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(423,26): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(522,49): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(522,36): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(522,23): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(523,49): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(523,36): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(523,23): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(524,49): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(524,36): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(524,23): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(525,49): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(525,36): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(525,23): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(532,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(532,38): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(532,24): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(533,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(533,38): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(533,24): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(534,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(534,38): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(534,24): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(535,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(535,38): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(535,24): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(549,33): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(549,26): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(549,16): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(557,25): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(559,23): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(561,34): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(561,27): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+  SceneManager.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneGame.cpp(561,16): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.h(8,1): warning C4005: 'OBJECTCOUNT': macro redefinition
+  Generating Code...
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.h(8): message : see previous definition of 'OBJECTCOUNT'
   HelloGL.vcxproj -> D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\Debug\OpenGL-Project.exe

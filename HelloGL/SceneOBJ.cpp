@@ -16,7 +16,8 @@ SceneOBJ::SceneOBJ()
 
 SceneOBJ::~SceneOBJ(void)
 {
-
+	delete _material;
+	_material = NULL;
 }
 
 void SceneOBJ::InitGL()
@@ -30,6 +31,9 @@ void SceneOBJ::InitGL()
 void SceneOBJ::InitLighting()
 {
 	Scene::InitLighting();
+	_material = new Material();
+	red = green = blue = 1.0f;
+	UpdateLighting();
 }
 
 void SceneOBJ::InitObjects()
@@ -45,6 +49,7 @@ void SceneOBJ::Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	DrawMenu();
+	UpdateLighting();
 
 	if (!paused)
 	{
@@ -125,7 +130,7 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 		zPosition = -5.0f;
 	}
 
-	if (key == 'c')
+	if (key == 'p')
 	{
 		cubeLoaded = objectAudio = true;
 		tankLoaded = skullLoaded = false;
@@ -143,6 +148,72 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 		xPosition = 0.0f;
 		yPosition = -10.0f;
 		zPosition = -30.0f;
+	}
+
+	switch (key)
+	{
+	case 'r':
+		red = 1.0f;
+		green = 0.0f;
+		blue = 0.0f;
+
+		colorAudio = colorIsRed = true;
+		colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+		break;
+
+	case 'g':
+		red = 0.0f;
+		green = 1.0f;
+		blue = 0.0f;
+		
+		colorAudio = colorIsGreen = true;
+		colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+		break;
+
+	case 'b':
+		red = 0.0f;
+		green = 0.0f;
+		blue = 1.0f;
+		
+		colorAudio = colorIsBlue = true;
+		colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+		break;
+
+	case 'c':
+		red = 0.0f;
+		green = 1.0f;
+		blue = 1.0f;
+		
+		colorAudio = colorIsCyan = true;
+		colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
+		break;
+
+	case 'm':
+		red = 1.0f;
+		green = 0.0f;
+		blue = 1.0f;
+		
+		colorAudio = colorIsMagenta = true;
+		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
+		break;
+
+	case 'y':
+		red = 1.0f;
+		green = 1.0f;
+		blue = 0.0f;
+		
+		colorAudio = colorIsYellow = true;
+		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+		break;
+
+	case 'n':
+		red = 1.0f;
+		green = 1.0f;
+		blue = 1.0f;
+		
+		colorAudio = true;
+		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+		break;
 	}
 
 	if (key == 9)
@@ -199,13 +270,35 @@ void SceneOBJ::DrawUI()
 	DrawString("OBJ Loader", &vTitle, &cWhite);
 	DrawString("'TAB' to view scene controls.", &vReturn, &cWhite);
 
-	glEnable(GL_DEPTH_TEST);
+	Vector3 vObjLoaded = { 0.5f, 1.7f, -1.0f };
+	if (tankLoaded)
+		DrawString("IS7 tank object loaded.", &vObjLoaded, &cWhite);
+	else if (skullLoaded)
+		DrawString("Human skull object loaded.", &vObjLoaded, &cWhite);
+	else if (cubeLoaded)
+		DrawString("Companion cube object loaded.", &vObjLoaded, &cWhite);
+
 	glEnable(GL_LIGHTING);
+	
+	Vector3 vPosition = { 0.5f, 1.5f, -1.0f };
+	if (colorIsRed)
+		DrawString("Colour changed to red.", &vPosition, &cWhite);
+	else if (colorIsGreen)
+		DrawString("Colour changed to green.", &vPosition, &cWhite);
+	else if (colorIsBlue)
+		DrawString("Colour changed to blue.", &vPosition, &cWhite);
+	else if (colorIsCyan)
+		DrawString("Colour changed to cyan.", &vPosition, &cWhite);
+	else if (colorIsMagenta)
+		DrawString("Colour changed to magenta.", &vPosition, &cWhite);
+	else if (colorIsYellow)
+		DrawString("Colour changed to yellow.", &vPosition, &cWhite);
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 void SceneOBJ::DrawMenu()
 {
-	
 	if (paused)
 	{
 		glDisable(GL_TEXTURE_2D);
@@ -225,6 +318,15 @@ void SceneOBJ::DrawMenu()
 		Vector3 vObjectTank = { 0.25f, 1.05f, -1.0f };
 		Vector3 vObjectSkull = { 0.25f, 0.85f, -1.0f };
 		Vector3 vObjectCube = { 0.25f, 0.65f, -1.0f };
+
+		Vector3 vColour = { 0.25f, 0.3f, -1.0f };
+		Vector3 vColourRed = { 0.25f, 0.1f, -1.0f };
+		Vector3 vColourGreen = { 0.25f, -0.1f, -1.0f };
+		Vector3 vColourBlue = { 0.25f, -0.3f, -1.0f };
+		Vector3 vColourCyan = { 0.25f, -0.5f, -1.0f };
+		Vector3 vColourMagenta = { 0.25f, -0.7f, -1.0f };
+		Vector3 vColourYellow = { 0.25f, -0.9f, -1.0f };
+		Vector3 vColourReset = { 0.25f, -1.1f, -1.0f };
 
 		Vector3 vReturn = { -0.7f, -1.75f, -1.0f };
 
@@ -247,10 +349,19 @@ void SceneOBJ::DrawMenu()
 		DrawString("'up' - Move object backward", &vMovementBack, &cWhite);
 		DrawString("'down' - Move object forward", &vMovementForward, &cWhite);
 
-		DrawString("Change OBJ", &vObject, &cOrange);
+		DrawString("Change Object", &vObject, &cOrange);
 		DrawString("'t' - Change to tank", &vObjectTank, &cWhite);
 		DrawString("'h' - Change to skull", &vObjectSkull, &cWhite);
-		DrawString("'c' - Change to cube", &vObjectCube, &cWhite);
+		DrawString("'p' - Change to cube", &vObjectCube, &cWhite);
+
+		DrawString("Object Colour", &vColour, &cMagenta);
+		DrawString("'r' - Change to red", &vColourRed, &cWhite);
+		DrawString("'g' - Change to green", &vColourGreen, &cWhite);
+		DrawString("'b' - Change to blue", &vColourBlue, &cWhite);
+		DrawString("'c' - Change to cyan", &vColourCyan, &cWhite);
+		DrawString("'m' - Change to magenta", &vColourMagenta, &cWhite);
+		DrawString("'y' - Change to yellow", &vColourYellow, &cWhite);
+		DrawString("'n' - Reset colours", &vColourReset, &cWhite);
 
 		DrawString("'TAB' to return to the scene.", &vReturn, &cRed);
 
@@ -274,9 +385,12 @@ void SceneOBJ::SceneAudio()
 			PlaySound(NULL, NULL, 0);
 
 		if (objectAudio)
+			PlaySound("Audio/pipe.wav", GetModuleHandle(NULL), SND_ASYNC);
+
+		if (colorAudio)
 			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
 
-		audioPlaying = objectAudio = false;
+		audioPlaying = objectAudio = colorAudio = false;
 	}
 }
 
@@ -308,4 +422,29 @@ void SceneOBJ::LoadOBJ()
 		skullObj.Draw();
 	}
 	glPopMatrix();
+}
+
+void SceneOBJ::UpdateLighting()
+{
+	_material->Ambient.x = red;
+	_material->Ambient.y = green;
+	_material->Ambient.z = blue;
+	_material->Ambient.w = 1.0;
+
+	_material->Diffuse.x = red;
+	_material->Diffuse.y = green;
+	_material->Diffuse.z = blue;
+	_material->Diffuse.w = 1.0;
+
+	_material->Specular.x = 1.0;
+	_material->Specular.y = 1.0;
+	_material->Specular.z = 1.0;
+	_material->Specular.w = 1.0;
+
+	_material->Shininess = 100.0f;
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, &(_material->Ambient.x));
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, &(_material->Diffuse.x));
+	glMaterialfv(GL_FRONT, GL_SPECULAR, &(_material->Specular.x));
+	glMaterialf(GL_FRONT, GL_SHININESS, _material->Shininess);
 }

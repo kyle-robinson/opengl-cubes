@@ -5,9 +5,6 @@ SceneGame::SceneGame() : Scene()
 	InitGL();
 	InitLighting();
 	InitObjects();
-
-	cubeTimer = CUBE_TIMER;
-
 	glutMainLoop();
 }
 
@@ -25,6 +22,8 @@ void SceneGame::InitGL()
 	
 	GLUTCallbacks::Init(this);
 	glutDisplayFunc(GLUTCallbacks::Display);
+	glutKeyboardUpFunc(GLUTCallbacks::KeyboardUp);
+	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 }
 
 void SceneGame::InitLighting()
@@ -35,12 +34,13 @@ void SceneGame::InitLighting()
 void SceneGame::InitObjects()
 {
 	Scene::InitObjects();
+	cubeXBlue = 19;
 }
 
 void SceneGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_LIGHTING);
 
@@ -53,7 +53,7 @@ void SceneGame::Display()
 
 		DrawGrid();
 		DrawQuad();
-		DrawCube();
+		DrawCubes();
 
 		DrawUI();
 	}
@@ -82,17 +82,17 @@ void SceneGame::Update()
 
 void SceneGame::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'w' && cubeZ > 0)
-		cubeZ -= 1;
+	if (key == 'w' && cubeZRed > 0)
+		cubeZRed -= 1;
 
-	if (key == 's' && cubeZ < 19)
-		cubeZ += 1;
+	if (key == 's' && cubeZRed < 19)
+		cubeZRed += 1;
 
-	if (key == 'a' && cubeX > 0)
-		cubeX -= 1;
+	if (key == 'a' && cubeXRed > 0)
+		cubeXRed -= 1;
 
-	if (key == 'd' && cubeX < 19)
-		cubeX += 1;
+	if (key == 'd' && cubeXRed < 19)
+		cubeXRed += 1;
 
 	if (key == 'q' && cubeY < 4)
 		cubeY += 1;
@@ -102,78 +102,53 @@ void SceneGame::Keyboard(unsigned char key, int x, int y)
 
 	if (key == 'n')
 	{
-		for (int i = 0; i < Q[0].total + 1; i++)
+		for (int i = 0; i < Q_Red[0].total + 1; i++)
 		{
-			Q[i].x1 = 0;
-			Q[i].x2 = 0;
-			Q[i].x3 = 0;
-			Q[i].x4 = 0;
+			Q_Red[i].x1 = 0;
+			Q_Red[i].x2 = 0;
+			Q_Red[i].x3 = 0;
+			Q_Red[i].x4 = 0;
 			
-			Q[i].y1 = 0;
-			Q[i].y2 = 0;
-			Q[i].y3 = 0;
-			Q[i].y4 = 0;
+			Q_Red[i].y1 = 0;
+			Q_Red[i].y2 = 0;
+			Q_Red[i].y3 = 0;
+			Q_Red[i].y4 = 0;
 			
-			Q[i].z1 = 0;
-			Q[i].z2 = 0;
-			Q[i].z3 = 0;
-			Q[i].z4 = 0;
+			Q_Red[i].z1 = 0;
+			Q_Red[i].z2 = 0;
+			Q_Red[i].z3 = 0;
+			Q_Red[i].z4 = 0;
+		}
+		for (int i = 0; i < Q_Blue[0].total + 1; i++)
+		{
+			Q_Blue[i].x1 = 0;
+			Q_Blue[i].x2 = 0;
+			Q_Blue[i].x3 = 0;
+			Q_Blue[i].x4 = 0;
+
+			Q_Blue[i].y1 = 0;
+			Q_Blue[i].y2 = 0;
+			Q_Blue[i].y3 = 0;
+			Q_Blue[i].y4 = 0;
+
+			Q_Blue[i].z1 = 0;
+			Q_Blue[i].z2 = 0;
+			Q_Blue[i].z3 = 0;
+			Q_Blue[i].z4 = 0;
 		}
 		PlaySound("Audio/hint.wav", GetModuleHandle(NULL), SND_ASYNC);
 	}
 
 	if (key == 32)
 	{
-		AddQuad();
+		AddQuadRed();
 		cubeRed = true;
 	}
 
-	if (key == 'r')
+	if (key == 13)
 	{
-		Q[cubeN].r = 1;
-		Q[cubeN].g = 0;
-		Q[cubeN].b = 0;
-		colourAudio = true;
-	}
-
-	if (key == 'g')
-	{
-		Q[cubeN].r = 0;
-		Q[cubeN].g = 1;
-		Q[cubeN].b = 0;
-		colourAudio = true;
-	}
-
-	if (key == 'b')
-	{
-		Q[cubeN].r = 0;
-		Q[cubeN].g = 0;
-		Q[cubeN].b = 1;
-		colourAudio = true;
-	}
-
-	if (key == 'c')
-	{
-		Q[cubeN].r = 0;
-		Q[cubeN].g = 1;
-		Q[cubeN].b = 1;
-		colourAudio = true;
-	}
-
-	if (key == 'm')
-	{
-		Q[cubeN].r = 1;
-		Q[cubeN].g = 0;
-		Q[cubeN].b = 1;
-		colourAudio = true;
-	}
-
-	if (key == 'y')
-	{
-		Q[cubeN].r = 1;
-		Q[cubeN].g = 1;
-		Q[cubeN].b = 0;
-		colourAudio = true;
+		AddQuadBlue();
+		cubeBlue = true;
 	}
 
 	if (key == 9)
@@ -183,6 +158,128 @@ void SceneGame::Keyboard(unsigned char key, int x, int y)
 		else
 			paused = false;
 	}
+}
+
+void SceneGame::KeyboardSpecial(int key, int x, int y)
+{
+	if (key == GLUT_KEY_UP && cubeZBlue > 0)
+		cubeZBlue -= 1;
+
+	if (key == GLUT_KEY_DOWN && cubeZBlue < 19)
+		cubeZBlue += 1;
+
+	if (key == GLUT_KEY_LEFT && cubeXBlue > 0)
+		cubeXBlue -= 1;
+
+	if (key == GLUT_KEY_RIGHT && cubeXBlue < 19)
+		cubeXBlue += 1;
+
+	if (key == GLUT_KEY_F1)
+	{
+		Q_Red[cubeN].r = 1;
+		Q_Red[cubeN].g = 0;
+		Q_Red[cubeN].b = 0;
+	}
+
+	if (key == GLUT_KEY_F2)
+	{
+		Q_Red[cubeN].r = 0;
+		Q_Red[cubeN].g = 1;
+		Q_Red[cubeN].b = 0;
+	}
+
+	if (key == GLUT_KEY_F3)
+	{
+		Q_Red[cubeN].r = 0;
+		Q_Red[cubeN].g = 0;
+		Q_Red[cubeN].b = 1;
+	}
+
+	if (key == GLUT_KEY_F4)
+	{
+		Q_Red[cubeN].r = 0;
+		Q_Red[cubeN].g = 1;
+		Q_Red[cubeN].b = 1;
+	}
+
+	if (key == GLUT_KEY_F5)
+	{
+		Q_Red[cubeN].r = 1;
+		Q_Red[cubeN].g = 0;
+		Q_Red[cubeN].b = 1;
+	}
+
+	if (key == GLUT_KEY_F6)
+	{
+		Q_Red[cubeN].r = 1;
+		Q_Red[cubeN].g = 1;
+		Q_Red[cubeN].b = 0;
+	}
+
+	if (key == GLUT_KEY_F7)
+	{
+		Q_Blue[cubeN].r = 1;
+		Q_Blue[cubeN].g = 0;
+		Q_Blue[cubeN].b = 0;
+	}
+
+	if (key == GLUT_KEY_F8)
+	{
+		Q_Blue[cubeN].r = 0;
+		Q_Blue[cubeN].g = 1;
+		Q_Blue[cubeN].b = 0;
+	}
+
+	if (key == GLUT_KEY_F9)
+	{
+		Q_Blue[cubeN].r = 0;
+		Q_Blue[cubeN].g = 0;
+		Q_Blue[cubeN].b = 1;
+	}
+
+	if (key == GLUT_KEY_F10)
+	{
+		Q_Blue[cubeN].r = 0;
+		Q_Blue[cubeN].g = 1;
+		Q_Blue[cubeN].b = 1;
+	}
+
+	if (key == GLUT_KEY_F11)
+	{
+		Q_Blue[cubeN].r = 1;
+		Q_Blue[cubeN].g = 0;
+		Q_Blue[cubeN].b = 1;
+	}
+
+	if (key == GLUT_KEY_F12)
+	{
+		Q_Blue[cubeN].r = 1;
+		Q_Blue[cubeN].g = 1;
+		Q_Blue[cubeN].b = 0;
+	}
+
+	if (key == GLUT_KEY_F1 ||
+		key == GLUT_KEY_F2 ||
+		key == GLUT_KEY_F3 ||
+		key == GLUT_KEY_F4 ||
+		key == GLUT_KEY_F5 ||
+		key == GLUT_KEY_F6 ||
+		key == GLUT_KEY_F7 ||
+		key == GLUT_KEY_F8 ||
+		key == GLUT_KEY_F9 ||
+		key == GLUT_KEY_F10 ||
+		key == GLUT_KEY_F11 ||
+		key == GLUT_KEY_F12)
+		colourAudio = true;
+}
+
+void SceneGame::KeyboardUp(unsigned char key, int x, int y)
+{
+	if (key == 32)
+		cubeRed = false;
+
+	if (key == 13)
+		cubeBlue = false;
 }
 
 void SceneGame::DrawString(const char* text, Vector3* position, Color* color)
@@ -227,12 +324,14 @@ void SceneGame::DrawMenu()
 	Vector3 vQuad = { 0.1f, 0.4f, -1.0f };
 	Vector3 vQuadSpace = { 0.1f, 0.33f, -1.0f };
 	Vector3 vQuadRemove = { 0.1f, 0.26f, -1.0f };
-	Vector3 vQuadRed = { 0.1f, 0.19f, -1.0f };
-	Vector3 vQuadGreen = { 0.1f, 0.12f, -1.0f };
-	Vector3 vQuadBlue = { 0.1f, 0.05f, -1.0f };
-	Vector3 vQuadCyan = { 0.1f, -0.02f, -1.0f };
-	Vector3 vQuadMagenta = { 0.1f, -0.09f, -1.0f };
-	Vector3 vQuadYellow = { 0.1f, -0.16f, -1.0f };
+	
+	Vector3 vQuadColours = { 0.1f, 0.1375f, -1.0f };
+	Vector3 vQuadRed = { 0.1f, 0.0675f, -1.0f };
+	Vector3 vQuadGreen = { 0.1f, -0.0025f, -1.0f };
+	Vector3 vQuadBlue = { 0.1f, -0.0725f, -1.0f };
+	Vector3 vQuadCyan = { 0.1f, -0.1425f, -1.0f };
+	Vector3 vQuadMagenta = { 0.1f, -0.2125f, -1.0f };
+	Vector3 vQuadYellow = { 0.1f, -0.2825f, -1.0f };
 
 	Vector3 vReturn = { -0.2195f, -0.5495f, -1.0f };
 
@@ -258,6 +357,8 @@ void SceneGame::DrawMenu()
 	DrawString("Quads", &vQuad, &cOrange);
 	DrawString("'space' - Define 1 quad vertex", &vQuadSpace, &cWhite);
 	DrawString("'n' - Remove quads from scene", &vQuadRemove, &cWhite);
+	
+	DrawString("Quad Colours", &vQuadColours, &cMagenta);
 	DrawString("'r' - Change quad to red", &vQuadRed, &cWhite);
 	DrawString("'g' - Change quad to green", &vQuadGreen, &cWhite);
 	DrawString("'b' - Change quad to blue", &vQuadBlue, &cWhite);
@@ -276,16 +377,6 @@ void SceneGame::SceneAudio()
 	{
 		if (audioPlaying)
 			PlaySound(NULL, NULL, 0);
-
-		if (cubeRed)
-		{
-			cubeTimer -= 1;
-			if (cubeTimer <= 0)
-			{
-				cubeRed = false;
-				cubeTimer = CUBE_TIMER;
-			}
-		}
 
 		if (colourAudio)
 			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
@@ -336,43 +427,86 @@ void SceneGame::DrawGrid()
 	}
 }
 
-void SceneGame::AddQuad()
+void SceneGame::AddQuadRed()
 {
-	Q[0].state++;
-	if (Q[0].state > 4)
-		Q[0].state = 1;
-	int st = Q[0].state;
+	Q_Red[0].state++;
+	if (Q_Red[0].state > 4)
+		Q_Red[0].state = 1;
+	int st = Q_Red[0].state;
 
 	if (st == 1)
 	{
-		Q[0].total++;
-		cubeN = Q[0].total;
+		Q_Red[0].total++;
+		cubeN = Q_Red[0].total;
 
-		Q[cubeN].x1 = cubeX;
-		Q[cubeN].y1 = cubeY;
-		Q[cubeN].z1 = cubeZ;
+		Q_Red[cubeN].x1 = cubeXRed;
+		Q_Red[cubeN].y1 = cubeY;
+		Q_Red[cubeN].z1 = cubeZRed;
 	}
 
 	if (st == 1 || st == 2)
 	{
-		Q[cubeN].x2 = cubeX;
-		Q[cubeN].y2 = cubeY;
-		Q[cubeN].z2 = cubeZ;
+		Q_Red[cubeN].x2 = cubeXRed;
+		Q_Red[cubeN].y2 = cubeY;
+		Q_Red[cubeN].z2 = cubeZRed;
 	}
 
 	if (st == 1 || st == 2 || st == 3)
 	{
-		Q[cubeN].x3 = cubeX;
-		Q[cubeN].y3 = cubeY;
-		Q[cubeN].z3 = cubeZ;
+		Q_Red[cubeN].x3 = cubeXRed;
+		Q_Red[cubeN].y3 = cubeY;
+		Q_Red[cubeN].z3 = cubeZRed;
 		PlaySound("Audio/menu_click.wav", GetModuleHandle(NULL), SND_ASYNC);
 	}
 
 	if (st == 1 || st == 2 || st == 3 || st == 4)
 	{
-		Q[cubeN].x4 = cubeX;
-		Q[cubeN].y4 = cubeY;
-		Q[cubeN].z4 = cubeZ;
+		Q_Red[cubeN].x4 = cubeXRed;
+		Q_Red[cubeN].y4 = cubeY;
+		Q_Red[cubeN].z4 = cubeZRed;
+	}
+
+	if (st == 4)
+		PlaySound("Audio/pipe.wav", GetModuleHandle(NULL), SND_ASYNC);
+}
+
+void SceneGame::AddQuadBlue()
+{
+	Q_Blue[0].state++;
+	if (Q_Blue[0].state > 4)
+		Q_Blue[0].state = 1;
+	int st = Q_Blue[0].state;
+
+	if (st == 1)
+	{
+		Q_Blue[0].total++;
+		cubeN = Q_Blue[0].total;
+
+		Q_Blue[cubeN].x1 = cubeXBlue;
+		Q_Blue[cubeN].y1 = cubeY;
+		Q_Blue[cubeN].z1 = cubeZBlue;
+	}
+
+	if (st == 1 || st == 2)
+	{
+		Q_Blue[cubeN].x2 = cubeXBlue;
+		Q_Blue[cubeN].y2 = cubeY;
+		Q_Blue[cubeN].z2 = cubeZBlue;
+	}
+
+	if (st == 1 || st == 2 || st == 3)
+	{
+		Q_Blue[cubeN].x3 = cubeXBlue;
+		Q_Blue[cubeN].y3 = cubeY;
+		Q_Blue[cubeN].z3 = cubeZBlue;
+		PlaySound("Audio/menu_click.wav", GetModuleHandle(NULL), SND_ASYNC);
+	}
+
+	if (st == 1 || st == 2 || st == 3 || st == 4)
+	{
+		Q_Blue[cubeN].x4 = cubeXBlue;
+		Q_Blue[cubeN].y4 = cubeY;
+		Q_Blue[cubeN].z4 = cubeZBlue;
 	}
 
 	if (st == 4)
@@ -381,28 +515,50 @@ void SceneGame::AddQuad()
 
 void SceneGame::DrawQuad()
 {
-	for (int i = 0; i < Q[0].total + 1; i++)
+	for (int i = 0; i < Q_Red[0].total + 1; i++)
 	{
 		glBegin(GL_QUADS);
-			glColor3f(Q[i].r, Q[i].g, Q[i].b);
-			glVertex3f(Q[i].x1, Q[i].y1, Q[i].z1);
-			glVertex3f(Q[i].x2, Q[i].y2, Q[i].z2);
-			glVertex3f(Q[i].x3, Q[i].y3, Q[i].z3);
-			glVertex3f(Q[i].x4, Q[i].y4, Q[i].z4);
+			glColor3f(Q_Red[i].r, Q_Red[i].g, Q_Red[i].b);
+			glVertex3f(Q_Red[i].x1, Q_Red[i].y1, Q_Red[i].z1);
+			glVertex3f(Q_Red[i].x2, Q_Red[i].y2, Q_Red[i].z2);
+			glVertex3f(Q_Red[i].x3, Q_Red[i].y3, Q_Red[i].z3);
+			glVertex3f(Q_Red[i].x4, Q_Red[i].y4, Q_Red[i].z4);
+		glEnd();
+	}
+	for (int i = 0; i < Q_Blue[0].total + 1; i++)
+	{
+		glBegin(GL_QUADS);
+			glColor3f(Q_Blue[i].r, Q_Blue[i].g, Q_Blue[i].b);
+			glVertex3f(Q_Blue[i].x1, Q_Blue[i].y1, Q_Blue[i].z1);
+			glVertex3f(Q_Blue[i].x2, Q_Blue[i].y2, Q_Blue[i].z2);
+			glVertex3f(Q_Blue[i].x3, Q_Blue[i].y3, Q_Blue[i].z3);
+			glVertex3f(Q_Blue[i].x4, Q_Blue[i].y4, Q_Blue[i].z4);
 		glEnd();
 	}
 }
 
-void SceneGame::DrawCube()
+void SceneGame::DrawCubes()
 {
 	glPushMatrix();
 
 		if (!cubeRed)
-			glColor3f(1, 1, 1);
+			glColor3f(0.5, 0, 0);
 		else
 			glColor3f(1, 0, 0);
 
-		glTranslatef(cubeX, cubeY, cubeZ);
+		glTranslatef(cubeXRed, cubeY, cubeZRed);
+		glutSolidCube(0.4);
+
+	glPopMatrix();
+
+	glPushMatrix();
+
+		if (!cubeBlue)
+			glColor3f(0, 0.3, 0.5);
+		else
+			glColor3f(0, 0.6, 1);
+
+		glTranslatef(cubeXBlue, cubeY, cubeZBlue);
 		glutSolidCube(0.4);
 
 	glPopMatrix();

@@ -41,8 +41,8 @@ void SceneCollision::InitGL()
 	Scene::InitGL();
 	GLUTCallbacks::Init(this);
 	glutDisplayFunc(GLUTCallbacks::Display);
-	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 	glutKeyboardUpFunc(GLUTCallbacks::KeyboardUp);
+	glutSpecialFunc(GLUTCallbacks::KeyboardSpecial);
 	glutSpecialUpFunc(GLUTCallbacks::KeyboardSpecialUp);
 }
 
@@ -120,7 +120,10 @@ void SceneCollision::Update()
 void SceneCollision::Keyboard(unsigned char key, int x, int y)
 {
 	if (key == 'i')
+	{
 		SetCubePositions();
+		PlaySound("Audio/hint.wav", GetModuleHandle(NULL), SND_ASYNC);
+	}
 
 	if (collisionTimer == COLLISION_TIMER)
 	{
