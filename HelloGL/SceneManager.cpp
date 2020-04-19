@@ -41,11 +41,6 @@ void SceneManager::Update()
 void SceneManager::ChangeScene(SCENES newScreen)
 {	
 	PlaySound("Audio/game_sound.wav", GetModuleHandle(NULL), SND_ASYNC);
-	
-	if (mCurrentScene != NULL || mCurrentScene == NULL)
-	{
-		delete mCurrentScene;
-	}
 
 	SceneMenu* tempMenu;
 	SceneStarfield* tempStarfield;
@@ -82,40 +77,27 @@ void SceneManager::ChangeScene(SCENES newScreen)
 		std::cout << "ERROR::Was not able to load any of the scenes!" << std::endl;
 		break;
 	}
+	mCurrentScene->~Scene();
 }
 
 void SceneManager::Keyboard(unsigned char key, int x, int y)
 {
+	if (key == '0' || key == '1' || key == '2' || key == '3' || key == '4' || key == 27)
+	{
+		delete mCurrentScene;
+		mCurrentScene = NULL;
+	}
+
 	if (key == '0')
-	{
-		delete mCurrentScene;
-		mCurrentScene = NULL;
 		ChangeScene(SCENE_MENU);
-	}
-	if (key == '1')
-	{
-		delete mCurrentScene;
-		mCurrentScene = NULL;
+	else if (key == '1')
 		ChangeScene(SCENE_STARFIELD);
-	}
-	if (key == '2')
-	{
-		delete mCurrentScene;
-		mCurrentScene = NULL;
+	else if (key == '2')
 		ChangeScene(SCENE_COLLISION);
-	}
-	if (key == '3')
-	{
-		delete mCurrentScene;
-		mCurrentScene = NULL;
+	else if (key == '3')
 		ChangeScene(SCENE_GAME);
-	}
-	if (key == '4')
-	{
-		delete mCurrentScene;
-		mCurrentScene = NULL;
+	else if (key == '4')
 		ChangeScene(SCENE_OBJLOADER);
-	}
 
 	if (key == 27)
 		exit(0);
