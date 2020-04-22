@@ -13,7 +13,7 @@ SceneGame::SceneGame() : Scene()
 
 SceneGame::~SceneGame(void)
 {
-
+	
 }
 
 void SceneGame::InitGL()

@@ -93,6 +93,9 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files\Objects\Cube</Filter>
     </ClCompile>
+    <ClCompile Include="Treenode.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLUTCallbacks.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Header Files\Objects\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="Treenode.h">
+      <Filter>Header Files\Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

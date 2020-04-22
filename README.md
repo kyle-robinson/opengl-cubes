@@ -11,8 +11,8 @@ OpenGL project as part of 2nd semester FOGGS module.
 
 ### Additional Tutorials to complete.
 - [ ] Linked Lists
-- [ ] Binary Trees
-- [ ] Scene Graphs
+- [x] Binary Trees
+- [x] Scene Graphs
 
 ### Complex Features
 - [x] Implement a scene manager system.

@@ -15,9 +15,11 @@ SceneOBJ::SceneOBJ()
 }
 
 SceneOBJ::~SceneOBJ(void)
-{
+{	
 	delete _material;
 	_material = NULL;
+
+	
 }
 
 void SceneOBJ::InitGL()

@@ -1,6 +1,14 @@
 #pragma once
 
+#include <Windows.h>
 #include <gl\GL.h>
+#include <string>
+
+struct Node
+{
+	std::string data;
+	Node *left, *right;
+};
 
 enum SCENES
 {

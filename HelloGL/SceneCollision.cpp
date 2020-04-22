@@ -347,7 +347,7 @@ void SceneCollision::DrawMenu()
 		DrawString("`F6' - Yellow", &vColourYellow, &cWhite);
 		DrawString("`R' - Reset Colours", &vColourReset, &cWhite);
 		
-		DrawString("s c e n e    c o l o u r", &vCubes, &cDarkCyan);
+		DrawString("c u b e    p o s i t i o n s", &vCubes, &cDarkCyan);
 		DrawString("`I' - Reset Cube Positions", &vCubesReset, &cWhite);
 
 		DrawString("`T A B'    t o    r e t u r n    t o    t h e    s c e n e   . . .", &vReturn, &cLightBlue);
