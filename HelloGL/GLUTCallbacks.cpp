@@ -151,4 +151,10 @@ namespace GLUTCallbacks
 		if (sceneOBJ != nullptr)
 			sceneOBJ->ObjectMenu(value);
 	}
+
+	void ColourMenu(int value)
+	{
+		if (sceneOBJ != nullptr)
+			sceneOBJ->ColourMenu(value);
+	}
 }

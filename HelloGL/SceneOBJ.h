@@ -32,7 +32,9 @@ public:
 	void SceneAudio();
 	void LoadOBJ();
 	void UpdateLighting();
+	
 	void ObjectMenu(int value);
+	void ColourMenu(int value);
 
 private:
 	bool paused, audioPlaying, objectAudio, colorAudio,

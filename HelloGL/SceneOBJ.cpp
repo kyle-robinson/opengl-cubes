@@ -52,6 +52,15 @@ void SceneOBJ::InitMenu()
 	glutAddMenuEntry("Skull", 1);
 	glutAddMenuEntry("Cube", 2);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+	glutCreateMenu(GLUTCallbacks::ColourMenu);
+	glutAddMenuEntry("Red", 0);
+	glutAddMenuEntry("Green", 1);
+	glutAddMenuEntry("Blue", 2);
+	glutAddMenuEntry("Cyan", 3);
+	glutAddMenuEntry("Magenta", 4);
+	glutAddMenuEntry("Yellow", 5);
+	glutAttachMenu(GLUT_LEFT_BUTTON);
 }
 
 void SceneOBJ::Display()
@@ -479,5 +488,68 @@ void SceneOBJ::ObjectMenu(int value)
 	{
 		cubeLoaded = objectAudio = true;
 		tankLoaded = skullLoaded = false;
+	}
+}
+
+void SceneOBJ::ColourMenu(int value)
+{
+	if (value == 0)
+	{
+		red = 1.0f;
+		green = 0.0f;
+		blue = 0.0f;
+		
+		colorAudio = colorIsRed = true;
+		colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+	}
+
+	if (value == 1)
+	{
+		red = 0.0f;
+		green = 1.0f;
+		blue = 0.0f;
+
+		colorAudio = colorIsGreen = true;
+		colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+	}
+
+	if (value == 2)
+	{
+		red = 0.0f;
+		green = 0.0f;
+		blue = 1.0f;
+
+		colorAudio = colorIsBlue = true;
+		colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+	}
+
+	if (value == 3)
+	{
+		red = 0.0f;
+		green = 1.0f;
+		blue = 1.0f;
+
+		colorAudio = colorIsCyan = true;
+		colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
+	}
+
+	if (value == 4)
+	{
+		red = 1.0f;
+		green = 0.0f;
+		blue = 1.0f;
+
+		colorAudio = colorIsMagenta = true;
+		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
+	}
+
+	if (value == 5)
+	{
+		red = 1.0f;
+		green = 1.0f;
+		blue = 0.0f;
+
+		colorAudio = colorIsYellow = true;
+		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
 	}
 }
