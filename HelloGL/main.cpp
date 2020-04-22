@@ -44,7 +44,7 @@ void InitWindow(int argc, char* argv[])
 
 void CreateSceneGraph()
 {
-	std::cout << "SCENE GRAPH" << std::endl << std::endl;
+	std::cout << "Scene Graph / Binary Tree" << std::endl << std::endl;
 	
 	tree = new Treenode();
 

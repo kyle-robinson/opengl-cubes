@@ -20,6 +20,7 @@ public:
 	void InitGL();
 	void InitLighting();
 	void InitObjects();
+	void InitMenu();
 
 	void Keyboard(unsigned char key, int x, int y);
 	void KeyboardSpecial(int key, int x, int y);
@@ -31,6 +32,7 @@ public:
 	void SceneAudio();
 	void LoadOBJ();
 	void UpdateLighting();
+	void ObjectMenu(int value);
 
 private:
 	bool paused, audioPlaying, objectAudio, colorAudio,

@@ -145,4 +145,10 @@ namespace GLUTCallbacks
 		if (sceneCollision != nullptr)
 			sceneCollision->KeyboardSpecialUp(key, x, y);
 	}
+
+	void ObjectMenu(int value)
+	{
+		if (sceneOBJ != nullptr)
+			sceneOBJ->ObjectMenu(value);
+	}
 }

@@ -5,6 +5,7 @@ SceneOBJ::SceneOBJ()
 	InitGL();
 	InitLighting();
 	InitObjects();
+	InitMenu();
 
 	tankLoaded = true;
 	xPosition = 0.0f;
@@ -18,8 +19,6 @@ SceneOBJ::~SceneOBJ(void)
 {	
 	delete _material;
 	_material = NULL;
-
-	
 }
 
 void SceneOBJ::InitGL()
@@ -44,6 +43,15 @@ void SceneOBJ::InitObjects()
 	tankObj.Load((char*)"Objects/IS7.obj");
 	cubeObj.Load((char*)"Objects/cube.obj");
 	skullObj.Load((char*)"Objects/skull.obj");
+}
+
+void SceneOBJ::InitMenu()
+{
+	glutCreateMenu(GLUTCallbacks::ObjectMenu);
+	glutAddMenuEntry("Tank", 0);
+	glutAddMenuEntry("Skull", 1);
+	glutAddMenuEntry("Cube", 2);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
 void SceneOBJ::Display()
@@ -126,30 +134,18 @@ void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 	{
 		tankLoaded = objectAudio = true;
 		cubeLoaded = skullLoaded = false;
-
-		xPosition = 0.0f;
-		yPosition = -1.0f;
-		zPosition = -5.0f;
 	}
 
 	if (key == 'h')
 	{
 		skullLoaded = objectAudio = true;
 		tankLoaded = cubeLoaded = false;
-
-		xPosition = 0.0f;
-		yPosition = -10.0f;
-		zPosition = -30.0f;
 	}
 
 	if (key == 'c')
 	{
 		cubeLoaded = objectAudio = true;
 		tankLoaded = skullLoaded = false;
-
-		xPosition = 0.0f;
-		yPosition = -0.25f;
-		zPosition = -0.5f;
 	}
 
 	if (key == 'r')
@@ -408,27 +404,36 @@ void SceneOBJ::LoadOBJ()
 	glPushMatrix();
 	if (tankLoaded)
 	{
+		xPosition = 0.0f;
+		yPosition = -1.0f;
+		zPosition = -5.0f;
 		glTranslatef(xPosition, yPosition, zPosition);
 		glRotatef(g_rotation, 0, 1, 0);
 		glRotatef(90, 0, 1, 0);
 		g_rotation++;
 		tankObj.Draw();
 	}
-	else if (cubeLoaded)
-	{
-		glTranslatef(xPosition, yPosition, zPosition);
-		glRotatef(g_rotation, 0, 1, 0);
-		glRotatef(90, 0, 1, 0);
-		g_rotation++;
-		cubeObj.Draw();
-	}
 	else if (skullLoaded)
 	{
+		xPosition = 0.0f;
+		yPosition = -10.0f;
+		zPosition = -30.0f;
 		glTranslatef(xPosition, yPosition, zPosition);
 		glRotatef(g_rotation, 0, 1, 0);
 		glRotatef(90, 0, 1, 0);
 		g_rotation++;
 		skullObj.Draw();
+	}
+	else if (cubeLoaded)
+	{
+		xPosition = 0.0f;
+		yPosition = -0.25f;
+		zPosition = -0.5f;
+		glTranslatef(xPosition, yPosition, zPosition);
+		glRotatef(g_rotation, 0, 1, 0);
+		glRotatef(90, 0, 1, 0);
+		g_rotation++;
+		cubeObj.Draw();
 	}
 	glPopMatrix();
 }
@@ -456,4 +461,23 @@ void SceneOBJ::UpdateLighting()
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, &(_material->Diffuse.x));
 	glMaterialfv(GL_FRONT, GL_SPECULAR, &(_material->Specular.x));
 	glMaterialf(GL_FRONT, GL_SHININESS, _material->Shininess);
+}
+
+void SceneOBJ::ObjectMenu(int value)
+{
+	if (value == 0)
+	{
+		tankLoaded = objectAudio = true;
+		skullLoaded = cubeLoaded = false;
+	}
+	else if (value == 1)
+	{
+		skullLoaded = objectAudio = true;
+		tankLoaded = cubeLoaded = false;
+	}
+	else if (value == 2)
+	{
+		cubeLoaded = objectAudio = true;
+		tankLoaded = skullLoaded = false;
+	}
 }
