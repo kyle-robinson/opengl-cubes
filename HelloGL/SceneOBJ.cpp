@@ -511,8 +511,8 @@ void SceneOBJ::MouseMenu(int value)
 
 	case 4:
 		red = 0.0f;
-		green = 0.0f;
-		blue = 1.0f;
+		green = 1.0f;
+		blue = 0.0f;
 		colorAudio = colorIsBlue = true;
 		colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 		break;
