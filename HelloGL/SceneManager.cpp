@@ -55,29 +55,33 @@ void SceneManager::ChangeScene(SCENES newScreen)
 		mCurrentScene = (Scene*)tempMenu;
 		tempMenu = NULL;
 		break;
+
 	case SCENE_STARFIELD:
 		tempStarfield = new SceneStarfield();
 		mCurrentScene = (Scene*)tempStarfield;
 		tempStarfield = NULL;
 		break;
+
 	case SCENE_COLLISION:
 		tempCollision = new SceneCollision();
 		mCurrentScene = (Scene*)tempCollision;
 		tempCollision = NULL;
 		break;
+
 	case SCENE_GAME:
 		tempGame = new SceneGame();
 		mCurrentScene = (Scene*)tempGame;
 		tempGame = NULL;
+
 	case SCENE_OBJLOADER:
 		tempOBJ = new SceneOBJ();
 		mCurrentScene = (Scene*)tempOBJ;
 		tempOBJ = NULL;
+
 	default:
 		std::cout << "ERROR::Was not able to load any of the scenes!" << std::endl;
 		break;
 	}
-	mCurrentScene->~Scene();
 }
 
 void SceneManager::Keyboard(unsigned char key, int x, int y)

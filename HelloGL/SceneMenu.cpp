@@ -1,5 +1,4 @@
 #include "SceneMenu.h"
-#include <iostream>
 
 SceneMenu::SceneMenu() : Scene()
 {
@@ -11,6 +10,8 @@ SceneMenu::SceneMenu() : Scene()
 
 SceneMenu::~SceneMenu(void)
 {
+	Scene::~Scene();
+	
 	delete textureStarfield;
 	textureStarfield = NULL;
 

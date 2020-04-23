@@ -33,18 +33,16 @@ public:
 	void LoadOBJ();
 	void UpdateLighting();
 	
-	void ObjectMenu(int value);
-	void ColourMenu(int value);
+	void MouseMenu(int value);
 
 private:
 	bool paused, audioPlaying, objectAudio, colorAudio,
 		 colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow,
 		 tankLoaded, cubeLoaded, skullLoaded;
-
 	float g_rotation, xPosition, yPosition, zPosition,
 		  red, green, blue;
+	int mouseMenu, objectMenu, colourMenu;
 
 	ModelOBJ tankObj, cubeObj, skullObj;
-
 	Material* _material;
 };

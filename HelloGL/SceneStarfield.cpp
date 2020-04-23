@@ -10,6 +10,7 @@ SceneStarfield::SceneStarfield() : Scene()
 	InitGL();
 	InitLighting();
 	InitObjects();
+	InitMenu();
 
 	zMoving = cRotating = true;
 
@@ -18,6 +19,8 @@ SceneStarfield::SceneStarfield() : Scene()
 
 SceneStarfield::~SceneStarfield(void)
 {
+	Scene::~Scene();
+	
 	delete cubeMesh;
 	cubeMesh = NULL;
 	
@@ -64,6 +67,28 @@ void SceneStarfield::InitObjects()
 		objects[i] = new Cube(cubeMesh, texturePenguins, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, - (rand() % 1000) / 10.0f);
 }
 
+void SceneStarfield::InitMenu()
+{
+	textureMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Penguin", 0);
+	glutAddMenuEntry("Star", 1);
+
+	colourMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Red", 2);
+	glutAddMenuEntry("Green", 3);
+	glutAddMenuEntry("Blue", 4);
+	glutAddMenuEntry("Cyan", 5);
+	glutAddMenuEntry("Magenta", 6);
+	glutAddMenuEntry("Yellow", 7);
+
+	mouseMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddSubMenu("Texture", textureMenu);
+	glutAddSubMenu("Colour", colourMenu);
+
+	glutAddMenuEntry("Exit", 8);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
 void SceneStarfield::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -89,11 +114,10 @@ void SceneStarfield::Update()
 	
 	Scene::Update();
 	SceneAudio();
-	
-	CameraMovement();
 
 	if (!paused)
 	{
+		CameraMovement();
 		for (int i = 0; i < OBJECTCOUNT; i++)
 		{
 			objects[i]->Update();
@@ -101,9 +125,7 @@ void SceneStarfield::Update()
 		}
 	}
 	else
-	{
 		ResetCamera();
-	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->Ambient.x));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->Diffuse.x));
@@ -114,107 +136,115 @@ void SceneStarfield::Update()
 }
 
 void SceneStarfield::Keyboard(unsigned char key, int x, int y)
-{	
-	if (key == 'i')
-		ResetCamera();
-	
-	if (key == 'e')
+{
+	switch(key)
 	{
+	case 'i':
+	case 'I':
+		ResetCamera();
+		break;
+
+	case 'e':
+	case 'E':
 		if (!cRotating)
 			cRotating = true;
 		else
 			cRotating = false;
-	}
+		break;
 
-	if (key == 'z')
-	{
+	case 'z':
+	case 'Z':
 		if (!zReverse)
 			zReverse = true;
 		else
 			zReverse = false;
-	}
+		break;
 
-	if (key == 'q')
-	{
+	case 'q':
+	case 'Q':
 		if (!zMoving)
 			zMoving = true;
 		else
 			zMoving = false;
-	}
-	
-	for (int i = 0; i < OBJECTCOUNT; i++)
-	{
-		if (key == 'w')
-		{
-			objects[i]->axisX = 1.0f;
-			objects[i]->axisY = 0.0f;
-			objects[i]->axisZ = 0.0f;
+		break;
 
-			objects[i]->_rotation -= CUBE_ROTATION;
-			cRotating = false;
-		}
-
-		if (key == 's')
-		{
-			objects[i]->axisX = 1.0f;
-			objects[i]->axisY = 0.0f;
-			objects[i]->axisZ = 0.0f;
-
-			objects[i]->_rotation += CUBE_ROTATION;
-			cRotating = false;
-		}
-		
-		if (key == 'a')
-		{
-			objects[i]->axisX = 0.0f;
-			objects[i]->axisY = 1.0f;
-			objects[i]->axisZ = 0.0f;
-
-			objects[i]->_rotation -= CUBE_ROTATION;
-			cRotating = false;
-		}
-
-		if (key == 'd')
-		{
-			objects[i]->axisX = 0.0f;
-			objects[i]->axisY = 1.0f;
-			objects[i]->axisZ = 0.0f;
-
-			objects[i]->_rotation += CUBE_ROTATION;
-			cRotating = false;
-		}
-
-		if (key == 'l')
-		{
-			textureAudio = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			objects[i] = new Cube(cubeMesh, textureStars, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
-		}
-		
-		if (key == 'p')
-		{
-			textureAudio = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
-		}
-
-		if (key == 'r')
-		{
-			objects[i]->red = 1.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 1.0f;
-
-			colorAudio = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-		}
-	}
-
-	if (key == 9)
-	{
+	case 9:
 		if (!paused)
 			paused = true;
 		else
 			paused = false;
+		break;
+
+	default:
+		break;
+	}
+	
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		switch (key)
+		{
+		case 'w':
+		case 'W':
+			objects[i]->axisX = 1.0f;
+			objects[i]->axisY = 0.0f;
+			objects[i]->axisZ = 0.0f;
+			objects[i]->_rotation -= CUBE_ROTATION;
+			cRotating = false;
+			break;
+
+		case 's':
+		case 'S':
+			objects[i]->axisX = 1.0f;
+			objects[i]->axisY = 0.0f;
+			objects[i]->axisZ = 0.0f;
+			objects[i]->_rotation += CUBE_ROTATION;
+			cRotating = false;
+			break;
+
+		case 'a':
+		case 'A':
+			objects[i]->axisX = 0.0f;
+			objects[i]->axisY = 1.0f;
+			objects[i]->axisZ = 0.0f;
+			objects[i]->_rotation -= CUBE_ROTATION;
+			cRotating = false;
+			break;
+
+		case 'd':
+		case 'D':
+			objects[i]->axisX = 0.0f;
+			objects[i]->axisY = 1.0f;
+			objects[i]->axisZ = 0.0f;
+			objects[i]->_rotation += CUBE_ROTATION;
+			cRotating = false;
+			break;
+
+		case 'l':
+		case 'L':
+			textureAudio = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			objects[i] = new Cube(cubeMesh, textureStars, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+			break;
+
+		case 'p':
+		case 'P':
+			textureAudio = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+			break;
+
+		case 'r':
+		case 'R':
+			objects[i]->red = 1.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		default:
+			break;
+		}
 	}
 }
 
@@ -222,23 +252,34 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 {
 	if (!paused)
 	{
-		if (key == GLUT_KEY_UP)
+		switch (key)
 		{
+		case GLUT_KEY_UP:
 			camera->eye.z -= MOVEMENT_SPEED;
 			camera->center.z -= MOVEMENT_SPEED;
 			camera->up.z -= MOVEMENT_SPEED;
-		}
-		else if (key == GLUT_KEY_DOWN)
-		{
+			break;
+
+		case GLUT_KEY_DOWN:
 			camera->eye.z += MOVEMENT_SPEED;
 			camera->center.z += MOVEMENT_SPEED;
 			camera->up.z += MOVEMENT_SPEED;
-		}
-		else if (key == GLUT_KEY_LEFT && camera->eye.z == 1.0f)
-			camera->eye.x += MOVEMENT_SPEED / 10;
-		else if (key == GLUT_KEY_RIGHT && camera->eye.z == 1.0f)
-			camera->eye.x -= MOVEMENT_SPEED / 10;
+			break;
 
+		case GLUT_KEY_LEFT:
+			if (camera->eye.z == 1.0f)
+				camera->eye.x += MOVEMENT_SPEED / 10;
+			break;
+
+		case GLUT_KEY_RIGHT:
+			if (camera->eye.z == 1.0f)
+				camera->eye.x -= MOVEMENT_SPEED / 10;
+			break;
+		
+		default:
+			break;
+		}
+		
 		for (int i = 0; i < OBJECTCOUNT; i++)
 		{
 			switch (key)
@@ -247,7 +288,6 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 				objects[i]->red = 1.0f;
 				objects[i]->green = 0.0f;
 				objects[i]->blue = 0.0f;
-
 				colorAudio = colorIsRed = true;
 				colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 				break;
@@ -256,7 +296,6 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 				objects[i]->red = 0.0f;
 				objects[i]->green = 1.0f;
 				objects[i]->blue = 0.0f;
-
 				colorAudio = colorIsGreen = true;
 				colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 				break;
@@ -265,7 +304,6 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 				objects[i]->red = 0.0f;
 				objects[i]->green = 0.0f;
 				objects[i]->blue = 1.0f;
-
 				colorAudio = colorIsBlue = true;
 				colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 				break;
@@ -274,7 +312,6 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 				objects[i]->red = 0.0f;
 				objects[i]->green = 1.0f;
 				objects[i]->blue = 1.0f;
-
 				colorAudio = colorIsCyan = true;
 				colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
 				break;
@@ -283,7 +320,6 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 				objects[i]->red = 1.0f;
 				objects[i]->green = 0.0f;
 				objects[i]->blue = 1.0f;
-
 				colorAudio = colorIsMagenta = true;
 				colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
 				break;
@@ -292,9 +328,11 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 				objects[i]->red = 1.0f;
 				objects[i]->green = 1.0f;
 				objects[i]->blue = 0.0f;
-
 				colorAudio = colorIsYellow = true;
 				colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+				break;
+
+			default:
 				break;
 			}
 		}
@@ -303,18 +341,34 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 
 void SceneStarfield::KeyboardUp(unsigned char key, int x, int y)
 {
-	if (key == 'a' || key == 'd')
+	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
-		for (int i = 0; i < OBJECTCOUNT; i++)
+		switch (key)
 		{
+		case 'a':
+		case 'A':
+		case 'd':
+		case 'D':
 			objects[i]->axisX = 1.0f;
 			objects[i]->axisY = 0.0f;
 			objects[i]->axisZ = 0.0f;
+			break;
 		}
 	}
 
-	if (key == 'w' || key == 's' || key == 'a' || key == 'd')
+	switch (key)
+	{
+	case 'w':
+	case 'W':
+	case 's':
+	case 'S':
+	case 'a':
+	case 'A':
+	case 'd':
+	case 'D':
 		cRotating = true;
+		break;
+	}
 }
 
 void SceneStarfield::DrawString(const char* text, Vector3* position, Color* color)
@@ -460,20 +514,16 @@ void SceneStarfield::SceneAudio()
 	{
 		if (!audioPlaying)
 			PlaySound("Audio/mario_elevator.wav", GetModuleHandle(NULL), SND_LOOP | SND_ASYNC);
-		
 		audioPlaying = true;
 	}
 	else
 	{
 		if (audioPlaying)
 			PlaySound(NULL, NULL, 0);
-
 		if (colorAudio)
 			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
-
 		if (textureAudio)
 			PlaySound("Audio/pipe.wav", GetModuleHandle(NULL), SND_ASYNC);
-
 		audioPlaying = colorAudio = textureAudio = false;
 	}
 }
@@ -495,33 +545,29 @@ void SceneStarfield::CubeMovement(int iterator)
 
 	if (objects[iterator]->_position.z > 10.0f)
 		objects[iterator]->_position.z = -100.0f;
-
-	if (objects[iterator]->_position.z < -100.0f)
+	else if (objects[iterator]->_position.z < -100.0f)
 		objects[iterator]->_position.z = 10.0f;
 }
 
 void SceneStarfield::CameraMovement()
 {
-	if (!paused)
+	if (camera->eye.z < -75.0f)
 	{
-		if (camera->eye.z < -75.0f)
-		{
-			camera->eye.z += MOVEMENT_SPEED;
-			camera->center.z += MOVEMENT_SPEED;
-			camera->up.z += MOVEMENT_SPEED;
-		}
-		else if (camera->eye.z > 30.0f)
-		{
-			camera->eye.z -= MOVEMENT_SPEED;
-			camera->center.z -= MOVEMENT_SPEED;
-			camera->up.z -= MOVEMENT_SPEED;
-		}
-
-		if (camera->eye.x > MOVEMENT_SPEED)
-			camera->eye.x -= MOVEMENT_SPEED / 10;
-		else if (camera->eye.x < -MOVEMENT_SPEED)
-			camera->eye.x += MOVEMENT_SPEED / 10;
+		camera->eye.z += MOVEMENT_SPEED;
+		camera->center.z += MOVEMENT_SPEED;
+		camera->up.z += MOVEMENT_SPEED;
 	}
+	else if (camera->eye.z > 30.0f)
+	{
+		camera->eye.z -= MOVEMENT_SPEED;
+		camera->center.z -= MOVEMENT_SPEED;
+		camera->up.z -= MOVEMENT_SPEED;
+	}
+
+	if (camera->eye.x > MOVEMENT_SPEED)
+		camera->eye.x -= MOVEMENT_SPEED / 10;
+	else if (camera->eye.x < -MOVEMENT_SPEED)
+		camera->eye.x += MOVEMENT_SPEED / 10;
 }
 
 void SceneStarfield::ResetCamera()
@@ -537,4 +583,80 @@ void SceneStarfield::ResetCamera()
 	camera->up.x = 0.0f;
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
+}
+
+void SceneStarfield::MouseMenu(int value)
+{
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		switch (value)
+		{
+		case 0:
+			textureAudio = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			objects[i] = new Cube(cubeMesh, texturePenguins, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+			break;
+
+		case 1:
+			textureAudio = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			objects[i] = new Cube(cubeMesh, textureStars, objects[i]->_position.x, objects[i]->_position.y, objects[i]->_position.z);
+			break;
+
+		case 2:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 0.0f;
+			colorAudio = colorIsRed = true;
+			colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 3:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+			colorAudio = colorIsGreen = true;
+			colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 4:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = colorIsBlue = true;
+			colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 5:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = colorIsCyan = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 6:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = colorIsMagenta = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
+			break;
+
+		case 7:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+			colorAudio = colorIsYellow = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+			break;
+
+		case 8:
+			exit(0);
+			break;
+
+		default:
+			break;
+		}
+	}
 }

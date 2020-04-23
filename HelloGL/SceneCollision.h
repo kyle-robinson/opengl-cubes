@@ -22,6 +22,7 @@ public:
 	void InitGL();
 	void InitLighting();
 	void InitObjects();
+	void InitMenu();
 
 	void Keyboard(unsigned char key, int x, int y);
 	void KeyboardSpecial(int key, int x, int y);
@@ -45,6 +46,8 @@ public:
 	void SetCubePositions();
 	void UpdateCubePositions();
 
+	void MouseMenu(int value);
+
 private:
 	bool paused, audioPlaying, cubeCollision, cubeAudio, colorAudio,
 		 colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow,
@@ -52,6 +55,7 @@ private:
 		 penguinMovingUp, penguinMovingDown, penguinMovingLeft, penguinMovingRight,
 		 starMovingUp, starMovingDown, starMovingLeft, starMovingRight;
 	float rotation, cubeSpeed, collisionTimer;
+	int mouseMenu, colourMenu;
 
 	Mesh* cubeMesh;
 	Texture2D *texturePenguins, *textureStars;

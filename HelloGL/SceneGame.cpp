@@ -13,7 +13,7 @@ SceneGame::SceneGame() : Scene()
 
 SceneGame::~SceneGame(void)
 {
-	
+	Scene::~Scene();
 }
 
 void SceneGame::InitGL()
@@ -85,38 +85,58 @@ void SceneGame::Update()
 
 void SceneGame::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'w' && cubeZRed > 0)
-		cubeZRed -= 1;
-
-	if (key == 's' && cubeZRed < 19)
-		cubeZRed += 1;
-
-	if (key == 'a' && cubeXRed > 0)
-		cubeXRed -= 1;
-
-	if (key == 'd' && cubeXRed < 19)
-		cubeXRed += 1;
-
-	if (key == 'q' && cubeYRed < 4)
-		cubeYRed += 1;
-
-	if (key == 'e' && cubeYRed > -4)
-		cubeYRed -= 1;
-
-	if (key == 'r')
+	switch (key)
 	{
+	case 'w':
+	case 'W':
+		if (cubeZRed > 0)
+			cubeZRed -= 1;
+		break;
+
+	case 's':
+	case 'S':
+		if (cubeZRed < 19)
+			cubeZRed += 1;
+		break;
+
+	case 'a':
+	case 'A':
+		if (cubeXRed > 0)
+			cubeXRed -= 1;
+		break;
+
+	case 'd':
+	case 'D':
+		if (cubeXRed < 19)
+			cubeXRed += 1;
+		break;
+
+	case 'q':
+	case 'Q':
+		if (cubeYRed < 4)
+			cubeYRed += 1;
+		break;
+
+	case 'e':
+	case 'E':
+		if (cubeYRed > -4)
+			cubeYRed -= 1;
+		break;
+
+	case 'r':
+	case 'R':
 		for (int i = 0; i < Q_Red[0].total + 1; i++)
 		{
 			Q_Red[i].x1 = 0;
 			Q_Red[i].x2 = 0;
 			Q_Red[i].x3 = 0;
 			Q_Red[i].x4 = 0;
-			
+
 			Q_Red[i].y1 = 0;
 			Q_Red[i].y2 = 0;
 			Q_Red[i].y3 = 0;
 			Q_Red[i].y4 = 0;
-			
+
 			Q_Red[i].z1 = 0;
 			Q_Red[i].z2 = 0;
 			Q_Red[i].z3 = 0;
@@ -143,155 +163,174 @@ void SceneGame::Keyboard(unsigned char key, int x, int y)
 		cubeBlue_Quad = false;
 		quadClear = true;
 		PlaySound("Audio/hint.wav", GetModuleHandle(NULL), SND_ASYNC);
-	}
+		break;
 
-	if (key == 32)
-	{
+	case 32:
 		AddQuadRed();
 		cubeRed = true;
-	}
+		break;
 
-	if (key == 13)
-	{
+	case 13:
 		AddQuadBlue();
 		cubeBlue = true;
-	}
+		break;
 
-	if (key == 9)
-	{
+	case 9:
 		if (!paused)
 			paused = true;
 		else
 			paused = false;
+		break;
+
+	default:
+		break;
 	}
 }
 
 void SceneGame::KeyboardSpecial(int key, int x, int y)
 {
-	if (key == GLUT_KEY_UP && cubeZBlue > 0)
-		cubeZBlue -= 1;
-
-	if (key == GLUT_KEY_DOWN && cubeZBlue < 19)
-		cubeZBlue += 1;
-
-	if (key == GLUT_KEY_LEFT && cubeXBlue > 0)
-		cubeXBlue -= 1;
-
-	if (key == GLUT_KEY_RIGHT && cubeXBlue < 19)
-		cubeXBlue += 1;
-
-	if (key == GLUT_KEY_PAGE_UP && cubeYBlue < 4)
-		cubeYBlue += 1;
-
-	if (key == GLUT_KEY_PAGE_DOWN && cubeYBlue > -4)
-		cubeYBlue -= 1;
-
-	if (key == GLUT_KEY_F1)
+	switch (key)
 	{
+	case GLUT_KEY_UP:
+		if (cubeZBlue > 0)
+			cubeZBlue -= 1;
+		break;
+
+	case GLUT_KEY_DOWN:
+		if (cubeZBlue < 19)
+			cubeZBlue += 1;
+		break;
+
+	case GLUT_KEY_LEFT:
+		if (cubeXBlue > 0)
+			cubeXBlue -= 1;
+		break;
+
+	case GLUT_KEY_RIGHT:
+		if (cubeXBlue < 19)
+			cubeXBlue += 1;
+		break;
+
+	case GLUT_KEY_PAGE_UP:
+		if (cubeYBlue < 4)
+			cubeYBlue += 1;
+		break;
+
+	case GLUT_KEY_PAGE_DOWN:
+		if (cubeYBlue > -4)
+			cubeYBlue -= 1;
+		break;
+
+	case GLUT_KEY_F1:
 		Q_Red[cubeN].r = 1;
 		Q_Red[cubeN].g = 0;
 		Q_Red[cubeN].b = 0;
-	}
+		break;
 
-	if (key == GLUT_KEY_F2)
-	{
+	case GLUT_KEY_F2:
 		Q_Red[cubeN].r = 0;
 		Q_Red[cubeN].g = 1;
 		Q_Red[cubeN].b = 0;
-	}
+		break;
 
-	if (key == GLUT_KEY_F3)
-	{
+	case GLUT_KEY_F3:
 		Q_Red[cubeN].r = 0;
 		Q_Red[cubeN].g = 0;
 		Q_Red[cubeN].b = 1;
-	}
+		break;
 
-	if (key == GLUT_KEY_F4)
-	{
+	case GLUT_KEY_F4:
 		Q_Red[cubeN].r = 0;
 		Q_Red[cubeN].g = 1;
 		Q_Red[cubeN].b = 1;
-	}
+		break;
 
-	if (key == GLUT_KEY_F5)
-	{
+	case GLUT_KEY_F5:
 		Q_Red[cubeN].r = 1;
 		Q_Red[cubeN].g = 0;
 		Q_Red[cubeN].b = 1;
-	}
+		break;
 
-	if (key == GLUT_KEY_F6)
-	{
+	case GLUT_KEY_F6:
 		Q_Red[cubeN].r = 1;
 		Q_Red[cubeN].g = 1;
 		Q_Red[cubeN].b = 0;
-	}
+		break;
 
-	if (key == GLUT_KEY_F7)
-	{
+	case GLUT_KEY_F7:
 		Q_Blue[cubeN].r = 1;
 		Q_Blue[cubeN].g = 0;
 		Q_Blue[cubeN].b = 0;
-	}
-
-	if (key == GLUT_KEY_F8)
-	{
+		break;
+		
+	case GLUT_KEY_F8:
 		Q_Blue[cubeN].r = 0;
 		Q_Blue[cubeN].g = 1;
 		Q_Blue[cubeN].b = 0;
-	}
+		break;
 
-	if (key == GLUT_KEY_F9)
-	{
+	case GLUT_KEY_F9:
 		Q_Blue[cubeN].r = 0;
 		Q_Blue[cubeN].g = 0;
 		Q_Blue[cubeN].b = 1;
-	}
+		break;
 
-	if (key == GLUT_KEY_F10)
-	{
+	case GLUT_KEY_F10:
 		Q_Blue[cubeN].r = 0;
 		Q_Blue[cubeN].g = 1;
 		Q_Blue[cubeN].b = 1;
-	}
+		break;
 
-	if (key == GLUT_KEY_F11)
-	{
+	case GLUT_KEY_F11:
 		Q_Blue[cubeN].r = 1;
 		Q_Blue[cubeN].g = 0;
 		Q_Blue[cubeN].b = 1;
-	}
+		break;
 
-	if (key == GLUT_KEY_F12)
-	{
+	case GLUT_KEY_F12:
 		Q_Blue[cubeN].r = 1;
 		Q_Blue[cubeN].g = 1;
 		Q_Blue[cubeN].b = 0;
+		break;
+
+	default:
+		break;
 	}
 
-	if (key == GLUT_KEY_F1 ||
-		key == GLUT_KEY_F2 ||
-		key == GLUT_KEY_F3 ||
-		key == GLUT_KEY_F4 ||
-		key == GLUT_KEY_F5 ||
-		key == GLUT_KEY_F6 ||
-		key == GLUT_KEY_F7 ||
-		key == GLUT_KEY_F8 ||
-		key == GLUT_KEY_F9 ||
-		key == GLUT_KEY_F10 ||
-		key == GLUT_KEY_F11 ||
-		key == GLUT_KEY_F12)
+	switch (key)
+	{
+	case GLUT_KEY_F1:
+	case GLUT_KEY_F2:
+	case GLUT_KEY_F3:
+	case GLUT_KEY_F4:
+	case GLUT_KEY_F5:
+	case GLUT_KEY_F6:
+	case GLUT_KEY_F7:
+	case GLUT_KEY_F8:
+	case GLUT_KEY_F9:
+	case GLUT_KEY_F10:
+	case GLUT_KEY_F11:
+	case GLUT_KEY_F12:
 		colourAudio = true;
+		break;
+
+	default:
+		break;
+	}
 }
 
 void SceneGame::KeyboardUp(unsigned char key, int x, int y)
 {
-	if (key == 32)
+	switch (key)
+	{
+	case 32:
 		cubeRed = false;
+		break;
 
-	if (key == 13)
+	case 13:
 		cubeBlue = false;
+		break;
+	}
 }
 
 void SceneGame::DrawString(const char* text, Vector3* position, Color* color)

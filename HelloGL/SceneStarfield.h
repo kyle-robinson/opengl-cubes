@@ -14,12 +14,14 @@ class SceneStarfield : Scene
 public:
 	SceneStarfield();
 	~SceneStarfield(void);
+
 	void Display();
 	void Update();
 
 	void InitGL();
 	void InitLighting();
 	void InitObjects();
+	void InitMenu();
 
 	void Keyboard(unsigned char key, int x, int y);
 	void KeyboardUp(unsigned char key, int x, int y);
@@ -35,11 +37,14 @@ public:
 	void CameraMovement();
 	void ResetCamera();
 
+	void MouseMenu(int value);
+
 private:
 	bool paused, audioPlaying, colorAudio, textureAudio,
 		 colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow,
 		 zReverse, zMoving, cRotating;
 	float rotation;
+	int mouseMenu, textureMenu, colourMenu;
 
 	Mesh* cubeMesh;
 	Texture2D *texturePenguins, *textureStars;

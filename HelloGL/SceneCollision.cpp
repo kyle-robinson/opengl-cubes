@@ -4,13 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
 
 SceneCollision::SceneCollision() : Scene()
 {
 	InitGL();
 	InitLighting();
 	InitObjects();
+	InitMenu();
 
 	SetCubePositions();
 	collisionTimer = COLLISION_TIMER;
@@ -19,7 +19,9 @@ SceneCollision::SceneCollision() : Scene()
 }
 
 SceneCollision::~SceneCollision(void)
-{
+{	
+	Scene::~Scene();
+	
 	delete cubeMesh;
 	cubeMesh = NULL;
 
@@ -65,6 +67,23 @@ void SceneCollision::InitObjects()
 
 	objects[0] = new Cube(cubeMesh, texturePenguins, 0.0f, 0.0f, 0.0f);
 	objects[1] = new Cube(cubeMesh, textureStars, 0.0f, 0.0f, 0.0f);
+}
+
+void SceneCollision::InitMenu()
+{
+	colourMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Red", 0);
+	glutAddMenuEntry("Green", 1);
+	glutAddMenuEntry("Blue", 2);
+	glutAddMenuEntry("Cyan", 3);
+	glutAddMenuEntry("Magenta", 4);
+	glutAddMenuEntry("Yellow", 5);
+	
+	mouseMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddSubMenu("Colour", colourMenu);
+	glutAddMenuEntry("Exit", 6);
+
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
 void SceneCollision::Display()
@@ -119,46 +138,70 @@ void SceneCollision::Update()
 
 void SceneCollision::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'i')
+	switch (key)
 	{
+	case 'i':
+	case 'I':
 		SetCubePositions();
 		PlaySound("Audio/hint.wav", GetModuleHandle(NULL), SND_ASYNC);
-	}
+		break;
 
-	if (collisionTimer == COLLISION_TIMER)
-	{
-		if (key == 'w')
-			penguinMovingUp = true;
-
-		if (key == 's')
-			penguinMovingDown = true;
-
-		if (key == 'a')
-			penguinMovingLeft = true;
-
-		if (key == 'd')
-			penguinMovingRight = true;
-	}
-
-	for (int i = 0; i < OBJECTCOUNT; i++)
-	{
-		if (key == 'r')
-		{
-			objects[i]->red = 1.0f;
-			objects[i]->green = 1.0f;
-			objects[i]->blue = 1.0f;
-
-			colorAudio = true;
-			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-		}
-	}
-
-	if (key == 9)
-	{
+	case 9:
 		if (!paused)
 			paused = true;
 		else
 			paused = false;
+		break;
+
+	default:
+		break;
+	}
+
+	if (collisionTimer == COLLISION_TIMER)
+	{
+		switch (key)
+		{
+		case 'w':
+		case 'W':
+			penguinMovingUp = true;
+			break;
+
+		case 's':
+		case 'S':
+			penguinMovingDown = true;
+			break;
+
+		case 'a':
+		case 'A':
+			penguinMovingLeft = true;
+			break;
+
+		case 'd':
+		case 'D':
+			penguinMovingRight = true;
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		switch (key)
+		{
+		case 'r':
+		case 'R':
+			objects[i]->red = 1.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		default:
+			break;
+		}
 	}
 }
 
@@ -166,17 +209,27 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 {
 	if (collisionTimer == COLLISION_TIMER)
 	{
-		if (key == GLUT_KEY_UP)
+		switch (key)
+		{
+		case GLUT_KEY_UP:
 			starMovingUp = true;
+			break;
 
-		if (key == GLUT_KEY_DOWN)
+		case GLUT_KEY_DOWN:
 			starMovingDown = true;
+			break;
 
-		if (key == GLUT_KEY_LEFT)
+		case GLUT_KEY_LEFT:
 			starMovingLeft = true;
+			break;
 
-		if (key == GLUT_KEY_RIGHT)
+		case GLUT_KEY_RIGHT:
 			starMovingRight = true;
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	for (int i = 0; i < OBJECTCOUNT; i++)
@@ -187,7 +240,6 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 0.0f;
-
 			colorAudio = colorIsRed = true;
 			colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 			break;
@@ -196,7 +248,6 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
-
 			colorAudio = colorIsGreen = true;
 			colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 			break;
@@ -205,7 +256,6 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 			objects[i]->red = 0.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
-
 			colorAudio = colorIsBlue = true;
 			colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 			break;
@@ -214,7 +264,6 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 			objects[i]->red = 0.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 1.0f;
-
 			colorAudio = colorIsCyan = true;
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
 			break;
@@ -223,7 +272,6 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 0.0f;
 			objects[i]->blue = 1.0f;
-
 			colorAudio = colorIsMagenta = true;
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
 			break;
@@ -232,7 +280,6 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 			objects[i]->red = 1.0f;
 			objects[i]->green = 1.0f;
 			objects[i]->blue = 0.0f;
-
 			colorAudio = colorIsYellow = true;
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
 			break;
@@ -243,35 +290,59 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 void SceneCollision::KeyboardUp(unsigned char key, int x, int y)
 {
 	cubeSpeed = 1.0f;
-	
-	if (key == 'w')
+
+	switch (key)
+	{
+	case 'w':
+	case 'W':
 		penguinMovingUp = false;
+		break;
 
-	if (key == 's')
+	case 's':
+	case 'S':
 		penguinMovingDown = false;
+		break;
 
-	if (key == 'a')
+	case 'a':
+	case 'A':
 		penguinMovingLeft = false;
+		break;
 
-	if (key == 'd')
+	case 'd':
+	case 'D':
 		penguinMovingRight = false;
+		break;
+
+	default:
+		break;
+	}
 }
 
 void SceneCollision::KeyboardSpecialUp(int key, int x, int y)
 {
 	cubeSpeed = 1.0f;
 
-	if (key == GLUT_KEY_UP)
+	switch (key)
+	{
+	case GLUT_KEY_UP:
 		starMovingUp = false;
+		break;
 
-	if (key == GLUT_KEY_DOWN)
+	case GLUT_KEY_DOWN:
 		starMovingDown = false;
+		break;
 
-	if (key == GLUT_KEY_LEFT)
+	case GLUT_KEY_LEFT:
 		starMovingLeft = false;
+		break;
 
-	if (key == GLUT_KEY_RIGHT)
+	case GLUT_KEY_RIGHT:
 		starMovingRight = false;
+		break;
+
+	default:
+		break;
+	}
 }
 
 void SceneCollision::DrawString(const char* text, Vector3* position, Color* color)
@@ -556,6 +627,70 @@ void SceneCollision::UpdateCubePositions()
 			cubeSpeed = 0.0f;
 			collisionTimer = COLLISION_TIMER;
 			innerCollision = outerCollision = upperCollision = lowerCollision = false;
+		}
+	}
+}
+
+void SceneCollision::MouseMenu(int value)
+{
+	for (int i = 0; i < OBJECTCOUNT; i++)
+	{
+		switch (value)
+		{
+		case 0:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 0.0f;
+			colorAudio = colorIsRed = true;
+			colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 1:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+			colorAudio = colorIsGreen = true;
+			colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 2:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = colorIsBlue = true;
+			colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 3:
+			objects[i]->red = 0.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = colorIsCyan = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
+			break;
+
+		case 4:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 0.0f;
+			objects[i]->blue = 1.0f;
+			colorAudio = colorIsMagenta = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
+			break;
+
+		case 5:
+			objects[i]->red = 1.0f;
+			objects[i]->green = 1.0f;
+			objects[i]->blue = 0.0f;
+			colorAudio = colorIsYellow = true;
+			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+			break;
+
+		case 6:
+			exit(0);
+			break;
+
+		default:
+			break;
 		}
 	}
 }

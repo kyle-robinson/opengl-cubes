@@ -17,6 +17,8 @@ SceneOBJ::SceneOBJ()
 
 SceneOBJ::~SceneOBJ(void)
 {	
+	Scene::~Scene();
+
 	delete _material;
 	_material = NULL;
 }
@@ -47,27 +49,31 @@ void SceneOBJ::InitObjects()
 
 void SceneOBJ::InitMenu()
 {
-	glutCreateMenu(GLUTCallbacks::ObjectMenu);
+	objectMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
 	glutAddMenuEntry("Tank", 0);
 	glutAddMenuEntry("Skull", 1);
 	glutAddMenuEntry("Cube", 2);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
-	glutCreateMenu(GLUTCallbacks::ColourMenu);
-	glutAddMenuEntry("Red", 0);
-	glutAddMenuEntry("Green", 1);
-	glutAddMenuEntry("Blue", 2);
-	glutAddMenuEntry("Cyan", 3);
-	glutAddMenuEntry("Magenta", 4);
-	glutAddMenuEntry("Yellow", 5);
-	glutAttachMenu(GLUT_LEFT_BUTTON);
+	colourMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Red", 3);
+	glutAddMenuEntry("Green", 4);
+	glutAddMenuEntry("Blue", 5);
+	glutAddMenuEntry("Cyan", 6);
+	glutAddMenuEntry("Magenta", 7);
+	glutAddMenuEntry("Yellow", 8);
+
+	mouseMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddSubMenu("Object", objectMenu);
+	glutAddSubMenu("Colour", colourMenu);
+
+	glutAddMenuEntry("Exit", 9);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
 void SceneOBJ::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	DrawMenu();
 	UpdateLighting();
 
 	if (!paused)
@@ -77,6 +83,8 @@ void SceneOBJ::Display()
 		DrawUI();
 		glEnable(GL_TEXTURE_2D);
 	}
+	else
+		DrawMenu();
 
 	glFlush();
 	glutSwapBuffers();
@@ -99,111 +107,122 @@ void SceneOBJ::Update()
 
 void SceneOBJ::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'w')
+	switch (key)
 	{
+	case 'w':
+	case 'W':
 		if (tankLoaded)
 			zPosition -= 0.2f;
 		else if (cubeLoaded)
 			zPosition -= 0.1f;
 		else if (skullLoaded)
 			zPosition -= 2.0f;
-	}
+		break;
 
-	if (key == 'a')
-	{
+	case 'a':
+	case 'A':
 		if (tankLoaded)
 			xPosition -= 0.2f;
 		else if (cubeLoaded)
 			xPosition -= 0.1f;
 		else if (skullLoaded)
 			xPosition -= 2.0f;
-	}
+		break;
 
-	if (key == 's')
-	{
+	case 's':
+	case 'S':
 		if (tankLoaded)
 			zPosition += 0.2f;
 		else if (cubeLoaded)
 			zPosition += 0.1f;
 		else if (skullLoaded)
 			zPosition += 2.0f;
-	}
+		break;
 
-	if (key == 'd')
-	{
+	case 'd':
+	case 'D':
 		if (tankLoaded)
 			xPosition += 0.2f;
 		else if (cubeLoaded)
 			xPosition += 0.1f;
 		else if (skullLoaded)
 			xPosition += 2.0f;
-	}
+		break;
 
-	if (key == 't')
-	{
+	case 't':
+	case 'T':
+		xPosition = 0.0f;
+		yPosition = -1.0f;
+		zPosition = -5.0f;
 		tankLoaded = objectAudio = true;
 		cubeLoaded = skullLoaded = false;
-	}
+		break;
 
-	if (key == 'h')
-	{
+	case 'h':
+	case 'H':
+		xPosition = 0.0f;
+		yPosition = -10.0f;
+		zPosition = -30.0f;
 		skullLoaded = objectAudio = true;
 		tankLoaded = cubeLoaded = false;
-	}
+		break;
 
-	if (key == 'c')
-	{
+	case 'c':
+	case 'C':
+		xPosition = 0.0f;
+		yPosition = -0.25f;
+		zPosition = -0.5f;
 		cubeLoaded = objectAudio = true;
 		tankLoaded = skullLoaded = false;
-	}
+		break;
 
-	if (key == 'r')
-	{
+	case 'r':
+	case 'R':
 		red = 1.0f;
 		green = 1.0f;
 		blue = 1.0f;
-
 		colorAudio = true;
 		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-	}
+		break;
 
-	if (key == 9)
-	{
+	case 9:
 		if (!paused)
 			paused = true;
 		else
 			paused = false;
+		break;
+
+	default:
+		break;
 	}
 }
 
 void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 {
-	if (key == GLUT_KEY_UP)
+	switch (key)
 	{
+	case GLUT_KEY_UP:
 		if (tankLoaded)
 			yPosition += 0.2f;
 		else if (cubeLoaded)
 			yPosition += 0.1f;
 		else if (skullLoaded)
 			yPosition += 2.0f;
-	}
-	if (key == GLUT_KEY_DOWN)
-	{
+		break;
+
+	case GLUT_KEY_DOWN:
 		if (tankLoaded)
 			yPosition -= 0.2f;
 		else if (cubeLoaded)
 			yPosition -= 0.1f;
 		else if (skullLoaded)
 			yPosition -= 2.0f;
-	}
+		break;
 
-	switch (key)
-	{
 	case GLUT_KEY_F1:
 		red = 1.0f;
 		green = 0.0f;
 		blue = 0.0f;
-
 		colorAudio = colorIsRed = true;
 		colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 		break;
@@ -212,7 +231,6 @@ void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 		red = 0.0f;
 		green = 1.0f;
 		blue = 0.0f;
-
 		colorAudio = colorIsGreen = true;
 		colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 		break;
@@ -221,7 +239,6 @@ void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 		red = 0.0f;
 		green = 0.0f;
 		blue = 1.0f;
-
 		colorAudio = colorIsBlue = true;
 		colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
 		break;
@@ -230,7 +247,6 @@ void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 		red = 0.0f;
 		green = 1.0f;
 		blue = 1.0f;
-
 		colorAudio = colorIsCyan = true;
 		colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
 		break;
@@ -239,7 +255,6 @@ void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 		red = 1.0f;
 		green = 0.0f;
 		blue = 1.0f;
-
 		colorAudio = colorIsMagenta = true;
 		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
 		break;
@@ -248,9 +263,11 @@ void SceneOBJ::KeyboardSpecial(int key, int x, int y)
 		red = 1.0f;
 		green = 1.0f;
 		blue = 0.0f;
-
 		colorAudio = colorIsYellow = true;
 		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+		break;
+
+	default:
 		break;
 	}
 }
@@ -270,13 +287,13 @@ void SceneOBJ::DrawUI()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
 
-	Vector3 vTitle = { -1.8f, 1.7f, -1.0f };
-	Vector3 vReturn = { -1.05f, -1.75f, -1.0f };
+	Vector3 vTitle =		{ -1.8f, 1.7f, -1.0f };
+	Vector3 vReturn =		{ -1.05f, -1.75f, -1.0f };
 
-	Color cWhite = { 1.0f, 1.0f, 1.0f };
-	Color cPurple = { 0.6f, 0.2f, 0.9f };
-	Color cLightPurple = { 0.8f, 0.5f, 1.0f };
-	Color cLilac = { 0.9f, 0.8f, 1.0f };
+	Color cWhite =			{ 1.0f, 1.0f, 1.0f };
+	Color cPurple =			{ 0.6f, 0.2f, 0.9f };
+	Color cLightPurple =	{ 0.8f, 0.5f, 1.0f };
+	Color cLilac =			{ 0.9f, 0.8f, 1.0f };
 
 	DrawString("O B J    L O A D E R", &vTitle, &cPurple);
 	DrawString("`T A B'    t o    v i e w    s c e n e    c o n t r o l s    . . .", &vReturn, &cLilac);
@@ -310,78 +327,75 @@ void SceneOBJ::DrawUI()
 
 void SceneOBJ::DrawMenu()
 {
-	if (paused)
-	{
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
 
-		Vector3 vTitle = { -0.85f, 1.75f, -1.0f };
+	Vector3 vTitle =		 { -0.85f, 1.75f, -1.0f };
 
-		Vector3 vMovement = { -1.7f, 1.25f, -1.0f };
-		Vector3 vMovementW = { -1.7f, 1.05f, -1.0f };
-		Vector3 vMovementA = { -1.7f, 0.85f, -1.0f };
-		Vector3 vMovementS = { -1.7f, 0.65f, -1.0f };
-		Vector3 vMovementD = { -1.7f, 0.45f, -1.0f };
-		Vector3 vMovementUp = { -1.7f, 0.25f, -1.0f };
-		Vector3 vMovementDown = { -1.7f, 0.05f, -1.0f };
+	Vector3 vMovement =		 { -1.7f, 1.25f, -1.0f };
+	Vector3 vMovementW =	 { -1.7f, 1.05f, -1.0f };
+	Vector3 vMovementA =	 { -1.7f, 0.85f, -1.0f };
+	Vector3 vMovementS =	 { -1.7f, 0.65f, -1.0f };
+	Vector3 vMovementD =	 { -1.7f, 0.45f, -1.0f };
+	Vector3 vMovementUp =	 { -1.7f, 0.25f, -1.0f };
+	Vector3 vMovementDown =  { -1.7f, 0.05f, -1.0f };
 
-		Vector3 vObject = { 0.25f, 1.25f, -1.0f };
-		Vector3 vObjectTank = { 0.25f, 1.05f, -1.0f };
-		Vector3 vObjectSkull = { 0.25f, 0.85f, -1.0f };
-		Vector3 vObjectCube = { 0.25f, 0.65f, -1.0f };
+	Vector3 vObject =		 { 0.25f, 1.25f, -1.0f };
+	Vector3 vObjectTank =	 { 0.25f, 1.05f, -1.0f };
+	Vector3 vObjectSkull =	 { 0.25f, 0.85f, -1.0f };
+	Vector3 vObjectCube =	 { 0.25f, 0.65f, -1.0f };
 
-		Vector3 vColour = { 0.25f, 0.3f, -1.0f };
-		Vector3 vColourRed = { 0.25f, 0.1f, -1.0f };
-		Vector3 vColourGreen = { 0.25f, -0.1f, -1.0f };
-		Vector3 vColourBlue = { 0.25f, -0.3f, -1.0f };
-		Vector3 vColourCyan = { 0.25f, -0.5f, -1.0f };
-		Vector3 vColourMagenta = { 0.25f, -0.7f, -1.0f };
-		Vector3 vColourYellow = { 0.25f, -0.9f, -1.0f };
-		Vector3 vColourReset = { 0.25f, -1.1f, -1.0f };
+	Vector3 vColour =		 { 0.25f, 0.3f, -1.0f };
+	Vector3 vColourRed =	 { 0.25f, 0.1f, -1.0f };
+	Vector3 vColourGreen =	 { 0.25f, -0.1f, -1.0f };
+	Vector3 vColourBlue =	 { 0.25f, -0.3f, -1.0f };
+	Vector3 vColourCyan =	 { 0.25f, -0.5f, -1.0f };
+	Vector3 vColourMagenta = { 0.25f, -0.7f, -1.0f };
+	Vector3 vColourYellow =  { 0.25f, -0.9f, -1.0f };
+	Vector3 vColourReset =	 { 0.25f, -1.1f, -1.0f };
 
-		Vector3 vReturn = { -1.05f, -1.75f, -1.0f };
+	Vector3 vReturn =		 { -1.05f, -1.75f, -1.0f };
 
-		Color cWhite = { 1.0f, 1.0f, 1.0f };
-		Color cRed = { 1.0f, 0.2f, 0.2f };
-		Color cGreen = { 0.0f, 1.0f, 0.0f };
-		Color cBlue = { 0.2f, 0.2f, 1.0f };
-		Color cCyan = { 0.0f, 1.0f, 1.0f };
-		Color cMagenta = { 1.0f, 0.0f, 1.0f };
-		Color cYellow = { 1.0f, 1.0f, 0.0f };
-		Color cOrange = { 1.0f, 0.7f, 0.0f };
-		Color cPurple = { 0.6f, 0.2f, 0.9f };
-		Color cLightPurple = { 0.8f, 0.5f, 1.0f };
-		Color cLilac = { 0.9f, 0.8f, 1.0f };
+	Color cWhite =			 { 1.0f, 1.0f, 1.0f };
+	Color cRed =			 { 1.0f, 0.2f, 0.2f };
+	Color cGreen =			 { 0.0f, 1.0f, 0.0f };
+	Color cBlue =			 { 0.2f, 0.2f, 1.0f };
+	Color cCyan =			 { 0.0f, 1.0f, 1.0f };
+	Color cMagenta =		 { 1.0f, 0.0f, 1.0f };
+	Color cYellow =			 { 1.0f, 1.0f, 0.0f };
+	Color cOrange =			 { 1.0f, 0.7f, 0.0f };
+	Color cPurple =			 { 0.6f, 0.2f, 0.9f };
+	Color cLightPurple =	 { 0.8f, 0.5f, 1.0f };
+	Color cLilac =			 { 0.9f, 0.8f, 1.0f };
 
-		DrawString("O B J    L O A D E R    C O N T R O L S", &vTitle, &cPurple);
+	DrawString("O B J    L O A D E R    C O N T R O L S", &vTitle, &cPurple);
 
-		DrawString("o b j e c t    m o v e m e n t", &vMovement, &cLightPurple);
-		DrawString("`W' - Move Backward", &vMovementW, &cWhite);
-		DrawString("`A' - Move Left", &vMovementA, &cWhite);
-		DrawString("`S' - Move Forward", &vMovementS, &cWhite);
-		DrawString("`D' - Move Right", &vMovementD, &cWhite);
-		DrawString("`UP' - Move Up", &vMovementUp, &cWhite);
-		DrawString("`DOWN' - Move Down", &vMovementDown, &cWhite);
+	DrawString("o b j e c t    m o v e m e n t", &vMovement, &cLightPurple);
+	DrawString("`W' - Move Backward", &vMovementW, &cWhite);
+	DrawString("`A' - Move Left", &vMovementA, &cWhite);
+	DrawString("`S' - Move Forward", &vMovementS, &cWhite);
+	DrawString("`D' - Move Right", &vMovementD, &cWhite);
+	DrawString("`UP' - Move Up", &vMovementUp, &cWhite);
+	DrawString("`DOWN' - Move Down", &vMovementDown, &cWhite);
 
-		DrawString("c h a n g e    o b j e c t", &vObject, &cLightPurple);
-		DrawString("`T' - Tank", &vObjectTank, &cWhite);
-		DrawString("`H' - Skull", &vObjectSkull, &cWhite);
-		DrawString("`C' - Cube", &vObjectCube, &cWhite);
+	DrawString("c h a n g e    o b j e c t", &vObject, &cLightPurple);
+	DrawString("`T' - Tank", &vObjectTank, &cWhite);
+	DrawString("`H' - Skull", &vObjectSkull, &cWhite);
+	DrawString("`C' - Cube", &vObjectCube, &cWhite);
 
-		DrawString("o b j e c t    c o l o u r", &vColour, &cLightPurple);
-		DrawString("`F1' - Red", &vColourRed, &cWhite);
-		DrawString("`F2' - Green", &vColourGreen, &cWhite);
-		DrawString("`F3' - Blue", &vColourBlue, &cWhite);
-		DrawString("`F4' - Cyan", &vColourCyan, &cWhite);
-		DrawString("`F5' - Magenta", &vColourMagenta, &cWhite);
-		DrawString("`F6' - Yellow", &vColourYellow, &cWhite);
-		DrawString("`R' - Reset Colours", &vColourReset, &cWhite);
+	DrawString("o b j e c t    c o l o u r", &vColour, &cLightPurple);
+	DrawString("`F1' - Red", &vColourRed, &cWhite);
+	DrawString("`F2' - Green", &vColourGreen, &cWhite);
+	DrawString("`F3' - Blue", &vColourBlue, &cWhite);
+	DrawString("`F4' - Cyan", &vColourCyan, &cWhite);
+	DrawString("`F5' - Magenta", &vColourMagenta, &cWhite);
+	DrawString("`F6' - Yellow", &vColourYellow, &cWhite);
+	DrawString("`R' - Reset Colours", &vColourReset, &cWhite);
 
-		DrawString("`T A B'    t o    r e t u r n    t o    t h e    s c e n e    . . .", &vReturn, &cLilac);
+	DrawString("`T A B'    t o    r e t u r n    t o    t h e    s c e n e    . . .", &vReturn, &cLilac);
 
-		glEnable(GL_LIGHTING);
-		glEnable(GL_TEXTURE_2D);
-	}
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
 }
 
 void SceneOBJ::SceneAudio()
@@ -390,20 +404,16 @@ void SceneOBJ::SceneAudio()
 	{
 		if (!audioPlaying)
 			PlaySound("Audio/mario_elevator.wav", GetModuleHandle(NULL), SND_LOOP | SND_ASYNC);
-		
 		audioPlaying = true;
 	}
 	else
 	{
 		if (audioPlaying)
 			PlaySound(NULL, NULL, 0);
-
 		if (objectAudio)
 			PlaySound("Audio/pipe.wav", GetModuleHandle(NULL), SND_ASYNC);
-
 		if (colorAudio)
 			PlaySound("Audio/button.wav", GetModuleHandle(NULL), SND_ASYNC);
-
 		audioPlaying = objectAudio = colorAudio = false;
 	}
 }
@@ -413,9 +423,6 @@ void SceneOBJ::LoadOBJ()
 	glPushMatrix();
 	if (tankLoaded)
 	{
-		xPosition = 0.0f;
-		yPosition = -1.0f;
-		zPosition = -5.0f;
 		glTranslatef(xPosition, yPosition, zPosition);
 		glRotatef(g_rotation, 0, 1, 0);
 		glRotatef(90, 0, 1, 0);
@@ -424,9 +431,6 @@ void SceneOBJ::LoadOBJ()
 	}
 	else if (skullLoaded)
 	{
-		xPosition = 0.0f;
-		yPosition = -10.0f;
-		zPosition = -30.0f;
 		glTranslatef(xPosition, yPosition, zPosition);
 		glRotatef(g_rotation, 0, 1, 0);
 		glRotatef(90, 0, 1, 0);
@@ -435,9 +439,6 @@ void SceneOBJ::LoadOBJ()
 	}
 	else if (cubeLoaded)
 	{
-		xPosition = 0.0f;
-		yPosition = -0.25f;
-		zPosition = -0.5f;
 		glTranslatef(xPosition, yPosition, zPosition);
 		glRotatef(g_rotation, 0, 1, 0);
 		glRotatef(90, 0, 1, 0);
@@ -472,84 +473,87 @@ void SceneOBJ::UpdateLighting()
 	glMaterialf(GL_FRONT, GL_SHININESS, _material->Shininess);
 }
 
-void SceneOBJ::ObjectMenu(int value)
+void SceneOBJ::MouseMenu(int value)
 {
-	if (value == 0)
+	switch (value)
 	{
+	case 0:
+		xPosition = 0.0f;
+		yPosition = -1.0f;
+		zPosition = -5.0f;
 		tankLoaded = objectAudio = true;
 		skullLoaded = cubeLoaded = false;
-	}
-	else if (value == 1)
-	{
+		break;
+
+	case 1:
+		xPosition = 0.0f;
+		yPosition = -10.0f;
+		zPosition = -30.0f;
 		skullLoaded = objectAudio = true;
 		tankLoaded = cubeLoaded = false;
-	}
-	else if (value == 2)
-	{
+		break;
+
+	case 2:
+		xPosition = 0.0f;
+		yPosition = -0.25f;
+		zPosition = -0.5f;
 		cubeLoaded = objectAudio = true;
 		tankLoaded = skullLoaded = false;
-	}
-}
+		break;
 
-void SceneOBJ::ColourMenu(int value)
-{
-	if (value == 0)
-	{
+	case 3:
 		red = 1.0f;
 		green = 0.0f;
 		blue = 0.0f;
-		
 		colorAudio = colorIsRed = true;
 		colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-	}
+		break;
 
-	if (value == 1)
-	{
-		red = 0.0f;
-		green = 1.0f;
-		blue = 0.0f;
-
-		colorAudio = colorIsGreen = true;
-		colorIsRed = colorIsBlue = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-	}
-
-	if (value == 2)
-	{
+	case 4:
 		red = 0.0f;
 		green = 0.0f;
 		blue = 1.0f;
-
 		colorAudio = colorIsBlue = true;
 		colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
-	}
+		break;
 
-	if (value == 3)
-	{
+	case 5:
+		red = 0.0f;
+		green = 0.0f;
+		blue = 1.0f;
+		colorAudio = colorIsBlue = true;
+		colorIsRed = colorIsGreen = colorIsCyan = colorIsMagenta = colorIsYellow = false;
+		break;
+
+	case 6:
 		red = 0.0f;
 		green = 1.0f;
 		blue = 1.0f;
-
 		colorAudio = colorIsCyan = true;
 		colorIsRed = colorIsGreen = colorIsBlue = colorIsMagenta = colorIsYellow = false;
-	}
+		break;
 
-	if (value == 4)
-	{
+	case 7:
 		red = 1.0f;
 		green = 0.0f;
 		blue = 1.0f;
-
 		colorAudio = colorIsMagenta = true;
 		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsYellow = false;
-	}
+		break;
 
-	if (value == 5)
-	{
+	case 8:
 		red = 1.0f;
 		green = 1.0f;
 		blue = 0.0f;
-
 		colorAudio = colorIsYellow = true;
 		colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
+		break;
+
+	case 9:
+		exit(0);
+		break;
+
+	default:
+		break;
 	}
 }

@@ -27,6 +27,5 @@ namespace GLUTCallbacks
 	void KeyboardSpecial(int key, int x, int y);
 	void KeyboardSpecialUp(int key, int x, int y);
 
-	void ObjectMenu(int value);
-	void ColourMenu(int value);
+	void MouseMenu(int value);
 }

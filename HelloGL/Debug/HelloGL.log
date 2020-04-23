@@ -1,2 +1,28 @@
-﻿  SceneOBJ.cpp
+﻿  GLUTCallbacks.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.h(8,1): warning C4005: 'OBJECTCOUNT': macro redefinition
+  SceneCollision.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.h(8): message : see previous definition of 'OBJECTCOUNT'
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(507,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(556,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(558,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(560,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(562,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(571,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(573,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(575,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(577,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(598,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(599,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(604,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(605,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(610,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(611,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(616,55): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  SceneManager.cpp
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.cpp(617,55): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneCollision.h(8,1): warning C4005: 'OBJECTCOUNT': macro redefinition
+  SceneOBJ.cpp
+  SceneStarfield.cpp
+  Generating Code...
+D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\HelloGL\SceneStarfield.h(8): message : see previous definition of 'OBJECTCOUNT'
   HelloGL.vcxproj -> D:\OneDrive - Staffordshire University\Game_&_Graphical_System_Development\Semester 2\OpenGL-Project\Debug\OpenGL-Project.exe

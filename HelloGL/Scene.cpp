@@ -23,6 +23,7 @@ void Scene::InitGL()
 	glLoadIdentity();
 	gluPerspective(90, 1, 1, 1000);
 	glMatrixMode(GL_MODELVIEW);
+	glutDetachMenu(GLUT_RIGHT_BUTTON);
 }
 
 void Scene::InitLighting()

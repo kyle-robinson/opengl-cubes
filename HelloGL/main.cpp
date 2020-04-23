@@ -14,8 +14,10 @@ void InitWindow(int argc, char* argv[]);
 int main(int argc, char* argv[])
 {	
 	CreateSceneGraph();
+	
 	InitWindow(argc, argv);
 	sceneManager = new SceneManager();
+
 	return 0;
 }
 
