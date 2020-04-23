@@ -22,6 +22,7 @@ void SceneGame::InitGL()
 	glLoadIdentity();
 	gluPerspective(35, 1.0f, 0.1f, 1000);
 	glMatrixMode(GL_MODELVIEW);
+	glutDetachMenu(GLUT_RIGHT_BUTTON);
 	
 	GLUTCallbacks::Init(this);
 	glutDisplayFunc(GLUTCallbacks::Display);
