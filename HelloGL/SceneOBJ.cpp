@@ -19,6 +19,10 @@ SceneOBJ::~SceneOBJ(void)
 {	
 	Scene::~Scene();
 
+	tankObj.Release();
+	skullObj.Release();
+	cubeObj.Release();
+
 	delete _material;
 	_material = NULL;
 }
