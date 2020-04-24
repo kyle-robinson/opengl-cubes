@@ -287,6 +287,9 @@ void SceneCollision::KeyboardSpecial(int key, int x, int y)
 			colorAudio = colorIsYellow = true;
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
 			break;
+
+		default:
+			break;
 		}
 	}
 }
