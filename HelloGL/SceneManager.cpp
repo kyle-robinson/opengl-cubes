@@ -2,23 +2,18 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
-#include "SceneMenu.h"
 
+#include "SceneMenu.h"
 #include "SceneStarfield.h"
 #include "SceneCollision.h"
 #include "SceneGame.h"
 #include "SceneOBJ.h"
 
-#include <iostream>
-
 SceneManager::SceneManager()
 {
 	mCurrentScene = NULL;
-
-	GLUTCallbacks::Init(this);
-	glutKeyboardFunc(GLUTCallbacks::Keyboard);
-	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
-
+	
+	InitGL();
 	ChangeScene(SCENE_MENU);
 }
 
@@ -26,6 +21,13 @@ SceneManager::~SceneManager(void)
 {
 	delete mCurrentScene;
 	mCurrentScene = NULL;
+}
+
+void SceneManager::InitGL()
+{
+	GLUTCallbacks::Init(this);
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 }
 
 void SceneManager::Display()
@@ -104,5 +106,8 @@ void SceneManager::Keyboard(unsigned char key, int x, int y)
 		ChangeScene(SCENE_OBJLOADER);
 
 	if (key == 27)
+	{
+		glutDestroyWindow(glutGetWindow());
 		exit(0);
+	}
 }

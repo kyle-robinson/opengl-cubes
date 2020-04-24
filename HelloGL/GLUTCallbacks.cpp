@@ -152,6 +152,8 @@ namespace GLUTCallbacks
 			sceneStarfield->MouseMenu(value);
 		else if (sceneCollision != nullptr)
 			sceneCollision->MouseMenu(value);
+		else if (sceneGame != nullptr)
+			sceneGame->MouseMenu(value);
 		else if (sceneOBJ != nullptr)
 			sceneOBJ->MouseMenu(value);
 	}

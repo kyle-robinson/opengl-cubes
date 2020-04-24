@@ -78,10 +78,14 @@ void SceneCollision::InitMenu()
 	glutAddMenuEntry("Cyan", 3);
 	glutAddMenuEntry("Magenta", 4);
 	glutAddMenuEntry("Yellow", 5);
+
+	helpMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Controls", 6);
+	glutAddMenuEntry("Exit", 7);
 	
-	mouseMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	subMenus = glutCreateMenu(GLUTCallbacks::MouseMenu);
 	glutAddSubMenu("Colour", colourMenu);
-	glutAddMenuEntry("Exit", 6);
+	glutAddSubMenu("Help", helpMenu);
 
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
@@ -685,12 +689,26 @@ void SceneCollision::MouseMenu(int value)
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
 			break;
 
-		case 6:
-			exit(0);
-			break;
-
 		default:
 			break;
 		}
+	}
+
+	switch (value)
+	{
+	case 6:
+		if (!paused)
+			paused = true;
+		else
+			paused = false;
+		break;
+
+	case 7:
+		glutDestroyWindow(glutGetWindow());
+		exit(0);
+		break;
+
+	default:
+		break;
 	}
 }

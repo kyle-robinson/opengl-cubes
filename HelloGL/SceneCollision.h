@@ -55,7 +55,7 @@ private:
 		 penguinMovingUp, penguinMovingDown, penguinMovingLeft, penguinMovingRight,
 		 starMovingUp, starMovingDown, starMovingLeft, starMovingRight;
 	float rotation, cubeSpeed, collisionTimer;
-	int mouseMenu, colourMenu;
+	int subMenus, colourMenu, helpMenu;
 
 	Mesh* cubeMesh;
 	Texture2D *texturePenguins, *textureStars;

@@ -66,11 +66,15 @@ void SceneOBJ::InitMenu()
 	glutAddMenuEntry("Magenta", 7);
 	glutAddMenuEntry("Yellow", 8);
 
-	mouseMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	helpMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Controls", 9);
+	glutAddMenuEntry("Exit", 10);
+
+	subMenus = glutCreateMenu(GLUTCallbacks::MouseMenu);
 	glutAddSubMenu("Object", objectMenu);
 	glutAddSubMenu("Colour", colourMenu);
+	glutAddSubMenu("Help", helpMenu);
 
-	glutAddMenuEntry("Exit", 9);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
@@ -554,6 +558,14 @@ void SceneOBJ::MouseMenu(int value)
 		break;
 
 	case 9:
+		if (!paused)
+			paused = true;
+		else
+			paused = false;
+		break;
+
+	case 10:
+		glutDestroyWindow(glutGetWindow());
 		exit(0);
 		break;
 

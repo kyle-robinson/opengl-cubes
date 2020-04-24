@@ -19,6 +19,7 @@ public:
 	void InitGL();
 	void InitLighting();
 	void InitObjects();
+	void InitMenu();
 
 	void Keyboard(unsigned char key, int x, int y);
 	void KeyboardUp(unsigned char key, int x, int y);
@@ -37,10 +38,13 @@ public:
 	void AddQuadBlue();
 	void DrawQuad();
 
+	void MouseMenu(int value);
+
 private:
 	int cubeN,
 		cubeXRed, cubeYRed, cubeZRed,
-		cubeXBlue, cubeYBlue, cubeZBlue;
+		cubeXBlue, cubeYBlue, cubeZBlue,
+		subMenus, redMenu, blueMenu, helpMenu;
 
 	bool paused, audioPlaying, colourAudio,
 		 cubeRed, cubeRed_Quad,

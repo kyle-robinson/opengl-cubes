@@ -44,7 +44,7 @@ private:
 		 colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow,
 		 zReverse, zMoving, cRotating;
 	float rotation;
-	int mouseMenu, textureMenu, colourMenu;
+	int subMenus, textureMenu, colourMenu, helpMenu;
 
 	Mesh* cubeMesh;
 	Texture2D *texturePenguins, *textureStars;

@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <iostream>
+
 SceneStarfield::SceneStarfield() : Scene()
 {
 	InitGL();
@@ -13,7 +15,7 @@ SceneStarfield::SceneStarfield() : Scene()
 	InitMenu();
 
 	zMoving = cRotating = true;
-
+	
 	glutMainLoop();
 }
 
@@ -81,11 +83,15 @@ void SceneStarfield::InitMenu()
 	glutAddMenuEntry("Magenta", 6);
 	glutAddMenuEntry("Yellow", 7);
 
-	mouseMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	helpMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Controls", 8);
+	glutAddMenuEntry("Exit", 9);
+
+	subMenus = glutCreateMenu(GLUTCallbacks::MouseMenu);
 	glutAddSubMenu("Texture", textureMenu);
 	glutAddSubMenu("Colour", colourMenu);
+	glutAddSubMenu("Help", helpMenu);
 
-	glutAddMenuEntry("Exit", 8);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
@@ -651,12 +657,28 @@ void SceneStarfield::MouseMenu(int value)
 			colorIsRed = colorIsGreen = colorIsBlue = colorIsCyan = colorIsMagenta = false;
 			break;
 
-		case 8:
-			exit(0);
-			break;
-
 		default:
 			break;
 		}
+	}
+
+	switch (value)
+	{
+	case 8:
+		if (!paused)
+		{
+			paused = true;
+		}
+		else
+			paused = false;
+		break;
+
+	case 9:
+		glutDestroyWindow(glutGetWindow());
+		exit(0);
+		break;
+
+	default:
+		break;
 	}
 }

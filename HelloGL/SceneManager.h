@@ -12,6 +12,8 @@ public:
 	SceneManager();
 	~SceneManager(void);
 
+	void InitGL();
+
 	void Display();
 	void Update();
 

@@ -8,6 +8,7 @@ SceneGame::SceneGame() : Scene()
 	InitGL();
 	InitLighting();
 	InitObjects();
+	InitMenu();
 	glutMainLoop();
 }
 
@@ -39,6 +40,38 @@ void SceneGame::InitObjects()
 {
 	Scene::InitObjects();
 	cubeXBlue = 19;
+}
+
+void SceneGame::InitMenu()
+{
+	redMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Red", 0);
+	glutAddMenuEntry("Green", 1);
+	glutAddMenuEntry("Blue", 2);
+	glutAddMenuEntry("Cyan", 3);
+	glutAddMenuEntry("Magenta", 4);
+	glutAddMenuEntry("Yellow", 5);
+	glutAddMenuEntry("Remove Quads", 6);
+
+	blueMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Red", 7);
+	glutAddMenuEntry("Green", 8);
+	glutAddMenuEntry("Blue", 9);
+	glutAddMenuEntry("Cyan", 10);
+	glutAddMenuEntry("Magenta", 11);
+	glutAddMenuEntry("Yellow", 12);
+	glutAddMenuEntry("Remove Quads", 13);
+
+	helpMenu = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddMenuEntry("Controls", 14);
+	glutAddMenuEntry("Exit", 15);
+
+	subMenus = glutCreateMenu(GLUTCallbacks::MouseMenu);
+	glutAddSubMenu("Red Cursor", redMenu);
+	glutAddSubMenu("Blue Cursor", blueMenu);
+	glutAddSubMenu("Help", helpMenu);
+
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
 void SceneGame::Display()
@@ -667,4 +700,170 @@ void SceneGame::DrawCubes()
 		glutSolidCube(0.4);
 
 	glPopMatrix();
+}
+
+void SceneGame::MouseMenu(int value)
+{
+	switch (value)
+	{
+	case 0:
+		Q_Red[cubeN].r = 1;
+		Q_Red[cubeN].g = 0;
+		Q_Red[cubeN].b = 0;
+		break;
+
+	case 1:
+		Q_Red[cubeN].r = 0;
+		Q_Red[cubeN].g = 1;
+		Q_Red[cubeN].b = 0;
+		break;
+
+	case 2:
+		Q_Red[cubeN].r = 0;
+		Q_Red[cubeN].g = 0;
+		Q_Red[cubeN].b = 1;
+		break;
+
+	case 3:
+		Q_Red[cubeN].r = 0;
+		Q_Red[cubeN].g = 1;
+		Q_Red[cubeN].b = 1;
+		break;
+
+	case 4:
+		Q_Red[cubeN].r = 1;
+		Q_Red[cubeN].g = 0;
+		Q_Red[cubeN].b = 1;
+		break;
+
+	case 5:
+		Q_Red[cubeN].r = 1;
+		Q_Red[cubeN].g = 1;
+		Q_Red[cubeN].b = 0;
+		break;
+
+	case 6:
+		for (int i = 0; i < Q_Red[0].total + 1; i++)
+		{
+			Q_Red[i].x1 = 0;
+			Q_Red[i].x2 = 0;
+			Q_Red[i].x3 = 0;
+			Q_Red[i].x4 = 0;
+
+			Q_Red[i].y1 = 0;
+			Q_Red[i].y2 = 0;
+			Q_Red[i].y3 = 0;
+			Q_Red[i].y4 = 0;
+
+			Q_Red[i].z1 = 0;
+			Q_Red[i].z2 = 0;
+			Q_Red[i].z3 = 0;
+			Q_Red[i].z4 = 0;
+		}
+		break;
+
+	case 7:
+		Q_Blue[cubeN].r = 1;
+		Q_Blue[cubeN].g = 0;
+		Q_Blue[cubeN].b = 0;
+		break;
+
+	case 8:
+		Q_Blue[cubeN].r = 0;
+		Q_Blue[cubeN].g = 1;
+		Q_Blue[cubeN].b = 0;
+		break;
+
+	case 9:
+		Q_Blue[cubeN].r = 0;
+		Q_Blue[cubeN].g = 0;
+		Q_Blue[cubeN].b = 1;
+		break;
+
+	case 10:
+		Q_Blue[cubeN].r = 0;
+		Q_Blue[cubeN].g = 1;
+		Q_Blue[cubeN].b = 1;
+		break;
+
+	case 11:
+		Q_Blue[cubeN].r = 1;
+		Q_Blue[cubeN].g = 0;
+		Q_Blue[cubeN].b = 1;
+		break;
+
+	case 12:
+		Q_Blue[cubeN].r = 1;
+		Q_Blue[cubeN].g = 1;
+		Q_Blue[cubeN].b = 0;
+		break;
+
+	case 13:
+		for (int i = 0; i < Q_Blue[0].total + 1; i++)
+		{
+			Q_Blue[i].x1 = 0;
+			Q_Blue[i].x2 = 0;
+			Q_Blue[i].x3 = 0;
+			Q_Blue[i].x4 = 0;
+
+			Q_Blue[i].y1 = 0;
+			Q_Blue[i].y2 = 0;
+			Q_Blue[i].y3 = 0;
+			Q_Blue[i].y4 = 0;
+
+			Q_Blue[i].z1 = 0;
+			Q_Blue[i].z2 = 0;
+			Q_Blue[i].z3 = 0;
+			Q_Blue[i].z4 = 0;
+		}
+		break;
+
+	case 14:
+		if (!paused)
+			paused = true;
+		else
+			paused = false;
+		break;
+
+	case 15:
+		glutDestroyWindow(glutGetWindow());
+		exit(0);
+		break;
+
+	default:
+		break;
+	}
+
+	switch (value)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 7:
+	case 8:
+	case 9:
+	case 10:
+	case 11:
+	case 12:
+		colourAudio = true;
+		break;
+
+	case 6:
+		cubeRed_Quad = false;
+		quadClear = true;
+		PlaySound("Audio/hint.wav", GetModuleHandle(NULL), SND_ASYNC);
+		break;
+
+	case 13:
+		cubeBlue_Quad = false;
+		quadClear = true;
+		PlaySound("Audio/hint.wav", GetModuleHandle(NULL), SND_ASYNC);
+		break;
+
+	default:
+		break;
+	}
 }

@@ -35,14 +35,14 @@ public:
 	
 	void MouseMenu(int value);
 
+	ModelOBJ tankObj, cubeObj, skullObj;
+	Material* _material;
+
 private:
 	bool paused, audioPlaying, objectAudio, colorAudio,
 		 colorIsRed, colorIsGreen, colorIsBlue, colorIsCyan, colorIsMagenta, colorIsYellow,
 		 tankLoaded, cubeLoaded, skullLoaded;
 	float g_rotation, xPosition, yPosition, zPosition,
 		  red, green, blue;
-	int mouseMenu, objectMenu, colourMenu;
-
-	ModelOBJ tankObj, cubeObj, skullObj;
-	Material* _material;
+	int subMenus, objectMenu, colourMenu, helpMenu;
 };
