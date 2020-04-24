@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <iostream>
-
 SceneStarfield::SceneStarfield() : Scene()
 {
 	InitGL();
@@ -359,6 +357,9 @@ void SceneStarfield::KeyboardUp(unsigned char key, int x, int y)
 			objects[i]->axisY = 0.0f;
 			objects[i]->axisZ = 0.0f;
 			break;
+
+		default:
+			break;
 		}
 	}
 
@@ -373,6 +374,9 @@ void SceneStarfield::KeyboardUp(unsigned char key, int x, int y)
 	case 'd':
 	case 'D':
 		cRotating = true;
+		break;
+
+	default:
 		break;
 	}
 }
@@ -666,9 +670,7 @@ void SceneStarfield::MouseMenu(int value)
 	{
 	case 8:
 		if (!paused)
-		{
 			paused = true;
-		}
 		else
 			paused = false;
 		break;

@@ -364,6 +364,9 @@ void SceneGame::KeyboardUp(unsigned char key, int x, int y)
 	case 13:
 		cubeBlue = false;
 		break;
+
+	default:
+		break;
 	}
 }
 
