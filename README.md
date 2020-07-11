@@ -27,3 +27,5 @@ OpenGL project as part of 2nd semester FOGGS module.
 - [x] 2nd Scene - Cube collision example.
 - [x] 3rd Scene - Simple OpenGL game.
 - [x] 4th Scene - Example .obj file loading.
+
+![](screenshot.png)
