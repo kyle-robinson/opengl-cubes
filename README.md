@@ -1,4 +1,4 @@
-# OpenGL Project
+# OpenGL Cubes
 
 A simple graphical application created using OpenGL as part of my 2nd semester FOGGS module.
 
