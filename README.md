@@ -1,10 +1,10 @@
 # OpenGL Cubes
 
-[![MSBuild-Debug](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-debug.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-debug.yml)
+[![MSBuild-Debug](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-debug.yml/badge.svg)](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-debug.yml)
 &nbsp;
-[![MSBuild-Release](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-release.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-release.yml)
+[![MSBuild-Release](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-release.yml/badge.svg)](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-release.yml)
 &nbsp;
-[![CodeQL](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/codeql.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/codeql.yml)
+[![CodeQL](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/codeql.yml/badge.svg)](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/codeql.yml)
 
 A simple graphical application created using OpenGL as part of my 2nd semester FOGGS module.
 
