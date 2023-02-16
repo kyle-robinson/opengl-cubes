@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/HelloGL
+/HelloGL/x64/Debug
+/HelloGL/Release
+/HelloGL/x64/Release
+/HelloGL/Debug

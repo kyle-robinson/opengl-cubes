@@ -13,17 +13,17 @@ SceneStarfield::SceneStarfield() : Scene()
 	InitMenu();
 
 	zMoving = cRotating = true;
-	
+
 	glutMainLoop();
 }
 
 SceneStarfield::~SceneStarfield(void)
 {
 	Scene::~Scene();
-	
+
 	delete cubeMesh;
 	cubeMesh = NULL;
-	
+
 	delete texturePenguins;
 	texturePenguins = NULL;
 
@@ -96,7 +96,7 @@ void SceneStarfield::InitMenu()
 void SceneStarfield::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+
 	DrawMenu();
 
 	if (!paused)
@@ -115,7 +115,7 @@ void SceneStarfield::Display()
 void SceneStarfield::Update()
 {
 	glLoadIdentity();
-	
+
 	Scene::Update();
 	SceneAudio();
 
@@ -182,7 +182,7 @@ void SceneStarfield::Keyboard(unsigned char key, int x, int y)
 	default:
 		break;
 	}
-	
+
 	for (int i = 0; i < OBJECTCOUNT; i++)
 	{
 		switch (key)
@@ -279,11 +279,11 @@ void SceneStarfield::KeyboardSpecial(int key, int x, int y)
 			if (camera->eye.z == 1.0f)
 				camera->eye.x -= MOVEMENT_SPEED / 10;
 			break;
-		
+
 		default:
 			break;
 		}
-		
+
 		for (int i = 0; i < OBJECTCOUNT; i++)
 		{
 			switch (key)
