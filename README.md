@@ -5,6 +5,8 @@
 [![MSBuild-Release](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-release.yml/badge.svg)](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/msbuild-release.yml)
 &nbsp;
 [![CodeQL](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/codeql.yml/badge.svg)](https://github.com/kyle-robinson/opengl-cubes/actions/workflows/codeql.yml)
+&nbsp;
+<img src="https://img.shields.io/static/v1?label=University&message=Year 1&color=f7a52a&style=flat&logo=nintendogamecube&logoColor=CCCCCC" />
 
 A simple graphical application created using OpenGL as part of my 2nd semester FOGGS module.
 
